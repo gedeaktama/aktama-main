@@ -1,0 +1,28 @@
+# ==============================================================================
+# PT AKTAMA DIGITAL ANTIKA - ROOT DIRECTORY SECURITY & REWRITE
+# ==============================================================================
+# File ini melindungi struktur aplikasi jika diunggah langsung ke root domain.
+# CATATAN: Rekomendasi terbaik tetap memisahkan source code di luar public_html.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Lindungi file sensitif dari akses HTTP langsung
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.(json)|phpunit\.xml|artisan|README\.md) - [F,L,NC]
+
+    # 2. Lindungi direktori sistem
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage/logs|tests|vendor)($|/) - [F,L,NC]
+
+    # 3. Teruskan traffic publik ke subdirektori /public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Blokir penjelajahan direktori (Directory Indexing)
+Options -Indexes
+
+# Blokir akses ke file tersembunyi (dotfiles)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
