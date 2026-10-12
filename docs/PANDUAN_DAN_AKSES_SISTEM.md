@@ -15,7 +15,7 @@ Seluruh sistem yang berjalan di lingkungan XAMPP lokal telah dikonfigurasi denga
 | **Email Pengguna** | `admin@aktama.com` |
 | **Kata Sandi (Password)** | `AdminAktama2026!` |
 | **Peran (Role)** | `admin` (Administrator Sistem Penuh) |
-| **Fitur Akses** | Kelola Seksi Beranda (Drag & Drop), Visual Canvas Builder Halaman, Pengaturan Menu Navigasi, Berita/Artikel, Jasa Web, Pelatihan AI, Produk Kopi, Undangan, Portofolio, Leads Masuk, Logo, Cap, Topbar, dan Footer. |
+| **Fitur Akses** | Kelola Seksi Beranda (Drag & Drop), Visual Canvas Builder Halaman, Pengaturan Menu Navigasi, Berita/Artikel, Jasa Web, Pelatihan AI, Portofolio Proyek, Integrasi Ekosistem Digital (Undangan & Kopi Subdomain), Leads Masuk, Logo, Cap, Topbar, dan Footer. |
 
 ---
 
@@ -53,14 +53,14 @@ Seluruh sistem yang berjalan di lingkungan XAMPP lokal telah dikonfigurasi denga
 ## 2. DAFTAR LINK & RUTE PORTAL UTAMA (`aktama-main`)
 
 ### A. Rute Publik (Pengunjung & Calon Klien)
-| Halaman / Fitur | Tautan Lengkap (Localhost) | Deskripsi |
+| Halaman / Fitur | Tautan Lengkap (Localhost / Live) | Deskripsi |
 | :--- | :--- | :--- |
-| **Beranda Utama** | [http://localhost:8080/aktama-main/public/](http://localhost:8080/aktama-main/public/) | Halaman depan interaktif dengan susunan seksi modular dinamis |
-| **Tentang Perusahaan** | [http://localhost:8080/aktama-main/public/tentang-kami](http://localhost:8080/aktama-main/public/tentang-kami) | Profil PT Aktama Digital Antika, legalitas NIB, visi & misi |
-| **Pelatihan AI** | [http://localhost:8080/aktama-main/public/pelatihan-ai](http://localhost:8080/aktama-main/public/pelatihan-ai) | Program kursus kecerdasan buatan, fasilitator nasional, silabus |
+| **Beranda Utama** | [http://localhost:8080/aktama-main/public/](http://localhost:8080/aktama-main/public/) | Halaman depan interaktif dengan susunan seksi modular dinamis & showcase ekosistem |
+| **Tentang Perusahaan** | [http://localhost:8080/aktama-main/public/tentang-kami](http://localhost:8080/aktama-main/public/tentang-kami) | Profil PT Aktama Digital Antika, legalitas NIB `1703250057018`, visi & misi |
+| **Pelatihan AI** | [http://localhost:8080/aktama-main/public/pelatihan-ai](http://localhost:8080/aktama-main/public/pelatihan-ai) | Program kursus kecerdasan buatan, fasilitator nasional terakreditasi, silabus |
 | **Jasa Pembuatan Website** | [http://localhost:8080/aktama-main/public/jasa-website](http://localhost:8080/aktama-main/public/jasa-website) | Paket website corporate, instansi, sekolah, dan software custom |
-| **Unit Bisnis Kopi** | [http://localhost:8080/aktama-main/public/kopi](http://localhost:8080/aktama-main/public/kopi) | Komoditas kopi pilihan, varian bubuk/roastbeans eceran & grosir |
-| **Paket Undangan Online** | [http://localhost:8080/aktama-main/public/undangan](http://localhost:8080/aktama-main/public/undangan) | Katalog undangan pernikahan online, fitur RSVP & amplop digital |
+| **Gateway Aktama Coffee** | [http://localhost:8080/aktama-main/public/kopi](http://localhost:8080/aktama-main/public/kopi) | Otomatis redirect ke platform komoditas mandiri: [https://coffee.aktama.com](https://coffee.aktama.com) |
+| **Gateway Undangan Online** | [http://localhost:8080/aktama-main/public/undangan](http://localhost:8080/aktama-main/public/undangan) | Otomatis redirect ke platform SaaS mandiri: [https://undanganonline.aktama.com](https://undanganonline.aktama.com) |
 | **Portofolio Proyek** | [http://localhost:8080/aktama-main/public/portofolio](http://localhost:8080/aktama-main/public/portofolio) | Hasil karya web instansi, kampus, dan sistem bisnis |
 | **Artikel & Berita** | [http://localhost:8080/aktama-main/public/artikel](http://localhost:8080/aktama-main/public/artikel) | Publikasi berita teknologi, edukasi digital, dan rilis perusahaan |
 | **Halaman Privasi** | [http://localhost:8080/aktama-main/public/halaman/kebijakan-privasi](http://localhost:8080/aktama-main/public/halaman/kebijakan-privasi) | Contoh halaman kustom hasil CMS |
@@ -73,17 +73,15 @@ Seluruh sistem yang berjalan di lingkungan XAMPP lokal telah dikonfigurasi denga
 ### B. Rute Panel Admin (CMS Pengelolaan Konten)
 | Modul Panel Admin | Tautan Lengkap (Localhost) | Fungsi Pengelolaan |
 | :--- | :--- | :--- |
-| **Dashboard Utama** | [http://localhost:8080/aktama-main/public/admin/dashboard](http://localhost:8080/aktama-main/public/admin/dashboard) | Ringkasan statistik leads, produk, layanan, dan status sistem |
+| **Dashboard Utama** | [http://localhost:8080/aktama-main/public/admin/dashboard](http://localhost:8080/aktama-main/public/admin/dashboard) | Ringkasan statistik leads, portofolio, layanan, dan status sistem |
 | **Calon Pelanggan (Leads)** | [http://localhost:8080/aktama-main/public/admin/leads](http://localhost:8080/aktama-main/public/admin/leads) | Data konsultasi masuk via formulir web + tombol Chat WhatsApp instan |
-| **Seksi Beranda (Drag & Drop)** | [http://localhost:8080/aktama-main/public/admin/sections](http://localhost:8080/aktama-main/public/admin/sections) | Ubah urutan tata letak beranda, sembunyikan/tampilkan seksi, edit teks |
+| **Seksi Beranda (Drag & Drop)** | [http://localhost:8080/aktama-main/public/admin/sections](http://localhost:8080/aktama-main/public/admin/sections) | Ubah urutan tata letak beranda, sembunyikan/tampilkan seksi (termasuk Showcase Ekosistem), edit teks |
 | **Halaman & Visual Canvas** | [http://localhost:8080/aktama-main/public/admin/pages](http://localhost:8080/aktama-main/public/admin/pages) | Tambah & kelola halaman kustom (WordPress Page style) |
 | **Visual Drag & Drop Canvas** | [http://localhost:8080/aktama-main/public/admin/pages/3/builder](http://localhost:8080/aktama-main/public/admin/pages/3/builder) | Editor visual kanvas (Hero, Pricing, CTA, Grid) simpan otomatis via AJAX |
-| **Menu Navigasi Drag & Drop** | [http://localhost:8080/aktama-main/public/admin/menus](http://localhost:8080/aktama-main/public/admin/menus) | Susun urutan menu Header & Footer, tambah link halaman/custom |
+| **Menu Navigasi Drag & Drop** | [http://localhost:8080/aktama-main/public/admin/menus](http://localhost:8080/aktama-main/public/admin/menus) | Susun urutan menu Header & Footer, tambah link halaman internal / link ekosistem subdomain |
 | **Postingan / Berita** | [http://localhost:8080/aktama-main/public/admin/articles](http://localhost:8080/aktama-main/public/admin/articles) | Tambah postingan berita, upload gambar fitur, kategori, draf/publik |
 | **Jasa Web & Aplikasi** | [http://localhost:8080/aktama-main/public/admin/services](http://localhost:8080/aktama-main/public/admin/services) | Tambah paket jasa pembuatan website, harga, dan fitur unggulan |
 | **Pelatihan AI** | [http://localhost:8080/aktama-main/public/admin/training](http://localhost:8080/aktama-main/public/admin/training) | Tambah kurikulum pelatihan AI, durasi, jenjang level, target peserta |
-| **Produk Kopi & Varian** | [http://localhost:8080/aktama-main/public/admin/coffee](http://localhost:8080/aktama-main/public/admin/coffee) | Tambah produk kopi, kelola harga eceran vs grosir, varian gramatur |
-| **Paket Undangan Digital** | [http://localhost:8080/aktama-main/public/admin/invitations](http://localhost:8080/aktama-main/public/admin/invitations) | Kelola katalog paket undangan, diskon, dan label favorit |
 | **Portofolio Proyek** | [http://localhost:8080/aktama-main/public/admin/portfolios](http://localhost:8080/aktama-main/public/admin/portfolios) | Showcase karya proyek teknologi, testimoni klien, dan tautan demo |
 | **Pengaturan, Logo & Footer** | [http://localhost:8080/aktama-main/public/admin/settings](http://localhost:8080/aktama-main/public/admin/settings) | Upload Logo, Cap Resmi, Favicon, ubah teks Topbar, NIB, & deskripsi Footer |
 

@@ -43,11 +43,11 @@
         <div class="col-sm-6 col-xl-3">
             <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="text-muted small fw-bold text-uppercase">Produk Kopi</span>
-                    <span class="p-2 rounded-3 bg-warning bg-opacity-10 text-warning fs-5"><i class="bi bi-cup-hot-fill"></i></span>
+                    <span class="text-muted small fw-bold text-uppercase">Portofolio</span>
+                    <span class="p-2 rounded-3 bg-warning bg-opacity-10 text-warning fs-5"><i class="bi bi-briefcase-fill"></i></span>
                 </div>
-                <h3 class="fw-bold font-display text-dark mb-1">{{ $stats['coffee_count'] }}</h3>
-                <small class="text-muted">Katalog Robusta & Arabika</small>
+                <h3 class="fw-bold font-display text-dark mb-1">{{ $stats['portfolios_count'] }}</h3>
+                <small class="text-muted">Proyek Riil Terverifikasi</small>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ class AktamaCmsWordPressFeaturesTest extends TestCase
         $admin = $this->getAdminUser();
 
         $sections = HomeSection::orderBy('sort_order')->get();
-        $this->assertCount(10, $sections);
+        $this->assertCount(8, $sections);
 
         // Balik urutan seksi
         $reversedIds = $sections->pluck('id')->reverse()->values()->all();
@@ -59,7 +59,7 @@ class AktamaCmsWordPressFeaturesTest extends TestCase
     public function test_home_section_toggle_visibility(): void
     {
         $admin = $this->getAdminUser();
-        $section = HomeSection::where('section_key', 'aktama_coffee')->first();
+        $section = HomeSection::where('section_key', 'ekosistem_digital')->first();
         $this->assertTrue($section->is_active);
 
         // Nonaktifkan seksi
@@ -69,10 +69,10 @@ class AktamaCmsWordPressFeaturesTest extends TestCase
         $section->refresh();
         $this->assertFalse($section->is_active);
 
-        // Kunjungi beranda, seksi kopi tidak boleh muncul
+        // Kunjungi beranda, seksi ekosistem digital tidak boleh muncul
         $homeResponse = $this->get('/');
         $homeResponse->assertStatus(200);
-        $homeResponse->assertDontSee('id="aktama-coffee"', false);
+        $homeResponse->assertDontSee('id="ekosistem-digital"', false);
     }
 
     /**

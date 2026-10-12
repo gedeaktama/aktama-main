@@ -28,8 +28,6 @@ class AktamaCoreTest extends TestCase
             '/tentang-kami',
             '/pelatihan-ai',
             '/jasa-website',
-            '/kopi',
-            '/undangan',
             '/portofolio',
             '/artikel',
             '/sitemap.xml',
@@ -39,6 +37,10 @@ class AktamaCoreTest extends TestCase
             $response = $this->get($route);
             $response->assertStatus(200);
         }
+
+        // Uji rute gateway kopi dan undangan mengarahkan ke platform terkait
+        $this->get('/kopi')->assertRedirect();
+        $this->get('/undangan')->assertRedirect();
     }
 
     /**

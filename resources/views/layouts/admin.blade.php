@@ -106,18 +106,29 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.coffee.index') }}" class="nav-link {{ request()->routeIs('admin.coffee.*') ? 'active' : '' }}">
-                        <i class="bi bi-cup-hot-fill"></i> Produk Kopi & Varian
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.invitations.index') }}" class="nav-link {{ request()->routeIs('admin.invitations.*') ? 'active' : '' }}">
-                        <i class="bi bi-heart-fill"></i> Paket Undangan
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ route('admin.portfolios.index') }}" class="nav-link {{ request()->routeIs('admin.portfolios.*') ? 'active' : '' }}">
                         <i class="bi bi-briefcase-fill"></i> Portofolio
+                    </a>
+                </li>
+
+                <div class="text-white-50 text-uppercase small fw-bold px-3 mt-3 mb-1" style="font-size: 0.65rem;">Ekosistem Terintegrasi</div>
+
+                <li class="nav-item">
+                    <a href="https://undanganonline.aktama.com" target="_blank" rel="noopener" class="nav-link text-info d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-box-arrow-up-right me-2"></i> Undangan Online</span>
+                        <span class="badge bg-info bg-opacity-25 text-info" style="font-size: 0.6rem;">Live</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://coffee.aktama.com" target="_blank" rel="noopener" class="nav-link text-warning d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-box-arrow-up-right me-2"></i> Aktama Coffee</span>
+                        <span class="badge bg-warning bg-opacity-25 text-warning" style="font-size: 0.6rem;">Live</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://academy.aktama.com" target="_blank" rel="noopener" class="nav-link text-success d-flex align-items-center justify-content-between">
+                        <span><i class="bi bi-box-arrow-up-right me-2"></i> Aktama Academy</span>
+                        <span class="badge bg-success bg-opacity-25 text-success" style="font-size: 0.6rem;">Live</span>
                     </a>
                 </li>
 

@@ -15,11 +15,9 @@
     @else
         {{-- Fallback jika seksi database belum terisi --}}
         @include('partials.home.hero', ['sectionConfig' => null])
-        @include('partials.home.pelatihan_ai', ['sectionConfig' => null])
         @include('partials.home.jasa_website', ['sectionConfig' => null])
-        @include('partials.home.aktama_academy', ['sectionConfig' => null])
-        @include('partials.home.aktama_coffee', ['sectionConfig' => null])
-        @include('partials.home.undangan_online', ['sectionConfig' => null])
+        @include('partials.home.pelatihan_ai', ['sectionConfig' => null])
+        @include('partials.home.ekosistem_digital', ['sectionConfig' => null])
         @include('partials.home.portofolio', ['sectionConfig' => null])
         @include('partials.home.tentang_kami', ['sectionConfig' => null])
         @include('partials.home.artikel', ['sectionConfig' => null])

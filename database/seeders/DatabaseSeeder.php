@@ -4,11 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\CoffeeProduct;
-use App\Models\CoffeeProductVariant;
 use App\Models\Course;
 use App\Models\HomeSection;
-use App\Models\InvitationPackage;
 use App\Models\Page;
 use App\Models\Portfolio;
 use App\Models\Service;
@@ -50,8 +47,8 @@ class DatabaseSeeder extends Seeder
             'owner_name' => ['Gede Erik Aktama, S.Pd., M.Pd.', 'owner', 'Direktur Utama / Pemilik'],
             'owner_title' => ['Dosen Prodi Sistem Komputer Univ. Parna Raya & Fasilitator Nasional KKA Kemdikdasmen', 'owner', 'Jabatan & Kredensial Akademik'],
             'owner_bio' => ['Dosen pada Program Studi Sistem Komputer, Universitas Parna Raya, serta Fasilitator Nasional Koding dan Kecerdasan Artifisial (KKA) Kemdikdasmen. Berfokus pada rekayasa perangkat lunak modern, keamanan web bebas malware, dan literasi teknologi tepat guna.', 'owner', 'Biografi Singkat Direktur'],
-            'coffee_brand_name' => ['Kopi Distro Premium', 'coffee', 'Nama Brand Kopi'],
-            'coffee_tagline' => ['Roastery & Distribusi Biji/Bubuk Kopi Asli Nusantara untuk Retail dan Suplai Kafe', 'coffee', 'Tagline Bisnis Kopi'],
+            'coffee_brand_name' => ['Aktama Coffee', 'coffee', 'Nama Brand Kopi'],
+            'coffee_tagline' => ['Unit Bisnis Roastery & Distribusi Komoditas Kopi Nusantara', 'coffee', 'Tagline Bisnis Kopi'],
             'academy_url' => [$academyUrl, 'gateway', 'URL Gateway Aktama Academy'],
             'invitation_url' => [$invitationUrl, 'gateway', 'URL Gateway Undangan Online'],
             'coffee_app_url' => [$coffeeUrl, 'gateway', 'URL Gateway ERP Kopi'],
@@ -62,23 +59,24 @@ class DatabaseSeeder extends Seeder
             'linkedin_url' => ['https://linkedin.com/in/gedeerikaktama', 'social', 'URL LinkedIn Resmi'],
             'youtube_url' => ['https://youtube.com/@aktama', 'social', 'URL Channel YouTube'],
             'facebook_url' => ['', 'social', 'URL Halaman Facebook'],
-            'meta_default_title' => ['PT Aktama Digital Antika | Solusi Teknologi, Pelatihan AI & Ekosistem Bisnis', 'seo', 'Default Meta Title'],
-            'meta_default_description' => ['PT Aktama Digital Antika (NIB 1703250057018) — Penyedia Pelatihan AI Terapan, Jasa Website & POS Bebas Malware, Undangan Online, dan Distribusi Kopi Nusantara.', 'seo', 'Default Meta Description'],
+            'meta_default_title' => ['PT Aktama Digital Antika | Solusi Rekayasa Software, Pelatihan AI & Ekosistem Digital', 'seo', 'Default Meta Title'],
+            'meta_default_description' => ['PT Aktama Digital Antika (NIB 1703250057018) — Penyedia Jasa Pembuatan Website & Software Bebas Malware, Pelatihan AI Terapan Berlisensi LPK, serta Ekosistem Undangan Online dan Aktama Coffee.', 'seo', 'Default Meta Description'],
             'logo_path' => ['images/logo-aktama.png', 'media', 'Path Logo Utama Navbar'],
             'seal_path' => ['images/logo-seal-aktama.png', 'media', 'Path Cap Resmi Perusahaan'],
             'favicon_path' => ['images/logo-aktama.png', 'media', 'Path Favicon Tab Browser'],
             'topbar_text' => ['PT Aktama Digital Antika', 'header', 'Teks Entitas di Topbar'],
-            'topbar_highlight' => ['NIB: 1703250057018 | LPK Resmi Terdaftar', 'header', 'Badge Legalitas di Topbar'],
-            'footer_description' => ['Perusahaan penyedia solusi teknologi terpadu: Pelatihan Kecerdasan Artifisial (AI), Jasa Pembuatan Website & Aplikasi Bisnis, Ekosistem Edukasi Digital, Undangan Online, serta Distribusi Komoditas Kopi Riil.', 'footer', 'Deskripsi Perusahaan di Footer'],
+            'topbar_highlight' => ['NIB: 1703250057018 • LPK Resmi Terdaftar', 'header', 'Badge Legalitas di Topbar'],
+            'footer_description' => ['Perusahaan penyedia solusi teknologi terpadu: Jasa Rekayasa Website & Aplikasi Bisnis Bebas Malware, Pelatihan Kecerdasan Artifisial (AI) Terapan berlisensi LPK Resmi, serta pengembang ekosistem digital mandiri.', 'footer', 'Deskripsi Perusahaan di Footer'],
             'footer_copyright' => ['© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.', 'footer', 'Teks Copyright Footer'],
             'header_navigation_menu' => [json_encode([
                 ['label' => 'Beranda', 'url' => '/', 'target' => '_self'],
                 ['label' => 'Tentang Kami', 'url' => '/tentang-kami', 'target' => '_self'],
-                ['label' => 'Pelatihan AI', 'url' => '/pelatihan-ai', 'target' => '_self'],
                 ['label' => 'Jasa Website', 'url' => '/jasa-website', 'target' => '_self'],
-                ['label' => 'Kopi', 'url' => '/kopi', 'target' => '_self'],
-                ['label' => 'Undangan', 'url' => '/undangan', 'target' => '_self'],
+                ['label' => 'Pelatihan AI', 'url' => '/pelatihan-ai', 'target' => '_self'],
                 ['label' => 'Portofolio', 'url' => '/portofolio', 'target' => '_self'],
+                ['label' => 'Undangan Online', 'url' => $invitationUrl, 'target' => '_blank'],
+                ['label' => 'Aktama Coffee', 'url' => $coffeeUrl, 'target' => '_blank'],
+                ['label' => 'Academy', 'url' => $academyUrl, 'target' => '_blank'],
                 ['label' => 'Artikel', 'url' => '/artikel', 'target' => '_self'],
             ]), 'menus', 'Menu Navigasi Header'],
         ];
@@ -96,7 +94,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Website Profil Perusahaan & Bisnis (Company Profile)',
                 'slug' => 'website-profil-perusahaan',
                 'category' => 'website',
-                'excerpt' => 'Membangun kehadiran profesional perusahaan dengan desain elegan, cepat, dan terproteksi dari malware.',
+                'excerpt' => 'Membangun kehadiran profesional perusahaan dengan desain elegan, cepat, dan terproteksi dari celah malware.',
                 'description' => 'Layanan pembuatan website profil perusahaan modern untuk merepresentasikan kredibilitas bisnis kepada klien, investor, dan mitra usaha. Dilengkapi arsitektur kode bersih, mobile-responsive, optimasi SEO on-page, formulir terhubung WhatsApp, dan panel CMS admin mandiri.',
                 'price_starting' => 'Mulai Rp 2.500.000',
                 'features' => [
@@ -154,7 +152,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Pengembangan perangkat lunak kustom menggunakan arsitektur Laravel dan database MySQL yang tangguh. Cocok untuk portal kepegawaian, sistem penilaian akademik, otomasi operasional bisnis, atau integrasi API pihak ketiga.',
                 'price_starting' => 'Mulai Rp 12.500.000 (Sesuai KAK)',
                 'features' => [
-                    'Arsitektur Monolit Modern Bersih & Skalabel',
+                    'Arsitektur Monolit Modern Bersih & Skalalabel',
                     'Otorisasi Peran Berjenjang & Log Audit Aktivitas',
                     'Integrasi REST API & Payment Gateway (Midtrans/dll)',
                     'Garansi Pemeliharaan Bug & Pendampingan Pasca-Rilis'
@@ -249,176 +247,7 @@ class DatabaseSeeder extends Seeder
             TrainingProgram::updateOrCreate(['slug' => $prog['slug']], $prog);
         }
 
-        // 5. Katalog Produk Kopi Asli (Sesuai Database Proyek Riil Kopi Distro)
-        // A. Arabika Aceh Gayo
-        $gayo = CoffeeProduct::updateOrCreate(
-            ['slug' => 'kopi-arabika-aceh-gayo'],
-            [
-                'name' => 'Kopi Arabika Aceh Gayo',
-                'sku' => 'SKU-AG-ORIGIN',
-                'description' => 'Kopi Arabika dataran tinggi Gayo Aceh dengan karakter keasaman segar yang seimbang, berpadu aroma rempah halus dan sentuhan rasa cokelat karamel khas pegunungan.',
-                'origin' => 'Dataran Tinggi Gayo, Aceh Tengah',
-                'roast_level' => 'Medium Roast',
-                'image' => 'coffee/gayo.jpg',
-                'is_published' => true,
-            ]
-        );
-
-        $gayoVariants = [
-            ['name' => 'Arabika Aceh Gayo 100g (Biji/Bubuk)', 'weight' => 100, 'retail' => 40000, 'wholesale' => 35000, 'min' => 10],
-            ['name' => 'Arabika Aceh Gayo 250g (Biji/Bubuk)', 'weight' => 250, 'retail' => 90000, 'wholesale' => 78000, 'min' => 5],
-            ['name' => 'Arabika Aceh Gayo 500g (Biji/Bubuk)', 'weight' => 500, 'retail' => 170000, 'wholesale' => 148000, 'min' => 5],
-            ['name' => 'Arabika Aceh Gayo 1kg Pasokan Kafe', 'weight' => 1000, 'retail' => 310000, 'wholesale' => 275000, 'min' => 3],
-        ];
-        foreach ($gayoVariants as $v) {
-            CoffeeProductVariant::updateOrCreate(
-                ['coffee_product_id' => $gayo->id, 'variant_name' => $v['name']],
-                ['weight_grams' => $v['weight'], 'retail_price' => $v['retail'], 'wholesale_price' => $v['wholesale'], 'min_wholesale_qty' => $v['min'], 'is_active' => true]
-            );
-        }
-
-        // B. Arabika Toraja Sapan
-        $toraja = CoffeeProduct::updateOrCreate(
-            ['slug' => 'kopi-arabika-toraja-sapan'],
-            [
-                'name' => 'Kopi Arabika Toraja Sapan',
-                'sku' => 'SKU-AT-SAPAN',
-                'description' => 'Kopi Arabika legendaris khas Toraja Sapan Sulawesi dengan body yang mantap, aftertaste manis yang tahan lama, serta sentuhan herbal rempah khas.',
-                'origin' => 'Sapan, Toraja Utara, Sulawesi Selatan',
-                'roast_level' => 'Medium to Dark',
-                'image' => 'coffee/toraja.jpg',
-                'is_published' => true,
-            ]
-        );
-
-        $torajaVariants = [
-            ['name' => 'Arabika Toraja Sapan 250g (Biji/Bubuk)', 'weight' => 250, 'retail' => 95000, 'wholesale' => 82000, 'min' => 5],
-            ['name' => 'Arabika Toraja Sapan 500g (Biji/Bubuk)', 'weight' => 500, 'retail' => 180000, 'wholesale' => 155000, 'min' => 5],
-            ['name' => 'Arabika Toraja Sapan 1kg Pasokan Kafe', 'weight' => 1000, 'retail' => 330000, 'wholesale' => 290000, 'min' => 3],
-        ];
-        foreach ($torajaVariants as $v) {
-            CoffeeProductVariant::updateOrCreate(
-                ['coffee_product_id' => $toraja->id, 'variant_name' => $v['name']],
-                ['weight_grams' => $v['weight'], 'retail_price' => $v['retail'], 'wholesale_price' => $v['wholesale'], 'min_wholesale_qty' => $v['min'], 'is_active' => true]
-            );
-        }
-
-        // C. Arabika Flores Bajawa Honey
-        $flores = CoffeeProduct::updateOrCreate(
-            ['slug' => 'kopi-arabika-flores-bajawa-honey'],
-            [
-                'name' => 'Kopi Arabika Flores Bajawa Honey',
-                'sku' => 'SKU-FB-HONEY',
-                'description' => 'Kopi Arabika proses honey alami dari dataran tinggi Bajawa Flores. Memiliki aroma floral semerbak, rasa manis madu alami yang lembut, dan keasaman bersih.',
-                'origin' => 'Bajawa, Ngada, Nusa Tenggara Timur',
-                'roast_level' => 'Medium Roast',
-                'image' => 'coffee/flores.jpg',
-                'is_published' => true,
-            ]
-        );
-
-        $floresVariants = [
-            ['name' => 'Arabika Flores Bajawa 250g', 'weight' => 250, 'retail' => 92000, 'wholesale' => 80000, 'min' => 5],
-            ['name' => 'Arabika Flores Bajawa 500g', 'weight' => 500, 'retail' => 175000, 'wholesale' => 150000, 'min' => 5],
-            ['name' => 'Arabika Flores Bajawa 1kg Pasokan Kafe', 'weight' => 1000, 'retail' => 320000, 'wholesale' => 280000, 'min' => 3],
-        ];
-        foreach ($floresVariants as $v) {
-            CoffeeProductVariant::updateOrCreate(
-                ['coffee_product_id' => $flores->id, 'variant_name' => $v['name']],
-                ['weight_grams' => $v['weight'], 'retail_price' => $v['retail'], 'wholesale_price' => $v['wholesale'], 'min_wholesale_qty' => $v['min'], 'is_active' => true]
-            );
-        }
-
-        // D. Robusta Lampung Gold
-        $lampung = CoffeeProduct::updateOrCreate(
-            ['slug' => 'kopi-robusta-lampung-gold'],
-            [
-                'name' => 'Kopi Robusta Lampung Gold',
-                'sku' => 'SKU-RL-GOLD',
-                'description' => 'Robusta pilihan petani Lampung dengan crema melimpah, kepahitan pekat yang mantap (bold), dan aroma dark chocolate yang sangat cocok untuk kopi susu kekinian.',
-                'origin' => 'Lampung Barat, Sumatera',
-                'roast_level' => 'Dark Roast',
-                'image' => 'coffee/temanggung.jpg',
-                'is_published' => true,
-            ]
-        );
-
-        $lampungVariants = [
-            ['name' => 'Robusta Lampung Gold 250g', 'weight' => 250, 'retail' => 48000, 'wholesale' => 38000, 'min' => 5],
-            ['name' => 'Robusta Lampung Gold 500g', 'weight' => 500, 'retail' => 88000, 'wholesale' => 72000, 'min' => 5],
-            ['name' => 'Robusta Lampung Gold 1kg Pasokan Kafe', 'weight' => 1000, 'retail' => 160000, 'wholesale' => 130000, 'min' => 3],
-        ];
-        foreach ($lampungVariants as $v) {
-            CoffeeProductVariant::updateOrCreate(
-                ['coffee_product_id' => $lampung->id, 'variant_name' => $v['name']],
-                ['weight_grams' => $v['weight'], 'retail_price' => $v['retail'], 'wholesale_price' => $v['wholesale'], 'min_wholesale_qty' => $v['min'], 'is_active' => true]
-            );
-        }
-
-        // 6. Paket Undangan Online (Sesuai Proyek Riil Undangan Digital)
-        $invitations = [
-            [
-                'name' => 'Undangan Basic',
-                'slug' => 'invitation-basic',
-                'image' => 'invitations/wedding-cover.jpg',
-                'price' => 249000,
-                'discount_price' => 199000,
-                'features' => [
-                    'Cover Personalisasi Nama Tamu',
-                    'Profil Kedua Mempelai',
-                    'Detail Rangkaian Acara Lengkap',
-                    'Navigasi Peta Google Maps Terintegrasi',
-                    'Formulir RSVP / Konfirmasi Kehadiran Tamu',
-                    'Masa Aktif 6 Bulan'
-                ],
-                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
-                'is_popular' => false,
-                'sort_order' => 1,
-            ],
-            [
-                'name' => 'Undangan Premium',
-                'slug' => 'invitation-premium',
-                'image' => 'invitations/couple-detail.jpg',
-                'price' => 449000,
-                'discount_price' => 349000,
-                'features' => [
-                    'Seluruh Fitur Paket Basic',
-                    'Galeri Foto Kenangan (Slider)',
-                    'Kisah Perjalanan Cinta (Love Story)',
-                    'Dompet Digital / Amplop Online & Rekening',
-                    'Ucapan Doa & Buku Tamu Digital',
-                    'Countdown Hitung Mundur Hari Acara',
-                    'Masa Aktif 1 Tahun'
-                ],
-                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
-                'is_popular' => true,
-                'sort_order' => 2,
-            ],
-            [
-                'name' => 'Undangan Exclusive (Flagship)',
-                'slug' => 'invitation-exclusive',
-                'image' => 'invitations/gallery-1.jpg',
-                'price' => 799000,
-                'discount_price' => 599000,
-                'features' => [
-                    'Seluruh Fitur Paket Premium',
-                    'Musik Latar Romantis (Audio Player Otomatis)',
-                    'Akses Bebas Seluruh Tema Flagship',
-                    'Komposisi Visual Lebih Mewah & Halus',
-                    'Prioritas Bantuan Input Data dari Tim Desain',
-                    'Masa Aktif Selamanya (Lifetime Link)'
-                ],
-                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
-                'is_popular' => false,
-                'sort_order' => 3,
-            ],
-        ];
-
-        foreach ($invitations as $inv) {
-            InvitationPackage::updateOrCreate(['slug' => $inv['slug']], $inv);
-        }
-
-        // 7. Kursus Pembelajaran (Aktama Academy LMS)
+        // 5. Kursus Pembelajaran (Aktama Academy LMS)
         $courses = [
             [
                 'title' => 'Dasar Pemrograman Web Modern (HTML5, CSS3, & PHP)',
@@ -444,7 +273,7 @@ class DatabaseSeeder extends Seeder
             Course::updateOrCreate(['slug' => $c['slug']], $c);
         }
 
-        // 8. Portofolio Proyek Terverifikasi
+        // 6. Portofolio Proyek Terverifikasi
         $portfolios = [
             [
                 'title' => 'Sistem Informasi Kelulusan & Pengesahan Dokumen Sekolah',
@@ -464,7 +293,7 @@ class DatabaseSeeder extends Seeder
                 'client_type' => 'Bisnis Retail & Grosir Roastery',
                 'technology' => 'Laravel 12, MySQL, Bootstrap 5.3',
                 'project_year' => '2025',
-                'project_url' => null,
+                'project_url' => 'https://coffee.aktama.com',
                 'description' => 'Aplikasi pencatatan stok barang, transaksi kasir eceran & grosir, cetak surat jalan, dan buku piutang tempo.',
                 'is_published' => true,
             ],
@@ -473,9 +302,9 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'platform-undangan-digital',
                 'category' => 'website',
                 'client_type' => 'Layanan Konsumen Publik',
-                'technology' => 'Laravel, MySQL, JavaScript Interaktif',
+                'technology' => 'Laravel 12, MySQL, JavaScript Interaktif',
                 'project_year' => '2025',
-                'project_url' => null,
+                'project_url' => 'https://undanganonline.aktama.com',
                 'description' => 'Portal undangan online responsif dengan personalisasi nama tamu, reservasi RSVP, amplop digital, dan integrasi maps.',
                 'is_published' => true,
             ],
@@ -485,7 +314,7 @@ class DatabaseSeeder extends Seeder
             Portfolio::updateOrCreate(['slug' => $p['slug']], $p);
         }
 
-        // 9. Kategori & Artikel Blog Edukatif
+        // 7. Kategori & Artikel Blog Edukatif
         $catAi = Category::updateOrCreate(['slug' => 'kecerdasan-artifisial'], ['name' => 'Kecerdasan Artifisial (AI)']);
         $catWeb = Category::updateOrCreate(['slug' => 'tips-teknologi-web'], ['name' => 'Teknologi & Web']);
 
@@ -519,15 +348,27 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 10. Opsi A: Seksi Beranda Default (Modular Section Drag & Drop)
+        // 8. Seksi Beranda Default (Clean Modular Sections)
+        // Bersihkan seksi lama yang tidak lagi dipakai
+        HomeSection::whereIn('section_key', ['aktama_academy', 'aktama_coffee', 'undangan_online'])->delete();
+
         $homeSections = [
             [
                 'section_key' => 'hero',
                 'name' => 'Hero Banner & Profil Utama',
-                'badge' => 'PT Aktama Digital Antika • Solusi Teknologi Terpadu',
-                'title' => 'Kembangkan Bisnis & Kompetensi Digital Bersama Aktama Digital',
-                'subtitle' => 'Penyedia layanan Pelatihan Kecerdasan Artifisial (AI) terapan untuk instansi & sekolah, Jasa Pembuatan Website & Aplikasi bisnis yang aman dari celah malware, ekosistem pembelajaran Aktama Academy, serta lini usaha Undangan Online dan Aktama Coffee.',
+                'badge' => 'PT Aktama Digital Antika • NIB: 1703250057018',
+                'title' => 'Solusi Rekayasa Perangkat Lunak, Pelatihan AI Terapan, dan Ekosistem Bisnis Digital',
+                'subtitle' => 'Perusahaan teknologi berbadan hukum resmi penyedia jasa pembuatan website & aplikasi bisnis bebas malware, Lembaga Pelatihan Kerja (LPK) AI & Koding berlisensi, serta pengembang ekosistem digital mandiri.',
                 'sort_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'section_key' => 'jasa_website',
+                'name' => 'Jasa Pembuatan Website & Aplikasi',
+                'badge' => 'Software House & Rekayasa Web',
+                'title' => 'Jasa Pembuatan Website & Sistem Informasi Bebas Celah Malware',
+                'subtitle' => 'Didesain dengan arsitektur modern berstandar enterprise yang kebal dari risiko injeksi script judi online, cepat, mobile-friendly, dan teroptimasi SEO.',
+                'sort_order' => 2,
                 'is_active' => true,
             ],
             [
@@ -536,43 +377,16 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Pusat Pelatihan AI & Teknologi',
                 'title' => 'Program Pelatihan Kecerdasan Artifisial (AI) & Koding Praktis',
                 'subtitle' => 'Disusun langsung oleh Fasilitator Nasional KKA Kemdikdasmen berlisensi LPK resmi untuk mendongkrak produktivitas instansi pemerintah, sekolah, dan pelaku usaha.',
-                'sort_order' => 2,
-                'is_active' => true,
-            ],
-            [
-                'section_key' => 'jasa_website',
-                'name' => 'Jasa Pembuatan Website & Aplikasi',
-                'badge' => 'Layanan Rekayasa Web & Software',
-                'title' => 'Jasa Pembuatan Website & Aplikasi Bisnis Bebas Malware',
-                'subtitle' => 'Didesain dengan arsitektur modern berstandar enterprise yang kebal dari risiko injeksi script judi online, cepat, mobile-friendly, dan teroptimasi SEO.',
                 'sort_order' => 3,
                 'is_active' => true,
             ],
             [
-                'section_key' => 'aktama_academy',
-                'name' => 'Aktama Academy (Ekosistem LMS)',
-                'badge' => 'Platform Pembelajaran Daring',
-                'title' => 'Aktama Academy — Belajar Koding & AI Kapan Saja',
-                'subtitle' => 'Akses materi kursus terstruktur dari dasar pemrograman hingga pembuatan aplikasi bisnis mandiri bersama komunitas pembelajar aktif.',
+                'section_key' => 'ekosistem_digital',
+                'name' => 'Ekosistem Produk & Layanan Terpadu',
+                'badge' => 'Ekosistem Bisnis Aktama',
+                'title' => 'Ekosistem Produk Digital & Unit Bisnis Terpadu',
+                'subtitle' => 'Jelajahi lini produk perangkat lunak unggulan, platform pembelajaran daring, dan unit komoditas riil yang dikembangkan dan dikelola oleh PT Aktama Digital Antika.',
                 'sort_order' => 4,
-                'is_active' => true,
-            ],
-            [
-                'section_key' => 'aktama_coffee',
-                'name' => 'Lini Usaha Kopi (Kopi Distro / Aktama Coffee)',
-                'badge' => 'Ekosistem Komoditas Riil',
-                'title' => 'Katalog Kopi Asli Nusantara — Retail & Pasokan Kafe',
-                'subtitle' => 'Biji dan bubuk kopi single origin grade pilihan langsung dari petani mitra di Gayo, Toraja, Flores, dan Lampung untuk penikmat kopi maupun suplai bisnis warkop/kedai.',
-                'sort_order' => 5,
-                'is_active' => true,
-            ],
-            [
-                'section_key' => 'undangan_online',
-                'name' => 'Lini Usaha Undangan Online Digital',
-                'badge' => 'Layanan Konsumen Publik',
-                'title' => 'Paket Undangan Pernikahan Online Digital Elegan',
-                'subtitle' => 'Sebar momen bahagia ke seluruh kerabat dengan desain visual premium, personalisasi nama tamu, reservasi RSVP, amplop digital, dan galeri interaktif.',
-                'sort_order' => 6,
                 'is_active' => true,
             ],
             [
@@ -581,25 +395,25 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Bukti Kinerja Nyata',
                 'title' => 'Portofolio Implementasi Sistem & Rekayasa Digital',
                 'subtitle' => 'Jejak karya sistem informasi, aplikasi kasir operasional, dan portal web yang telah sukses diimplementasikan dan digunakan secara riil.',
-                'sort_order' => 7,
+                'sort_order' => 5,
                 'is_active' => true,
             ],
             [
                 'section_key' => 'tentang_kami',
                 'name' => 'Profil Pimpinan & Legalitas Perusahaan',
-                'badge' => 'Profil Perusahaan & Pimpinan',
+                'badge' => 'Integritas & Kepemimpinan',
                 'title' => 'Integritas Legalitas & Kepemimpinan Berbasis Kompetensi Akademik',
                 'subtitle' => 'Didirikan dengan landasan kepatuhan hukum yang solid serta dipimpin oleh praktisi sekaligus akademisi yang berkomitmen pada transfer teknologi nyata.',
-                'sort_order' => 8,
+                'sort_order' => 6,
                 'is_active' => true,
             ],
             [
                 'section_key' => 'artikel',
-                'name' => 'Artikel & Wawasan Teknologi Terbaru',
+                'name' => 'Artikel & Wawasan Teknologi',
                 'badge' => 'Wawasan & Literasi Digital',
                 'title' => 'Wawasan Terkini Seputar AI, Keamanan Web, & Bisnis Digital',
                 'subtitle' => 'Artikel edukatif dan panduan praktis untuk membantu Anda memahami perkembangan lanskap teknologi terkini secara bijak.',
-                'sort_order' => 9,
+                'sort_order' => 7,
                 'is_active' => true,
             ],
             [
@@ -607,8 +421,8 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Formulir Konsultasi & Permintaan Penawaran',
                 'badge' => 'Mulai Kolaborasi',
                 'title' => 'Konsultasikan Kebutuhan Teknologi atau Pelatihan Anda',
-                'subtitle' => 'Isi formulir ringkas di bawah ini atau hubungi saluran resmi kami. Tim teknis Aktama Digital akan menganalisis kebutuhan Anda dan memberikan solusi terbaik.',
-                'sort_order' => 10,
+                'subtitle' => 'Isi formulir ringkas di bawah ini atau hubungi saluran resmi kami. Tim teknis Aktama Digital siap menganalisis kebutuhan Anda dan memberikan solusi terbaik.',
+                'sort_order' => 8,
                 'is_active' => true,
             ],
         ];
@@ -617,7 +431,7 @@ class DatabaseSeeder extends Seeder
             HomeSection::updateOrCreate(['section_key' => $sec['section_key']], $sec);
         }
 
-        // 11. Opsi B: Halaman Kustom Default (CMS Pages)
+        // 9. Halaman Kustom Default (CMS Pages)
         Page::updateOrCreate(
             ['slug' => 'kebijakan-privasi'],
             [

@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\CoffeeProductController as AdminCoffeeController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\HomeSectionController as AdminHomeSectionController;
-use App\Http\Controllers\Admin\InvitationPackageController as AdminInvitationController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
@@ -91,14 +89,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Manajemen Pelatihan AI
         Route::resource('training', AdminTrainingController::class)->except(['show']);
-
-        // Manajemen Katalog Kopi & Varian
-        Route::resource('coffee', AdminCoffeeController::class)->except(['show']);
-        Route::post('/coffee/{coffee}/variants', [AdminCoffeeController::class, 'storeVariant'])->name('coffee.variants.store');
-        Route::delete('/coffee/variants/{variant}', [AdminCoffeeController::class, 'destroyVariant'])->name('coffee.variants.destroy');
-
-        // Manajemen Paket Undangan Online
-        Route::resource('invitations', AdminInvitationController::class)->except(['show']);
 
         // Manajemen Portofolio
         Route::resource('portfolios', AdminPortfolioController::class)->except(['show']);

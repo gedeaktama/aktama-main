@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\CoffeeProduct;
 use App\Models\Course;
 use App\Models\HomeSection;
-use App\Models\InvitationPackage;
 use App\Models\Lead;
 use App\Models\Page;
 use App\Models\Portfolio;
@@ -34,11 +32,11 @@ class HomeController extends Controller
             'owner_bio' => SiteSetting::get('owner_bio', 'Dosen Prodi Sistem Komputer Univ. Parna Raya dan Fasilitator Nasional KKA Kemdikdasmen.'),
             'nib_number' => SiteSetting::get('nib_number', '1703250057018'),
             'lpk_status' => SiteSetting::get('lpk_status', 'Unit LPK PT Aktama Digital Antika'),
-            'academy_url' => SiteSetting::get('academy_url', 'http://localhost:8080/aktama/public'),
-            'invitation_url' => SiteSetting::get('invitation_url', 'http://localhost:8080/undanganonline/public'),
-            'coffee_app_url' => SiteSetting::get('coffee_app_url', 'http://localhost:8080/kopi/public'),
+            'academy_url' => SiteSetting::get('academy_url', 'https://academy.aktama.com'),
+            'invitation_url' => SiteSetting::get('invitation_url', 'https://undanganonline.aktama.com'),
+            'coffee_app_url' => SiteSetting::get('coffee_app_url', 'https://coffee.aktama.com'),
             'coffee_brand_name' => SiteSetting::get('coffee_brand_name', 'Aktama Coffee'),
-            'coffee_tagline' => SiteSetting::get('coffee_tagline', 'Distribusi Biji & Bubuk Kopi Berkualitas untuk Retail, Kafe, dan Reseller'),
+            'coffee_tagline' => SiteSetting::get('coffee_tagline', 'Unit Bisnis Roastery & Distribusi Komoditas Kopi Nusantara'),
             'whatsapp_number' => SiteSetting::get('whatsapp_number', '6285341026331'),
             'email' => SiteSetting::get('email', 'gedeerikaktama@gmail.com'),
             'address' => SiteSetting::get('address', 'Indonesia'),
@@ -50,8 +48,8 @@ class HomeController extends Controller
             'seal_path' => SiteSetting::get('seal_path', 'images/logo-seal-aktama.png'),
             'favicon_path' => SiteSetting::get('favicon_path', 'images/logo-aktama.png'),
             'topbar_text' => SiteSetting::get('topbar_text', 'PT Aktama Digital Antika'),
-            'topbar_highlight' => SiteSetting::get('topbar_highlight', 'NIB: 1703250057018 | LPK Resmi Terdaftar'),
-            'footer_description' => SiteSetting::get('footer_description', 'Perusahaan penyedia solusi teknologi terpadu: Pelatihan Kecerdasan Artifisial (AI), Jasa Pembuatan Website & Aplikasi Bisnis, Ekosistem Edukasi Digital, Undangan Online, serta Distribusi Komoditas Kopi Riil.'),
+            'topbar_highlight' => SiteSetting::get('topbar_highlight', 'NIB: 1703250057018 • LPK Resmi Terdaftar'),
+            'footer_description' => SiteSetting::get('footer_description', 'Perusahaan penyedia solusi teknologi terpadu: Jasa Pembuatan Website & Aplikasi Bebas Malware, Pelatihan Kecerdasan Artifisial (AI) Terapan, serta Ekosistem Produk Digital Mandiri.'),
             'footer_copyright' => SiteSetting::get('footer_copyright', '© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.'),
             'header_navigation_menu' => SiteSetting::get('header_navigation_menu', null),
         ];
@@ -69,12 +67,6 @@ class HomeController extends Controller
 
         $services = Service::where('is_published', true)->orderBy('sort_order')->get();
         $trainingPrograms = TrainingProgram::where('is_published', true)->orderBy('sort_order')->get();
-        $coffeeProducts = CoffeeProduct::with(['variants' => function ($q) {
-                $q->where('is_active', true);
-            }])
-            ->where('is_published', true)
-            ->get();
-        $invitationPackages = InvitationPackage::where('is_published', true)->orderBy('sort_order')->get();
         $courses = Course::where('is_published', true)->get();
         $portfolios = Portfolio::where('is_published', true)->get();
         $articles = Article::with('category')
@@ -88,8 +80,6 @@ class HomeController extends Controller
             'homeSections',
             'services',
             'trainingPrograms',
-            'coffeeProducts',
-            'invitationPackages',
             'courses',
             'portfolios',
             'articles'
@@ -132,31 +122,21 @@ class HomeController extends Controller
     }
 
     /**
-     * Landing Page Khusus Bisnis Kopi (Aktama Coffee)
+     * Gateway Redirect ke Platform Kopi (Aktama Coffee)
      */
-    public function coffee(): View
+    public function coffee(): RedirectResponse
     {
-        $settings = $this->getSettings();
-        $coffeeProducts = CoffeeProduct::with(['variants' => function ($q) {
-                $q->where('is_active', true);
-            }])
-            ->where('is_published', true)
-            ->get();
-
-        return view('pages.coffee', compact('settings', 'coffeeProducts'));
+        $url = SiteSetting::get('coffee_app_url', 'https://coffee.aktama.com');
+        return redirect()->away($url);
     }
 
     /**
-     * Halaman Undangan Online
+     * Gateway Redirect ke Platform Undangan Online
      */
-    public function invitations(): View
+    public function invitations(): RedirectResponse
     {
-        $settings = $this->getSettings();
-        $packages = InvitationPackage::where('is_published', true)
-            ->orderBy('sort_order')
-            ->get();
-
-        return view('pages.invitations', compact('settings', 'packages'));
+        $url = SiteSetting::get('invitation_url', 'https://undanganonline.aktama.com');
+        return redirect()->away($url);
     }
 
     /**

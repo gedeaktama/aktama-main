@@ -126,11 +126,12 @@
                     @else
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('home') ? 'active text-primary fw-bold' : '' }}" href="{{ route('home') }}">Beranda</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('about') ? 'active text-primary fw-bold' : '' }}" href="{{ route('about') }}">Tentang Kami</a></li>
-                        <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('training') ? 'active text-primary fw-bold' : '' }}" href="{{ route('training') }}">Pelatihan AI</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('services') ? 'active text-primary fw-bold' : '' }}" href="{{ route('services') }}">Jasa Website</a></li>
-                        <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('coffee') ? 'active text-primary fw-bold' : '' }}" href="{{ route('coffee') }}">Kopi</a></li>
-                        <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('invitations') ? 'active text-primary fw-bold' : '' }}" href="{{ route('invitations') }}">Undangan</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('training') ? 'active text-primary fw-bold' : '' }}" href="{{ route('training') }}">Pelatihan AI</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('portfolios') ? 'active text-primary fw-bold' : '' }}" href="{{ route('portfolios') }}">Portofolio</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['invitation_url'] ?? 'https://undanganonline.aktama.com' }}" target="_blank" rel="noopener">Undangan Online</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener">Aktama Coffee</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener">Academy</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('articles.*') ? 'active text-primary fw-bold' : '' }}" href="{{ route('articles.index') }}">Artikel</a></li>
                     @endif
                 </ul>
@@ -244,18 +245,18 @@
                     <h6 class="text-uppercase text-info fw-bold small mb-3">Ekosistem Bisnis</h6>
                     <ul class="list-unstyled small space-y-2">
                         <li class="mb-2">
-                            <a href="{{ $settings['academy_url'] ?? 'http://localhost:8080/aktama/public' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                            <a href="{{ $settings['invitation_url'] ?? 'https://undanganonline.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                                <i class="bi bi-heart me-1 text-danger"></i> Undangan Online <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                                <i class="bi bi-cup-hot me-1 text-warning"></i> {{ $settings['coffee_brand_name'] ?? 'Aktama Coffee' }} <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
                                 <i class="bi bi-mortarboard me-1 text-success"></i> Aktama Academy <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="{{ $settings['invitation_url'] ?? 'http://localhost:8080/undanganonline/public' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
-                                <i class="bi bi-heart me-1 text-danger"></i> Undangan Digital <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="{{ route('coffee') }}" class="text-white-50 text-decoration-none hover-white">
-                                <i class="bi bi-cup-hot me-1 text-warning"></i> {{ $settings['coffee_brand_name'] ?? 'Aktama Coffee' }}
                             </a>
                         </li>
                     </ul>

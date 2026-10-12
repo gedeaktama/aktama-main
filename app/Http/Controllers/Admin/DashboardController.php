@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
-use App\Models\CoffeeProduct;
 use App\Models\HomeSection;
 use App\Models\Lead;
 use App\Models\Page;
@@ -22,7 +21,6 @@ class DashboardController extends Controller
             'new_leads' => Lead::where('status', 'new')->count(),
             'services_count' => Service::count(),
             'training_count' => TrainingProgram::count(),
-            'coffee_count' => CoffeeProduct::count(),
             'portfolios_count' => Portfolio::count(),
             'articles_count' => Article::count(),
             'pages_count' => Page::count(),
