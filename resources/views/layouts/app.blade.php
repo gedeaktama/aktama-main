@@ -308,9 +308,10 @@
                     {{ $settings['footer_copyright'] ?? ('© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.') }}
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="badge bg-secondary bg-opacity-25 text-white-50">Laravel 12</span>
-                    <span class="badge bg-secondary bg-opacity-25 text-white-50">Bootstrap 5.3</span>
-                    <span class="badge bg-secondary bg-opacity-25 text-white-50">Shared Hosting Ready</span>
+                    <span class="text-white-50 small"><i class="bi bi-patch-check-fill text-success me-1"></i>NIB: {{ $settings['nib_number'] ?? '1703250057018' }}</span>
+                    <a href="{{ route('admin.login') }}" class="text-white-50 text-decoration-none hover-white small py-1 px-2 rounded bg-dark border border-secondary border-opacity-25" title="Login Panel Admin CMS">
+                        <i class="bi bi-shield-lock-fill text-info me-1"></i> Login Admin
+                    </a>
                 </div>
             </div>
         </div>
