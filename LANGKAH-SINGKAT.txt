@@ -10,7 +10,7 @@ Repositori   : https://github.com/gedeaktama/aktama-main.git
 2. Buat database baru, contoh:
    - Nama Database : u107454400_aktamamain
    - Username      : u107454400_aktamamain (atau gunakan user yang sudah ada)
-   - Password      : Pr161024pr@@
+   - Password      : !AVZ>F!v7
 3. Berikan centang "ALL PRIVILEGES" lalu klik "Make Changes".
 
 --------------------------------------------------------------------------------
