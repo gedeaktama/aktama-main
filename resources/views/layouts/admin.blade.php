@@ -128,6 +128,11 @@
                         <i class="bi bi-gear-fill"></i> Pengaturan, Logo & Footer
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
+                        <i class="bi bi-person-lock"></i> Profil & Kata Sandi
+                    </a>
+                </li>
             </ul>
 
             <hr class="border-secondary border-opacity-25 my-3">
@@ -154,13 +159,15 @@
                     <h5 class="fw-bold mb-0 text-dark">@yield('page_title', 'Dashboard')</h5>
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <div class="text-end d-none d-sm-block">
-                        <div class="small fw-bold text-dark">{{ auth()->user()->name }}</div>
-                        <div class="text-muted" style="font-size: 0.75rem;">Administrator Aktama</div>
-                    </div>
-                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 d-flex align-items-center justify-content-center fw-bold" style="width: 2.25rem; height: 2.25rem;">
-                        {{ substr(auth()->user()->name, 0, 1) }}
-                    </div>
+                    <a href="{{ route('admin.profile') }}" class="text-decoration-none d-flex align-items-center gap-2 text-dark hover-opacity">
+                        <div class="text-end d-none d-sm-block">
+                            <div class="small fw-bold text-dark">{{ auth()->user()->name }}</div>
+                            <div class="text-muted" style="font-size: 0.75rem;">Administrator Aktama</div>
+                        </div>
+                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 d-flex align-items-center justify-content-center fw-bold" style="width: 2.25rem; height: 2.25rem;">
+                            {{ substr(auth()->user()->name, 0, 1) }}
+                        </div>
+                    </a>
                 </div>
             </header>
 

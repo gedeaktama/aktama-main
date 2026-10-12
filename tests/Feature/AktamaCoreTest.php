@@ -214,4 +214,68 @@ class AktamaCoreTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Mengapa Website Bisnis Harus Bebas dari Celah Malware');
     }
+
+    /**
+     * Uji proteksi Honeypot menolak bot spam tanpa menyimpan ke database leads.
+     */
+    public function test_honeypot_rejects_spam_bot_submission_without_saving_lead(): void
+    {
+        $response = $this->post(route('inquiry.store'), [
+            'aktama_hp_check' => 'http://spam-link-bot.com',
+            'name' => 'Spam Bot',
+            'whatsapp' => '0899999999',
+            'message' => 'Spam content',
+            'service_type' => 'jasa-website',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('leads', [
+            'name' => 'Spam Bot',
+        ]);
+    }
+
+    /**
+     * Uji admin dapat membuka halaman profil dan memperbarui kata sandi.
+     */
+    public function test_admin_can_access_profile_and_change_password(): void
+    {
+        $admin = User::first();
+
+        $response = $this->actingAs($admin)->get(route('admin.profile'));
+        $response->assertStatus(200);
+        $response->assertSee('Profil Administrator & Keamanan Akun');
+
+        $updateResponse = $this->actingAs($admin)->put(route('admin.profile.password'), [
+            'current_password' => 'AdminAktama2026!',
+            'password' => 'PasswordBaruAktama2026!',
+            'password_confirmation' => 'PasswordBaruAktama2026!',
+        ]);
+
+        $updateResponse->assertSessionHas('success');
+        $this->assertTrue(Hash::check('PasswordBaruAktama2026!', $admin->fresh()->password));
+    }
+
+    /**
+     * Uji floating WhatsApp dan Schema.org JSON-LD termuat di halaman depan.
+     */
+    public function test_floating_whatsapp_and_schema_rendered_in_homepage(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('floating-wa-btn');
+        $response->assertSee('6285341026331');
+        $response->assertSee('gedeerikaktama@gmail.com');
+        $response->assertSee('application/ld+json');
+    }
+
+    /**
+     * Uji halaman 404 kustom menampilkan identitas Aktama.
+     */
+    public function test_custom_404_page_renders_with_aktama_branding(): void
+    {
+        $response = $this->get('/halaman-acak-yang-tidak-ada-12345');
+        $response->assertStatus(404);
+        $response->assertSee('Halaman Tidak Ditemukan');
+        $response->assertSee('Kembali ke Beranda');
+    }
 }

@@ -33,7 +33,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/artikel', 'articles')->name('articles.index');
     Route::get('/artikel/{slug}', 'articleShow')->name('articles.show');
     Route::get('/halaman/{slug}', 'customPage')->name('pages.show');
-    Route::post('/inquiry', 'storeInquiry')->name('inquiry.store');
+    Route::post('/inquiry', 'storeInquiry')->middleware('throttle:6,1')->name('inquiry.store');
 });
 
 // Dynamic XML Sitemap untuk Mesin Pencari
@@ -56,6 +56,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     */
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [AdminAuthController::class, 'showProfile'])->name('profile');
+        Route::put('/profile/password', [AdminAuthController::class, 'updatePassword'])->name('profile.password');
 
         // Pengaturan Situs & Media Branding (Logo, Topbar, Footer)
         Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');

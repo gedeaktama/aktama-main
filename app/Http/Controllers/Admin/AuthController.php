@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -53,5 +54,27 @@ class AuthController extends Controller
 
         return redirect()->route('admin.login')
             ->with('success', 'Anda telah berhasil keluar dari sistem admin.');
+    }
+
+    public function showProfile(): View
+    {
+        $user = Auth::user();
+        return view('admin.profile', compact('user'));
+    }
+
+    public function updatePassword(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'current_password' => 'required|current_password',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('success', 'Kata sandi administrator berhasil diperbarui dengan aman!');
     }
 }

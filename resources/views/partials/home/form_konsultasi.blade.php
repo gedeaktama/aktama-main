@@ -26,6 +26,10 @@
 
                     <form action="{{ route('inquiry.store') }}" method="POST">
                         @csrf
+                        {{-- Honeypot Anti-Spam (tersembunyi dari pengunjung manusia, menjebak bot otomatis) --}}
+                        <div style="display:none !important;" aria-hidden="true">
+                            <input type="text" name="aktama_hp_check" value="" tabindex="-1" autocomplete="off">
+                        </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">

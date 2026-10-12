@@ -39,9 +39,13 @@ class HomeController extends Controller
             'coffee_app_url' => SiteSetting::get('coffee_app_url', 'http://localhost:8080/kopi/public'),
             'coffee_brand_name' => SiteSetting::get('coffee_brand_name', 'Aktama Coffee'),
             'coffee_tagline' => SiteSetting::get('coffee_tagline', 'Distribusi Biji & Bubuk Kopi Berkualitas untuk Retail, Kafe, dan Reseller'),
-            'whatsapp_number' => SiteSetting::get('whatsapp_number', '6281234567890'),
-            'email' => SiteSetting::get('email', 'kontak@aktama.com'),
+            'whatsapp_number' => SiteSetting::get('whatsapp_number', '6285341026331'),
+            'email' => SiteSetting::get('email', 'gedeerikaktama@gmail.com'),
             'address' => SiteSetting::get('address', 'Indonesia'),
+            'instagram_url' => SiteSetting::get('instagram_url', 'https://instagram.com/aktama.digital'),
+            'linkedin_url' => SiteSetting::get('linkedin_url', 'https://linkedin.com/in/gedeerikaktama'),
+            'youtube_url' => SiteSetting::get('youtube_url', 'https://youtube.com/@aktama'),
+            'facebook_url' => SiteSetting::get('facebook_url', ''),
             'logo_path' => SiteSetting::get('logo_path', 'images/logo-aktama.png'),
             'seal_path' => SiteSetting::get('seal_path', 'images/logo-seal-aktama.png'),
             'favicon_path' => SiteSetting::get('favicon_path', 'images/logo-aktama.png'),
@@ -209,6 +213,12 @@ class HomeController extends Controller
      */
     public function storeInquiry(Request $request): RedirectResponse
     {
+        // 1. Proteksi Anti-Spam (Honeypot): Jika field jebakan ini diisi oleh robot, gagalkan secara senyap
+        if ($request->filled('aktama_hp_check')) {
+            return redirect()->to(url()->previous() . '#form-konsultasi')
+                ->with('success', 'Permintaan konsultasi Anda telah diproses.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'whatsapp' => 'required|string|max:30',
@@ -226,7 +236,7 @@ class HomeController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $waTargetNumber = SiteSetting::get('whatsapp_number', '6281234567890');
+        $waTargetNumber = SiteSetting::get('whatsapp_number', '6285341026331');
         $cleanPhone = preg_replace('/[^0-9]/', '', $waTargetNumber);
         if (str_starts_with($cleanPhone, '0')) {
             $cleanPhone = '62' . substr($cleanPhone, 1);
@@ -243,7 +253,12 @@ class HomeController extends Controller
 
         $waDirectUrl = "https://wa.me/{$cleanPhone}?text=" . urlencode($waText);
 
-        return back()
+        $previousUrl = url()->previous();
+        $targetRedirect = str_contains($previousUrl, '#form-konsultasi')
+            ? $previousUrl
+            : $previousUrl . '#form-konsultasi';
+
+        return redirect()->to($targetRedirect)
             ->with('success', 'Permintaan konsultasi Anda telah tersimpan dengan aman di sistem kami! Tim kami akan segera menindaklanjuti.')
             ->with('wa_direct_url', $waDirectUrl);
     }

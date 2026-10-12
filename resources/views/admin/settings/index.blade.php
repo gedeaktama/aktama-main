@@ -238,6 +238,33 @@
             </div>
         </div>
 
+        <!-- CARD 8: TAUTAN MEDIA SOSIAL RESMI -->
+        <div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-share text-primary me-2"></i> Tautan Media Sosial Resmi</h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-dark"><i class="bi bi-instagram text-danger me-1"></i> URL Instagram Resmi</label>
+                        <input type="url" name="instagram_url" class="form-control" value="{{ $settings['instagram_url']->value ?? 'https://instagram.com/aktama.digital' }}" placeholder="https://instagram.com/aktama.digital">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-dark"><i class="bi bi-linkedin text-info me-1"></i> URL LinkedIn Resmi</label>
+                        <input type="url" name="linkedin_url" class="form-control" value="{{ $settings['linkedin_url']->value ?? 'https://linkedin.com/in/gedeerikaktama' }}" placeholder="https://linkedin.com/in/gedeerikaktama">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-dark"><i class="bi bi-youtube text-danger me-1"></i> URL Channel YouTube</label>
+                        <input type="url" name="youtube_url" class="form-control" value="{{ $settings['youtube_url']->value ?? 'https://youtube.com/@aktama' }}" placeholder="https://youtube.com/@aktama">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-dark"><i class="bi bi-facebook text-primary me-1"></i> URL Halaman Facebook</label>
+                        <input type="url" name="facebook_url" class="form-control" value="{{ $settings['facebook_url']->value ?? '' }}" placeholder="https://facebook.com/...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex justify-content-end mb-5">
             <button type="submit" class="btn btn-brand btn-lg rounded-pill px-5 shadow-sm">
                 <i class="bi bi-check-circle-fill me-2"></i> Simpan Seluruh Pengaturan & Media

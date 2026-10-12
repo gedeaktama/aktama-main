@@ -16,6 +16,39 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'Aktama Digital | Pelatihan AI & Solusi Teknologi')">
     <meta property="og:description" content="@yield('meta_description', 'Solusi digital terpadu untuk instansi, kampus, bisnis, dan masyarakat.')">
+    <meta property="og:image" content="{{ asset($settings['logo_path'] ?? 'images/logo-aktama.png') }}">
+    <meta property="og:image:alt" content="{{ $settings['company_name'] ?? 'PT Aktama Digital Antika' }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Aktama Digital | Pelatihan AI & Solusi Teknologi')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Solusi digital terpadu untuk instansi, kampus, bisnis, dan masyarakat.')">
+    <meta name="twitter:image" content="{{ asset($settings['logo_path'] ?? 'images/logo-aktama.png') }}">
+
+    <!-- Structured Data (Schema.org JSON-LD) -->
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@type' => 'Organization',
+      'name' => $settings['company_name'] ?? 'PT Aktama Digital Antika',
+      'alternateName' => $settings['brand_name'] ?? 'Aktama Digital',
+      'url' => url('/'),
+      'logo' => asset($settings['logo_path'] ?? 'images/logo-aktama.png'),
+      'description' => $settings['footer_description'] ?? 'Solusi teknologi terpadu dan pelatihan AI.',
+      'contactPoint' => [
+        '@type' => 'ContactPoint',
+        'telephone' => '+' . ($settings['whatsapp_number'] ?? '6285341026331'),
+        'contactType' => 'customer service',
+        'email' => $settings['email'] ?? 'gedeerikaktama@gmail.com',
+        'areaServed' => 'ID',
+        'availableLanguage' => ['Indonesian'],
+      ],
+      'founder' => [
+        '@type' => 'Person',
+        'name' => $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.',
+      ],
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset($settings['favicon_path'] ?? 'images/logo-aktama.png') }}">
@@ -232,14 +265,36 @@
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-uppercase text-info fw-bold small mb-3">Kontak Resmi</h6>
                     <p class="text-white-50 small mb-2">
-                        <i class="bi bi-whatsapp text-success me-2"></i> +{{ $settings['whatsapp_number'] ?? '6281234567890' }}
+                        <i class="bi bi-whatsapp text-success me-2"></i> +{{ $settings['whatsapp_number'] ?? '6285341026331' }}
                     </p>
                     <p class="text-white-50 small mb-2">
-                        <i class="bi bi-envelope text-info me-2"></i> {{ $settings['email'] ?? 'kontak@aktama.com' }}
+                        <i class="bi bi-envelope text-info me-2"></i> {{ $settings['email'] ?? 'gedeerikaktama@gmail.com' }}
                     </p>
                     <p class="text-white-50 small mb-3">
                         <i class="bi bi-globe me-2"></i> https://aktama.com
                     </p>
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        @if(!empty($settings['instagram_url']))
+                            <a href="{{ $settings['instagram_url'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-2 text-white border-secondary border-opacity-50 hover-white" title="Instagram Resmi" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-instagram text-danger"></i>
+                            </a>
+                        @endif
+                        @if(!empty($settings['linkedin_url']))
+                            <a href="{{ $settings['linkedin_url'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-2 text-white border-secondary border-opacity-50 hover-white" title="LinkedIn Resmi" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-linkedin text-info"></i>
+                            </a>
+                        @endif
+                        @if(!empty($settings['youtube_url']))
+                            <a href="{{ $settings['youtube_url'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-2 text-white border-secondary border-opacity-50 hover-white" title="YouTube Channel" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-youtube text-danger"></i>
+                            </a>
+                        @endif
+                        @if(!empty($settings['facebook_url']))
+                            <a href="{{ $settings['facebook_url'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-2 text-white border-secondary border-opacity-50 hover-white" title="Facebook" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-facebook text-primary"></i>
+                            </a>
+                        @endif
+                    </div>
                     <a href="#form-konsultasi" class="btn btn-outline-info btn-sm rounded-pill w-100">
                         <i class="bi bi-send me-1"></i> Kirim Permintaan Penawaran
                     </a>
@@ -259,6 +314,19 @@
             </div>
         </div>
     </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON (FAB) -->
+    <div class="position-fixed bottom-0 end-0 p-3 p-md-4" style="z-index: 1080;">
+        <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6285341026331' }}?text={{ urlencode('Halo PT Aktama Digital Antika, saya ingin berkonsultasi mengenai solusi teknologi dan pelatihan.') }}" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="btn btn-success d-flex align-items-center gap-2 rounded-pill shadow-lg px-3 py-2 text-white fw-bold text-decoration-none floating-wa-btn" 
+           style="background-color: #25D366; border-color: #25D366; transition: transform 0.2s ease, box-shadow 0.2s ease;"
+           title="Konsultasi Cepat via WhatsApp">
+            <i class="bi bi-whatsapp fs-4"></i>
+            <span class="d-none d-sm-inline fw-semibold" style="font-size: 0.9rem;">Chat WhatsApp</span>
+        </a>
+    </div>
 
     @stack('scripts')
 </body>
