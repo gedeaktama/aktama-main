@@ -1,22 +1,25 @@
-# PT AKTAMA DIGITAL ANTIKA — PORTAL & CMS
+# PT AKTAMA DIGITAL ANTIKA — PORTAL UTAMA & CMS
 
 Portal Perusahaan Resmi PT Aktama Digital Antika dan Ekosistem Bisnis Terpadu:
-- **Pelatihan Kecerdasan Artifisial (AI)** (Fasilitator Nasional Terverifikasi)
-- **Jasa Pembuatan Website & Software House**
-- **Aktama Academy** (LMS WordPress Terintegrasi)
-- **Platform Undangan Online**
-- **Distribusi Kopi Riil (Aktama Coffee / Kopi Distro)**
+- **Domain Resmi**: [https://aktama.com](https://aktama.com)
+- **Pelatihan Kecerdasan Artifisial (AI)** (Fasilitator Nasional Terverifikasi Kemdikdasmen & LPK Resmi)
+- **Jasa Pembuatan Website & Software House Bebas Malware**
+- **Aktama Academy** (Platform Kursus & LMS: [https://academy.aktama.com](https://academy.aktama.com))
+- **Platform Undangan Online** ([https://undanganonline.aktama.com](https://undanganonline.aktama.com))
+- **Distribusi Kopi Riil (Aktama Coffee / Kopi Distro)** ([https://coffee.aktama.com](https://coffee.aktama.com))
 
 ---
 
 ## 📖 PANDUAN PENGGUNA & KREDENSIAL AKSES
 Dokumentasi lengkap mengenai link publik, link admin, akun pengguna, dan cara penggunaan CMS telah disimpan di:
-👉 **[docs/PANDUAN_DAN_AKSES_SISTEM.md](docs/PANDUAN_DAN_AKSES_SISTEM.md)**
+- 👉 **[docs/PANDUAN_DAN_AKSES_SISTEM.md](docs/PANDUAN_DAN_AKSES_SISTEM.md)**
+- 🚀 **[LANGKAH-SINGKAT.txt](LANGKAH-SINGKAT.txt)** (Panduan Cepat Deploy Niagahoster)
 
 ---
 
 ## 🔑 AKSES CEPAT ADMIN
-- **URL Login Admin**: [http://localhost:8080/aktama-main/public/admin/login](http://localhost:8080/aktama-main/public/admin/login)
+- **Localhost**: [http://localhost:8080/aktama-main/public/admin/login](http://localhost:8080/aktama-main/public/admin/login)
+- **Produksi (Live)**: [https://aktama.com/admin/login](https://aktama.com/admin/login)
 - **Email**: `admin@aktama.com`
 - **Password**: `AdminAktama2026!`
 
@@ -31,6 +34,27 @@ Dokumentasi lengkap mengenai link publik, link admin, akun pengguna, dan cara pe
 
 ---
 
+## 🌐 DEPLOYMENT KE SERVER HOSTING (NIAGAHOSTER / CPANEL)
+
+Proyek ini telah dikonfigurasi dengan skrip deployment otomatis teruji untuk CloudLinux Alt-PHP 8.3 Niagahoster:
+- **Web Root Publik**: `/home/u107454400/domains/aktama.com/public_html`
+- **Source Code**: `/home/u107454400/domains/aktama.com/public_html/aktama-main-source`
+- **Skrip Deployment**: [`scripts/linux/deploy-niagahoster.sh`](scripts/linux/deploy-niagahoster.sh)
+- **Template .env**: [`.env.production.example`](.env.production.example)
+
+### Perintah Cepat Deploy via SSH:
+```bash
+ssh -p 65002 u107454400@147.93.80.47
+cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source
+git pull origin main
+bash scripts/linux/deploy-niagahoster.sh
+```
+
+---
+
 ## 🛠️ MENJALANKAN DI LOCALHOST (XAMPP)
 - Pastikan Apache & MySQL berjalan di XAMPP.
 - Aplikasi dapat diakses langsung pada: [http://localhost:8080/aktama-main/public/](http://localhost:8080/aktama-main/public/)
+
+---
+&copy; 2026 PT Aktama Digital Antika. Seluruh hak cipta dilindungi.

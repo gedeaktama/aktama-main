@@ -35,6 +35,11 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $isProd = app()->environment('production');
+        $academyUrl = $isProd ? 'https://academy.aktama.com' : 'http://localhost:8080/aktama/public';
+        $invitationUrl = $isProd ? 'https://undanganonline.aktama.com' : 'http://localhost:8080/undanganonline/public';
+        $coffeeUrl = $isProd ? 'https://coffee.aktama.com' : 'http://localhost:8080/kopi/public';
+
         // 2. Pengaturan Situs (Site Settings) Faktual & Terverifikasi
         $settings = [
             'company_name' => ['PT Aktama Digital Antika', 'general', 'Nama Resmi Badan Usaha'],
@@ -47,9 +52,9 @@ class DatabaseSeeder extends Seeder
             'owner_bio' => ['Dosen pada Program Studi Sistem Komputer, Universitas Parna Raya, serta Fasilitator Nasional Koding dan Kecerdasan Artifisial (KKA) Kemdikdasmen. Berfokus pada rekayasa perangkat lunak modern, keamanan web bebas malware, dan literasi teknologi tepat guna.', 'owner', 'Biografi Singkat Direktur'],
             'coffee_brand_name' => ['Kopi Distro Premium', 'coffee', 'Nama Brand Kopi'],
             'coffee_tagline' => ['Roastery & Distribusi Biji/Bubuk Kopi Asli Nusantara untuk Retail dan Suplai Kafe', 'coffee', 'Tagline Bisnis Kopi'],
-            'academy_url' => ['http://localhost:8080/aktama/public', 'gateway', 'URL Gateway Aktama Academy'],
-            'invitation_url' => ['http://localhost:8080/undanganonline/public', 'gateway', 'URL Gateway Undangan Online'],
-            'coffee_app_url' => ['http://localhost:8080/kopi/public', 'gateway', 'URL Gateway ERP Kopi'],
+            'academy_url' => [$academyUrl, 'gateway', 'URL Gateway Aktama Academy'],
+            'invitation_url' => [$invitationUrl, 'gateway', 'URL Gateway Undangan Online'],
+            'coffee_app_url' => [$coffeeUrl, 'gateway', 'URL Gateway ERP Kopi'],
             'whatsapp_number' => ['6285341026331', 'contact', 'Nomor WhatsApp Resmi Bisnis'],
             'email' => ['gedeerikaktama@gmail.com', 'contact', 'Email Resmi Perusahaan'],
             'address' => ['Indonesia', 'contact', 'Alamat Domisili Perusahaan'],
@@ -366,7 +371,7 @@ class DatabaseSeeder extends Seeder
                     'Formulir RSVP / Konfirmasi Kehadiran Tamu',
                     'Masa Aktif 6 Bulan'
                 ],
-                'demo_url' => 'http://localhost:8080/undanganonline/public/undangan/agung-erik-kunti',
+                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
                 'is_popular' => false,
                 'sort_order' => 1,
             ],
@@ -385,7 +390,7 @@ class DatabaseSeeder extends Seeder
                     'Countdown Hitung Mundur Hari Acara',
                     'Masa Aktif 1 Tahun'
                 ],
-                'demo_url' => 'http://localhost:8080/undanganonline/public/undangan/agung-erik-kunti',
+                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
                 'is_popular' => true,
                 'sort_order' => 2,
             ],
@@ -403,7 +408,7 @@ class DatabaseSeeder extends Seeder
                     'Prioritas Bantuan Input Data dari Tim Desain',
                     'Masa Aktif Selamanya (Lifetime Link)'
                 ],
-                'demo_url' => 'http://localhost:8080/undanganonline/public/undangan/agung-erik-kunti',
+                'demo_url' => $invitationUrl . '/undangan/agung-erik-kunti',
                 'is_popular' => false,
                 'sort_order' => 3,
             ],
@@ -421,7 +426,7 @@ class DatabaseSeeder extends Seeder
                 'level' => 'Tingkat Pemula',
                 'price' => 149000,
                 'summary' => 'Belajar terstruktur dari konsep dasar web hingga berhasil mendeploy website perdana di server hosting.',
-                'external_link' => 'http://localhost:8080/aktama/public',
+                'external_link' => $academyUrl,
                 'is_published' => true,
             ],
             [
@@ -430,7 +435,7 @@ class DatabaseSeeder extends Seeder
                 'level' => 'Tingkat Menengah',
                 'price' => 299000,
                 'summary' => 'Panduan terapan merancang sistem kasir, manajemen stok multi-harga, otorisasi hak akses, dan pelaporan keuangan.',
-                'external_link' => 'http://localhost:8080/aktama/public',
+                'external_link' => $academyUrl,
                 'is_published' => true,
             ],
         ];

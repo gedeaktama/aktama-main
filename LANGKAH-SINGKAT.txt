@@ -1,0 +1,69 @@
+================================================================================
+PANDUAN SINGKAT HOSTING & UPDATE WEB UTAMA: PT AKTAMA DIGITAL ANTIKA
+Domain Utama : https://aktama.com
+Repositori   : https://github.com/gedeaktama/aktama-main.git
+================================================================================
+
+--- TAHAP 1: PERSIAPAN DATABASE DI CPANEL NIAGAHOSTER (HANYA 1 KALI) ---
+
+1. Buka cPanel Niagahoster -> Menu "MySQL Database Wizard".
+2. Buat database baru, contoh:
+   - Nama Database : u107454400_aktamamain
+   - Username      : u107454400_aktamamain (atau gunakan user yang sudah ada)
+   - Password      : Pr161024pr@@
+3. Berikan centang "ALL PRIVILEGES" lalu klik "Make Changes".
+
+--------------------------------------------------------------------------------
+--- TAHAP 2: DEPLOY PERTAMA KALI KE SERVER HOSTING VIA SSH ---
+--------------------------------------------------------------------------------
+
+1. Buka terminal (CMD / PowerShell / Git Bash) di komputer Anda, lalu login SSH:
+   ssh -p 65002 u107454400@147.93.80.47
+
+2. Masuk ke direktori public_html:
+   cd /home/u107454400/domains/aktama.com/public_html
+
+3. Kloning source code dari GitHub ke folder 'aktama-main-source':
+   git clone https://github.com/gedeaktama/aktama-main.git aktama-main-source
+
+4. Masuk ke folder source code:
+   cd aktama-main-source
+
+5. Salin dan sesuaikan file .env:
+   cp .env.production.example .env
+   (Jika nama database berbeda, edit dengan: nano .env)
+
+6. Jalankan skrip otomatis deployment Niagahoster:
+   bash scripts/linux/deploy-niagahoster.sh
+
+7. Selesai! Web utama langsung aktif di:
+   👉 https://aktama.com
+   👉 Panel Admin: https://aktama.com/admin/login
+      Email    : admin@aktama.com
+      Password : AdminAktama2026!
+
+--------------------------------------------------------------------------------
+--- TAHAP 3: UPDATE KODE DI MASA DEPAN (SANGAT MUDAH & CEPAT) ---
+--------------------------------------------------------------------------------
+
+Kapan pun Anda mengubah kode atau halaman di komputer lokal:
+
+1. Di komputer lokal (d:\Xampp2\htdocs\aktama-main):
+   npm run build
+   git add .
+   git commit -m "update web utama"
+   git push origin main
+
+2. Di terminal SSH server hosting:
+   cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source
+   git pull origin main
+   bash scripts/linux/deploy-niagahoster.sh
+
+================================================================================
+CATATAN STRUKTUR & KEAMANAN:
+- Web Root Publik : /home/u107454400/domains/aktama.com/public_html
+- Source Backend  : /home/u107454400/domains/aktama.com/public_html/aktama-main-source
+- Subdomain lain (coffee.aktama.com, undanganonline.aktama.com, academy.aktama.com) 
+  tetap berjalan normal dan terisolasi tanpa terganggu.
+- Link gateway di web utama otomatis terhubung ke ketiga subdomain tersebut.
+================================================================================
