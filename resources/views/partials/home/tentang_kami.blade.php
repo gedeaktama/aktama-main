@@ -27,6 +27,14 @@
                         <span class="badge bg-light text-dark border"><i class="bi bi-award text-warning me-1"></i> Fasilitator KKA</span>
                         <span class="badge bg-light text-dark border"><i class="bi bi-shield-check text-success me-1"></i> Software Architect</span>
                     </div>
+
+                    <div class="mt-3">
+                        <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-mortarboard-fill"></i>
+                            <span>Buka Portofolio & Riset SINTA</span>
+                            <i class="bi bi-box-arrow-up-right small"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 

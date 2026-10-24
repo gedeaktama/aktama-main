@@ -23,6 +23,12 @@ class HomeController extends Controller
      */
     private function getSettings(): array
     {
+        $isProd = app()->environment('production');
+        $profileUrl = $isProd ? 'https://profil.aktama.com' : 'http://localhost:8080/portofolio/public';
+        $academyUrl = $isProd ? 'https://academy.aktama.com' : 'http://localhost:8080/aktama/public';
+        $invitationUrl = $isProd ? 'https://undangan.aktama.com' : 'http://localhost:8080/undanganonline/public';
+        $coffeeUrl = $isProd ? 'https://coffee.aktama.com' : 'http://localhost:8080/kopi/public';
+
         return [
             'company_name' => SiteSetting::get('company_name', 'PT Aktama Digital Antika'),
             'brand_name' => SiteSetting::get('brand_name', 'Aktama Digital'),
@@ -32,9 +38,10 @@ class HomeController extends Controller
             'owner_bio' => SiteSetting::get('owner_bio', 'Dosen Prodi Sistem Komputer Univ. Parna Raya dan Fasilitator Nasional KKA Kemdikdasmen.'),
             'nib_number' => SiteSetting::get('nib_number', '1703250057018'),
             'lpk_status' => SiteSetting::get('lpk_status', 'Unit LPK PT Aktama Digital Antika'),
-            'academy_url' => SiteSetting::get('academy_url', 'https://academy.aktama.com'),
-            'invitation_url' => SiteSetting::get('invitation_url', 'https://undanganonline.aktama.com'),
-            'coffee_app_url' => SiteSetting::get('coffee_app_url', 'https://coffee.aktama.com'),
+            'academy_url' => SiteSetting::get('academy_url', $academyUrl),
+            'invitation_url' => SiteSetting::get('invitation_url', $invitationUrl),
+            'coffee_app_url' => SiteSetting::get('coffee_app_url', $coffeeUrl),
+            'profile_url' => SiteSetting::get('profile_url', $profileUrl),
             'coffee_brand_name' => SiteSetting::get('coffee_brand_name', 'Aktama Coffee'),
             'coffee_tagline' => SiteSetting::get('coffee_tagline', 'Unit Bisnis Roastery & Distribusi Komoditas Kopi Nusantara'),
             'whatsapp_number' => SiteSetting::get('whatsapp_number', '6285341026331'),
@@ -104,8 +111,9 @@ class HomeController extends Controller
         $trainingPrograms = TrainingProgram::where('is_published', true)
             ->orderBy('sort_order')
             ->get();
+        $courses = Course::where('is_published', true)->get();
 
-        return view('pages.training', compact('settings', 'trainingPrograms'));
+        return view('pages.training', compact('settings', 'trainingPrograms', 'courses'));
     }
 
     /**
@@ -122,21 +130,21 @@ class HomeController extends Controller
     }
 
     /**
-     * Gateway Redirect ke Platform Kopi (Aktama Coffee)
+     * Halaman Lini Usaha Komoditas Kopi (Aktama Coffee)
      */
-    public function coffee(): RedirectResponse
+    public function coffee(): View
     {
-        $url = SiteSetting::get('coffee_app_url', 'https://coffee.aktama.com');
-        return redirect()->away($url);
+        $settings = $this->getSettings();
+        return view('pages.coffee', compact('settings'));
     }
 
     /**
-     * Gateway Redirect ke Platform Undangan Online
+     * Halaman Platform Undangan Online Digital
      */
-    public function invitations(): RedirectResponse
+    public function invitations(): View
     {
-        $url = SiteSetting::get('invitation_url', 'https://undanganonline.aktama.com');
-        return redirect()->away($url);
+        $settings = $this->getSettings();
+        return view('pages.invitations', compact('settings'));
     }
 
     /**

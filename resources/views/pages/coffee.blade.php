@@ -15,12 +15,16 @@
             <p class="text-white-50 max-w-2xl mx-auto fs-6 mb-4">
                 {{ $settings['coffee_tagline'] ?? 'Pasokan biji dan bubuk kopi berkualitas langsung dari sentra pengolahan. Menghadirkan aroma otentik untuk penikmat kopi harian dan kemitraan pasokan kafe modern.' }}
             </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#katalog-kopi" class="btn btn-warning rounded-pill px-4 py-2 fw-semibold">
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <a href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-warning rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 text-dark">
+                    <span>Buka Sistem Toko Kopi (coffee.aktama.com)</span>
+                    <i class="bi bi-box-arrow-up-right small"></i>
+                </a>
+                <a href="#katalog-kopi" class="btn btn-outline-light rounded-pill px-4 py-2">
                     <i class="bi bi-bag-check-fill me-1"></i> Lihat Pilihan Kopi
                 </a>
                 <a href="#kemitraan-grosir" class="btn btn-outline-light rounded-pill px-4 py-2">
-                    <i class="bi bi-shop me-1"></i> Paket Grosir Kafe & Reseller
+                    <i class="bi bi-shop me-1"></i> Paket Grosir Kafe
                 </a>
             </div>
         </div>

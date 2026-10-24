@@ -34,8 +34,9 @@ class DatabaseSeeder extends Seeder
 
         $isProd = app()->environment('production');
         $academyUrl = $isProd ? 'https://academy.aktama.com' : 'http://localhost:8080/aktama/public';
-        $invitationUrl = $isProd ? 'https://undanganonline.aktama.com' : 'http://localhost:8080/undanganonline/public';
+        $invitationUrl = $isProd ? 'https://undangan.aktama.com' : 'http://localhost:8080/undanganonline/public';
         $coffeeUrl = $isProd ? 'https://coffee.aktama.com' : 'http://localhost:8080/kopi/public';
+        $profileUrl = $isProd ? 'https://profil.aktama.com' : 'http://localhost:8080/portofolio/public';
 
         // 2. Pengaturan Situs (Site Settings) Faktual & Terverifikasi
         $settings = [
@@ -52,6 +53,7 @@ class DatabaseSeeder extends Seeder
             'academy_url' => [$academyUrl, 'gateway', 'URL Gateway Aktama Academy'],
             'invitation_url' => [$invitationUrl, 'gateway', 'URL Gateway Undangan Online'],
             'coffee_app_url' => [$coffeeUrl, 'gateway', 'URL Gateway ERP Kopi'],
+            'profile_url' => [$profileUrl, 'gateway', 'URL Website Portofolio & Riset Founder'],
             'whatsapp_number' => ['6285341026331', 'contact', 'Nomor WhatsApp Resmi Bisnis'],
             'email' => ['gedeerikaktama@gmail.com', 'contact', 'Email Resmi Perusahaan'],
             'address' => ['Indonesia', 'contact', 'Alamat Domisili Perusahaan'],
@@ -73,10 +75,11 @@ class DatabaseSeeder extends Seeder
                 ['label' => 'Tentang Kami', 'url' => '/tentang-kami', 'target' => '_self'],
                 ['label' => 'Jasa Website', 'url' => '/jasa-website', 'target' => '_self'],
                 ['label' => 'Pelatihan AI', 'url' => '/pelatihan-ai', 'target' => '_self'],
-                ['label' => 'Portofolio', 'url' => '/portofolio', 'target' => '_self'],
+                ['label' => 'Portofolio Proyek', 'url' => '/portofolio', 'target' => '_self'],
+                ['label' => 'Profil & Riset Founder', 'url' => $profileUrl, 'target' => '_blank'],
+                ['label' => 'Aktama Academy', 'url' => $academyUrl, 'target' => '_blank'],
                 ['label' => 'Undangan Online', 'url' => $invitationUrl, 'target' => '_blank'],
                 ['label' => 'Aktama Coffee', 'url' => $coffeeUrl, 'target' => '_blank'],
-                ['label' => 'Academy', 'url' => $academyUrl, 'target' => '_blank'],
                 ['label' => 'Artikel', 'url' => '/artikel', 'target' => '_self'],
             ]), 'menus', 'Menu Navigasi Header'],
         ];
@@ -267,6 +270,24 @@ class DatabaseSeeder extends Seeder
                 'external_link' => $academyUrl,
                 'is_published' => true,
             ],
+            [
+                'title' => 'Prompt Engineering & Otomasi AI untuk Administrasi Perkantoran',
+                'slug' => 'prompt-engineering-ai-administrasi',
+                'level' => 'Tingkat Pemula - Menengah',
+                'price' => 199000,
+                'summary' => 'Otomasi penyusunan naskah dinas baku, ringkasan notula rapat eksekutif, dan formula spreadsheet kompleks dengan Generative AI.',
+                'external_link' => $academyUrl,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Computational Thinking & Logika Koding (KKA) untuk Tenaga Pendidik',
+                'slug' => 'koding-kka-tenaga-pendidik',
+                'level' => 'Tingkat Pemula',
+                'price' => 249000,
+                'summary' => 'Panduan perancangan modul ajar Koding dan Kecerdasan Artifisial (KKA) Kurikulum Merdeka beserta bank soal penalaran.',
+                'external_link' => $academyUrl,
+                'is_published' => true,
+            ],
         ];
 
         foreach ($courses as $c) {
@@ -275,6 +296,17 @@ class DatabaseSeeder extends Seeder
 
         // 6. Portofolio Proyek Terverifikasi
         $portfolios = [
+            [
+                'title' => 'Website Portofolio Profesional & Publikasi Riset SINTA Founder',
+                'slug' => 'website-portofolio-riset-founder',
+                'category' => 'website',
+                'client_type' => 'Akademisi & Personal Branding',
+                'technology' => 'Laravel 12, Filament 5, Tailwind CSS, MySQL',
+                'project_year' => '2026',
+                'project_url' => $profileUrl,
+                'description' => 'Portal resmi publikasi jurnal terakreditasi SINTA 4 & 5, riset computer vision deteksi manusia, dan rekam jejak akademik Ketua Prodi Sistem Komputer UNIPAR.',
+                'is_published' => true,
+            ],
             [
                 'title' => 'Sistem Informasi Kelulusan & Pengesahan Dokumen Sekolah',
                 'slug' => 'sistem-informasi-kelulusan-sekolah',
@@ -293,7 +325,7 @@ class DatabaseSeeder extends Seeder
                 'client_type' => 'Bisnis Retail & Grosir Roastery',
                 'technology' => 'Laravel 12, MySQL, Bootstrap 5.3',
                 'project_year' => '2025',
-                'project_url' => 'https://coffee.aktama.com',
+                'project_url' => $coffeeUrl,
                 'description' => 'Aplikasi pencatatan stok barang, transaksi kasir eceran & grosir, cetak surat jalan, dan buku piutang tempo.',
                 'is_published' => true,
             ],
@@ -304,7 +336,7 @@ class DatabaseSeeder extends Seeder
                 'client_type' => 'Layanan Konsumen Publik',
                 'technology' => 'Laravel 12, MySQL, JavaScript Interaktif',
                 'project_year' => '2025',
-                'project_url' => 'https://undanganonline.aktama.com',
+                'project_url' => $invitationUrl,
                 'description' => 'Portal undangan online responsif dengan personalisasi nama tamu, reservasi RSVP, amplop digital, dan integrasi maps.',
                 'is_published' => true,
             ],
@@ -457,5 +489,16 @@ class DatabaseSeeder extends Seeder
                 'sort_order' => 2,
             ]
         );
+
+        // 10. Sanitasi Data Uji Coba (Memastikan Database Produksi Bersih)
+        // Bersihkan data lead atau formulir dummy jika pernah diisi selama masa uji coba lokal
+        if (\Illuminate\Support\Facades\Schema::hasTable('leads')) {
+            \App\Models\Lead::where('name', 'like', '%test%')
+                ->orWhere('name', 'like', '%coba%')
+                ->orWhere('name', 'like', '%dummy%')
+                ->orWhere('whatsapp', 'like', '%123456%')
+                ->orWhere('email', 'like', '%example.com%')
+                ->delete();
+        }
     }
 }

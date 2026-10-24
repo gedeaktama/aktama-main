@@ -10,9 +10,18 @@
         <div class="container py-3 text-center">
             <span class="badge bg-danger bg-opacity-10 text-danger fw-bold text-uppercase px-3 py-1 mb-2">Event & Wedding Tech</span>
             <h1 class="display-6 fw-bold font-display text-dark">Undangan Online Digital Elegan</h1>
-            <p class="text-muted max-w-2xl mx-auto small mb-0">
+            <p class="text-muted max-w-2xl mx-auto small mb-3">
                 Solusi praktis dan berkelas untuk membagikan kabar bahagia momen pernikahan dan acara keluarga ke seluruh tamu undangan melalui smartphone.
             </p>
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <a href="{{ $settings['invitation_url'] ?? 'https://undangan.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold shadow-sm d-inline-flex align-items-center gap-2">
+                    <span>Buka Platform Undangan (undangan.aktama.com)</span>
+                    <i class="bi bi-box-arrow-up-right small"></i>
+                </a>
+                <a href="#form-daftar" class="btn btn-outline-dark rounded-pill px-4 py-2 small">
+                    <i class="bi bi-pencil-square me-1"></i> Pesan Paket Langsung
+                </a>
+            </div>
         </div>
     </section>
 

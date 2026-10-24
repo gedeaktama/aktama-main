@@ -62,5 +62,22 @@
                 </div>
             @endforelse
         </div>
+
+        <!-- Banner Gateway ke Aktama Academy LMS -->
+        <div class="mt-4 p-4 rounded-4 bg-white border shadow-sm d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-success bg-opacity-10 text-success p-3 fs-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-dark mb-1">Ingin Belajar Daring Mandiri Kapan Saja?</h6>
+                    <small class="text-muted">Akses video pembelajaran terstruktur, kuis evaluasi, dan sertifikat kelulusan LPK otomatis di platform <strong>Aktama Academy (academy.aktama.com)</strong>.</small>
+                </div>
+            </div>
+            <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-success rounded-pill px-4 py-2 fw-semibold text-nowrap d-inline-flex align-items-center gap-2">
+                <span>Buka Aktama Academy</span>
+                <i class="bi bi-box-arrow-up-right small"></i>
+            </a>
+        </div>
     </div>
 </section>

@@ -77,13 +77,17 @@
                     <span class="d-none d-xl-inline text-secondary">|</span>
                     <span class="d-none d-xl-inline badge bg-primary bg-opacity-25 text-info">{{ $settings['topbar_highlight'] }}</span>
                 @endif
+                <span class="d-none d-xl-inline text-secondary">|</span>
+                <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white d-none d-xl-inline">
+                    <i class="bi bi-person-workspace text-warning me-1"></i> Profil Founder (Riset SINTA)
+                </a>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <a href="mailto:{{ $settings['email'] ?? 'kontak@aktama.com' }}" class="text-white-50 text-decoration-none hover-white">
                     <i class="bi bi-envelope text-info me-1"></i> {{ $settings['email'] ?? 'kontak@aktama.com' }}
                 </a>
                 <span class="text-secondary">|</span>
-                <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6281234567890' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6285341026331' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
                     <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Resmi
                 </a>
             </div>
@@ -129,9 +133,49 @@
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('services') ? 'active text-primary fw-bold' : '' }}" href="{{ route('services') }}">Jasa Website</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('training') ? 'active text-primary fw-bold' : '' }}" href="{{ route('training') }}">Pelatihan AI</a></li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('portfolios') ? 'active text-primary fw-bold' : '' }}" href="{{ route('portfolios') }}">Portofolio</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['invitation_url'] ?? 'https://undanganonline.aktama.com' }}" target="_blank" rel="noopener">Undangan Online</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener">Aktama Coffee</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener">Academy</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle px-2" href="#" id="ekosistemDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ekosistem Digital
+                            </a>
+                            <ul class="dropdown-menu shadow-sm border-0 rounded-3" aria-labelledby="ekosistemDropdown">
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener">
+                                        <i class="bi bi-person-workspace text-primary"></i>
+                                        <div>
+                                            <div class="fw-bold small">Profil & Riset Founder</div>
+                                            <small class="text-muted" style="font-size: 0.72rem;">Riset AI, SINTA & Kemdikdasmen</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener">
+                                        <i class="bi bi-mortarboard-fill text-success"></i>
+                                        <div>
+                                            <div class="fw-bold small">Aktama Academy</div>
+                                            <small class="text-muted" style="font-size: 0.72rem;">LMS Kursus Online & Sertifikat</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ $settings['invitation_url'] ?? 'https://undangan.aktama.com' }}" target="_blank" rel="noopener">
+                                        <i class="bi bi-heart-fill text-danger"></i>
+                                        <div>
+                                            <div class="fw-bold small">Undangan Online</div>
+                                            <small class="text-muted" style="font-size: 0.72rem;">SaaS Undangan Digital Acara</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener">
+                                        <i class="bi bi-cup-hot-fill text-warning"></i>
+                                        <div>
+                                            <div class="fw-bold small">Aktama Coffee</div>
+                                            <small class="text-muted" style="font-size: 0.72rem;">Roastery & Pasokan Grosir Kopi</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a class="nav-link px-2 {{ request()->routeIs('articles.*') ? 'active text-primary fw-bold' : '' }}" href="{{ route('articles.index') }}">Artikel</a></li>
                     @endif
                 </ul>
@@ -207,7 +251,10 @@
                     <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 small mb-3">
                         <div class="text-info fw-semibold mb-1"><i class="bi bi-person-badge me-1"></i> Kepemimpinan Teknis:</div>
                         <div class="text-white fw-bold">{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}</div>
-                        <div class="text-white-50" style="font-size: 0.8rem;">{{ $settings['owner_title'] ?? 'Dosen Sistem Komputer & Fasilitator Nasional KKA Kemdikdasmen' }}</div>
+                        <div class="text-white-50 mb-2" style="font-size: 0.8rem;">{{ $settings['owner_title'] ?? 'Dosen Sistem Komputer & Fasilitator Nasional KKA Kemdikdasmen' }}</div>
+                        <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-info btn-sm rounded-pill px-3 py-1" style="font-size: 0.75rem;">
+                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Website Portofolio & Riset SINTA
+                        </a>
                     </div>
                 </div>
 
@@ -245,18 +292,23 @@
                     <h6 class="text-uppercase text-info fw-bold small mb-3">Ekosistem Bisnis</h6>
                     <ul class="list-unstyled small space-y-2">
                         <li class="mb-2">
-                            <a href="{{ $settings['invitation_url'] ?? 'https://undanganonline.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
-                                <i class="bi bi-heart me-1 text-danger"></i> Undangan Online <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
+                            <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                                <i class="bi bi-person-workspace me-1 text-primary"></i> Profil & Riset Founder <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                                <i class="bi bi-mortarboard me-1 text-success"></i> Aktama Academy (LMS) <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ $settings['invitation_url'] ?? 'https://undangan.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                                <i class="bi bi-heart me-1 text-danger"></i> Undangan Online Digital <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
                             </a>
                         </li>
                         <li class="mb-2">
                             <a href="{{ $settings['coffee_app_url'] ?? 'https://coffee.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
                                 <i class="bi bi-cup-hot me-1 text-warning"></i> {{ $settings['coffee_brand_name'] ?? 'Aktama Coffee' }} <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
-                                <i class="bi bi-mortarboard me-1 text-success"></i> Aktama Academy <i class="bi bi-box-arrow-up-right ms-1 small" style="font-size: 0.7rem;"></i>
                             </a>
                         </li>
                     </ul>

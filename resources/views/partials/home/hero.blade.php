@@ -38,13 +38,18 @@
                 </div>
 
                 <!-- Ringkasan Profil Singkat Pemilik -->
-                <div class="p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-start">
-                    <img src="{{ asset('images/gede-erik-aktama.jpg') }}" alt="{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}" class="rounded-circle object-fit-cover border border-2 border-primary shadow-sm" style="width: 56px; height: 56px;">
-                    <div class="small">
-                        <div class="text-muted" style="font-size: 0.75rem;">Dipimpin Langsung Oleh:</div>
-                        <strong class="text-dark d-block">{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}</strong>
-                        <span class="text-secondary" style="font-size: 0.8rem;">{{ $settings['owner_title'] ?? 'Dosen Sistem Komputer & Fasilitator Nasional KKA Kemdikdasmen' }}</span>
+                <div class="p-3 rounded-3 bg-light border d-flex align-items-center justify-content-between gap-3 text-start flex-wrap">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="{{ asset('images/gede-erik-aktama.jpg') }}" alt="{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}" class="rounded-circle object-fit-cover border border-2 border-primary shadow-sm" style="width: 56px; height: 56px;">
+                        <div class="small">
+                            <div class="text-muted" style="font-size: 0.75rem;">Dipimpin Langsung Oleh:</div>
+                            <strong class="text-dark d-block">{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}</strong>
+                            <span class="text-secondary" style="font-size: 0.8rem;">{{ $settings['owner_title'] ?? 'Dosen Sistem Komputer & Fasilitator Nasional KKA Kemdikdasmen' }}</span>
+                        </div>
                     </div>
+                    <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-1 text-nowrap" style="font-size: 0.78rem;">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Riset & SINTA
+                    </a>
                 </div>
             </div>
 
@@ -75,7 +80,25 @@
                             <span class="badge bg-info bg-opacity-10 text-info" style="font-size: 0.65rem;">Resmi LPK</span>
                         </a>
 
-                        <a href="{{ $settings['invitation_url'] ?? 'https://undanganonline.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                        <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                            <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary fs-5"><i class="bi bi-person-workspace"></i></div>
+                            <div class="flex-grow-1">
+                                <div class="fw-bold text-dark small">Profil & Riset Founder</div>
+                                <div class="text-muted" style="font-size: 0.75rem;">Publikasi ilmiah SINTA, riset AI & profil dosen</div>
+                            </div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary" style="font-size: 0.65rem;">profil.aktama.com <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                        </a>
+
+                        <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                            <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success fs-5"><i class="bi bi-mortarboard-fill"></i></div>
+                            <div class="flex-grow-1">
+                                <div class="fw-bold text-dark small">Aktama Academy (LMS)</div>
+                                <div class="text-muted" style="font-size: 0.75rem;">Platform kursus koding & AI daring mandiri</div>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success" style="font-size: 0.65rem;">Platform <i class="bi bi-box-arrow-up-right ms-1"></i></span>
+                        </a>
+
+                        <a href="{{ $settings['invitation_url'] ?? 'https://undangan.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
                             <div class="p-2 rounded-3 bg-pink bg-opacity-10 text-pink fs-5" style="background: rgba(236,72,153,0.1); color: #ec4899;"><i class="bi bi-heart-fill"></i></div>
                             <div class="flex-grow-1">
                                 <div class="fw-bold text-dark small">Undangan Online Digital</div>
@@ -91,15 +114,6 @@
                                 <div class="text-muted" style="font-size: 0.75rem;">Roastery biji/bubuk kopi & suplai kafe</div>
                             </div>
                             <span class="badge bg-warning bg-opacity-25 text-dark" style="font-size: 0.65rem;">Unit Bisnis <i class="bi bi-box-arrow-up-right ms-1"></i></span>
-                        </a>
-
-                        <a href="{{ $settings['academy_url'] ?? 'https://academy.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
-                            <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success fs-5"><i class="bi bi-mortarboard-fill"></i></div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold text-dark small">Aktama Academy (LMS)</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Platform kursus koding & AI daring</div>
-                            </div>
-                            <span class="badge bg-success bg-opacity-10 text-success" style="font-size: 0.65rem;">Platform <i class="bi bi-box-arrow-up-right ms-1"></i></span>
                         </a>
                     </div>
                 </div>

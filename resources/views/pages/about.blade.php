@@ -108,6 +108,22 @@
                                 <i class="bi bi-eye me-1"></i> Lihat Dokumen NIB
                             </a>
                         </div>
+
+                        <!-- Link ke Website Portofolio & Riset Founder -->
+                        <div class="p-3 bg-white rounded-3 border d-flex align-items-center justify-content-between flex-wrap gap-3 mt-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 fs-4 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-mortarboard-fill"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-dark small d-block">Website Portofolio Profesional & Riset SINTA</strong>
+                                    <small class="text-muted">Jurnal terindeks SINTA 4 & 5, riset algoritma AI, dan rekam jejak akademik founder di profil.aktama.com</small>
+                                </div>
+                            </div>
+                            <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm rounded-pill px-4 py-2 fw-semibold">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> Buka profil.aktama.com
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
