@@ -9,10 +9,22 @@
     <section class="py-5 bg-light border-bottom">
         <div class="container py-3 text-center">
             <span class="badge bg-secondary bg-opacity-10 text-dark fw-bold text-uppercase px-3 py-1 mb-2">Pusat Literasi & Wawasan</span>
-            <h1 class="display-6 fw-bold font-display text-dark">Artikel & Berita Teknologi Terkini</h1>
-            <p class="text-muted max-w-2xl mx-auto small mb-0">
-                Wawasan praktis seputar Kecerdasan Artifisial, keamanan website bisnis, dan kiat otomasi operasional digital.
+            <h1 class="display-6 fw-bold font-display text-dark">Artikel & Wawasan Teknologi Terkini</h1>
+            <p class="text-muted max-w-2xl mx-auto small mb-4">
+                Wawasan praktis seputar Kecerdasan Artifisial, keamanan website bisnis, transformasi komputasi, dan kiat otomasi industri digital.
             </p>
+
+            <!-- Kategori Filter Pills -->
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <a href="{{ route('articles.index') }}" class="btn btn-sm rounded-pill px-3 {{ !request('kategori') ? 'btn-primary' : 'btn-white border text-dark' }}">
+                    Semua Kategori
+                </a>
+                @foreach($categories as $category)
+                    <a href="{{ route('articles.index', ['kategori' => $category->slug]) }}" class="btn btn-sm rounded-pill px-3 {{ request('kategori') === $category->slug ? 'btn-primary' : 'btn-white border text-dark' }}">
+                        {{ $category->name }} ({{ $category->articles_count }})
+                    </a>
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -22,19 +34,19 @@
             <div class="row g-4 mb-5">
                 @forelse($articles as $art)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card card-feature p-4 h-100 d-flex flex-column justify-content-between">
+                        <div class="card card-feature p-4 h-100 d-flex flex-column justify-content-between border rounded-4 shadow-sm hover-lift">
                             <div>
                                 @if($art->image)
                                     <a href="{{ route('articles.show', $art->slug) }}" class="d-block mb-3 overflow-hidden rounded-3">
-                                        <img src="{{ asset('images/' . $art->image) }}" alt="{{ $art->title }}" class="img-fluid w-100 object-fit-cover shadow-xs" style="height: 180px;">
+                                        <img src="{{ asset('images/' . $art->image) }}" alt="{{ $art->title }}" class="img-fluid w-100 object-fit-cover shadow-xs" style="height: 190px;">
                                     </a>
                                 @endif
 
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="badge bg-primary bg-opacity-10 text-primary small">
-                                        {{ $art->category?->name ?? 'Umum' }}
+                                        {{ $art->category?->name ?? 'Wawasan' }}
                                     </span>
-                                    <small class="text-muted">{{ $art->published_at?->format('d M Y') ?? 'Baru' }}</small>
+                                    <small class="text-muted"><i class="bi bi-clock me-1"></i>{{ max(3, ceil(str_word_count(strip_tags($art->content)) / 180)) }} mnt baca</small>
                                 </div>
 
                                 <h3 class="fw-bold text-dark fs-6 mb-2">

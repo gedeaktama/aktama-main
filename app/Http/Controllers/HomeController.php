@@ -168,10 +168,18 @@ class HomeController extends Controller
             $q->where('status', 'published');
         }])->get();
 
-        $articles = Article::with('category')
-            ->where('status', 'published')
-            ->orderByDesc('published_at')
-            ->paginate(6);
+        $query = Article::with('category')
+            ->where('status', 'published');
+
+        if ($catSlug = request('kategori')) {
+            $query->whereHas('category', function ($q) use ($catSlug) {
+                $q->where('slug', $catSlug);
+            });
+        }
+
+        $articles = $query->orderByDesc('published_at')
+            ->paginate(12)
+            ->withQueryString();
 
         return view('pages.articles', compact('settings', 'articles', 'categories'));
     }
