@@ -22,9 +22,179 @@ class ArticleSeeder extends Seeder
 
         $authorName = 'Gede Erik Aktama, S.Pd., M.Pd.';
 
-        // 2. Daftar 10 Artikel Komprehensif
+        // 2. Daftar Artikel Komprehensif & Studi Kasus Faktual
         $articles = [
-            // ARTIKEL 1
+            // ARTIKEL BARU 1: PENDIDIKAN & KEBIJAKAN AI (KKA KEMDIKDASMEN)
+            [
+                'slug' => 'koding-dan-kecerdasan-artifisial-kka-menyiapkan-pendidik-dan-generasi-muda',
+                'category_id' => $catEdu->id,
+                'title' => 'Koding dan Kecerdasan Artifisial (KKA): Menyiapkan Pendidik dan Generasi Muda Indonesia Menghadapi Era Otomasi',
+                'image' => 'articles/article-kka-kemdikdasmen.jpg',
+                'summary' => 'Program Koding dan Kecerdasan Artifisial (KKA) Kemdikdasmen menjadi tonggak penting transformasi kurikulum nasional. Simak esensi strategis, tantangan kesiapan guru, dan roadmap pembelajaran logika komputasi sejak jenjang sekolah dasar dan menengah.',
+                'content' => '<p class="lead fw-medium text-dark mb-4">Langkah strategis Kementerian Pendidikan Dasar dan Menengah (Kemdikdasmen) dalam mengintegrasikan pembelajaran <strong>Koding dan Kecerdasan Artifisial (KKA)</strong> ke dalam kurikulum nasional menandai era baru pendidikan Indonesia: sebuah komitmen berani untuk mengubah generasi muda kita dari sekadar konsumen teknologi pasif menjadi kreator dan inovator digital berdaya saing global.</p>' .
+                    '<p>Sebagai <strong>Fasilitator Nasional KKA Kemdikdasmen</strong>, saya menyaksikan langsung antusiasme sekaligus kecemasan para pendidik di berbagai daerah. Pertanyaan paling mendasar yang kerap muncul adalah: <em>"Bagaimana mungkin sekolah kami yang memiliki keterbatasan laboratorium komputer mampu mengajarkan materi yang terdengar begitu rumit ini?"</em></p>' .
+
+                    '<h2>Tiga Pilar Inti Kerangka Pembelajaran KKA Nasional</h2>' .
+                    '<p>Esensi dari KKA bukanlah memaksa setiap murid menjadi pembuat software profesional, melainkan membekali setiap anak bangsa dengan tiga kompetensi fondasional:</p>' .
+                    '<ol>' .
+                    '<li><strong>Computational Thinking (Berpikir Komputasional):</strong> Melatih logika dekomposisi masalah, pengenalan pola data, dan abstraksi logis yang dapat diterapkan lintas mata pelajaran, bahkan tanpa bantuan komputer sekalipun (<em>Unplugged Computing</em>).</li>' .
+                    '<li><strong>Literasi & Etika Kecerdasan Artifisial:</strong> Memahami bagaimana mesin cerdas belajar, mengenali bias algoritma, menghargai hak cipta intelektual, serta menjaga integritas akademik di tengah maraknya alat bantu generatif.</li>' .
+                    '<li><strong>Kreasi Solutif Berbasis Masalah Lingkungan (Project-Based Learning):</strong> Mendorong siswa menciptakan karya teknologi sederhana yang memecahkan persoalan nyata di lingkungan sekitar mereka (contoh: krisis sampah, irigasi sawah, sistem keamanan lingkungan).</li>' .
+                    '</ol>' .
+
+                    '<h2>Contoh Rencana Aksi Nyata Pembelajaran KKA di Sekolah</h2>' .
+                    '<p>Berikut adalah kerangka modul 4 tahapan pembelajaran KKA ramah pemula yang berhasil diimplementasikan di berbagai sekolah mitra:</p>' .
+
+                    '<div class="output-box">' .
+                    '<h6 class="fw-bold text-primary mb-2"><i class="bi bi-diagram-3-fill me-2"></i>Roadmap Praktik Pembelajaran KKA Ramah Anak:</h6>' .
+                    '<div class="table-responsive">' .
+                    '<table class="table table-sm table-bordered bg-white mb-0">' .
+                    '<thead class="table-light"><tr><th>Fase / Tahap</th><th>Fokus Materi Pembelajaran</th><th>Alat Bantu Praktik</th><th>Luaran Proyek Siswa (Output)</th></tr></thead>' .
+                    '<tbody>' .
+                    '<tr><td><strong>Tahap 1: Logika Dasar</strong></td><td>Dekomposisi & Algoritma Percabangan (IF-ELSE)</td><td>Kartu Logika & Permainan Tanpa Komputer</td><td>Diagram alir (flowchart) pemecahan masalah harian.</td></tr>' .
+                    '<tr><td><strong>Tahap 2: Koding Visual</strong></td><td>Pemrograman Blok Interaktif & Logika Loop</td><td>Scratch / Blockly Studio</td><td>Animasi edukatif interaktif dan game sederhana.</td></tr>' .
+                    '<tr><td><strong>Tahap 3: Pengenalan AI</strong></td><td>Computer Vision & Klasifikasi Citra Sederhana</td><td>Google Teachable Machine</td><td>Model AI pendeteksi sampah organik vs anorganik.</td></tr>' .
+                    '<tr><td><strong>Tahap 4: Etika Digital</strong></td><td>Refleksi Dampak Otomasi & Kebaikan Bersama</td><td>Diskusi Terarah & Studi Kasus Nyata</td><td>Poster kampanye bijak bermedia dan beretika AI.</td></tr>' .
+                    '</tbody></table></div></div>' .
+
+                    '<h2>Kunci Keberhasilan: Mengupgrade Guru Sebelum Membeli Komputer</h2>' .
+                    '<p>Hardware dan perangkat komputer akan menjadi rongsokan mahal yang berdebu di laboratorium jika guru-gurunya tidak dibekali rasa percaya diri dan pedagogi yang tepat. Program KKA menempatkan guru sebagai pelita peradaban. Ketika guru merasa nyaman bereksperimen dengan logika koding, murid-murid akan menyerap semangat eksplorasi tersebut dengan kecepatan yang menakjubkan.</p>' .
+
+                    '<blockquote>"Koding adalah bahasa universal abad ke-21. Mengajarkan koding dan AI kepada anak-anak kita bukan semata soal karier industri perangkat lunak, melainkan melatih anak-anak Indonesia untuk berpikir merdeka, kritis, dan tidak mudah didikte oleh algoritma asing."<br><strong>— Gede Erik Aktama, S.Pd., M.Pd.</strong> (Fasilitator Nasional KKA Kemdikdasmen)</blockquote>' .
+
+                    '<div class="callout-card my-4">' .
+                    '<h5 class="fw-bold text-primary mb-2"><i class="bi bi-mortarboard-fill me-2"></i>Bimtek & Pendampingan Program KKA Sekolah</h5>' .
+                    '<p class="small text-muted mb-3"><strong>LPK PT Aktama Digital Antika</strong> siap menjadi mitra strategis bagi Dinas Pendidikan, Musyawarah Guru Mata Pelajaran (MGMP), dan Yayasan Sekolah dalam menyelenggarakan Bimbingan Teknis Koding & AI bersertifikat legalitas resmi.</p>' .
+                    '<div class="d-flex flex-wrap gap-2">' .
+                    '<a href="/pelatihan-ai" class="btn btn-sm btn-primary rounded-pill px-3">Pelajari Program Pendampingan KKA</a>' .
+                    '<a href="https://profil.aktama.com" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Profil Fasilitator Nasional ↗</a>' .
+                    '</div>' .
+                    '</div>',
+                'author' => $authorName,
+                'status' => 'published',
+                'published_at' => now(),
+                'meta_title' => 'Koding dan Kecerdasan Artifisial (KKA) Kemdikdasmen | Aktama Digital',
+                'meta_description' => 'Ulasan strategis kurikulum Koding dan Kecerdasan Artifisial (KKA) Kemdikdasmen oleh Fasilitator Nasional Gede Erik Aktama, S.Pd., M.Pd.',
+            ],
+
+            // ARTIKEL BARU 2: EFISIENSI ADMINISTRASI PERKANTORAN (STUDI KASUS POLRES MITRA)
+            [
+                'slug' => 'pemanfaatan-generative-ai-efisiensi-kerja-administratif-instansi',
+                'category_id' => $catAi->id,
+                'title' => 'Pemanfaatan Generative AI dalam Efisiensi Kerja Administratif: Panduan Praktis untuk Instansi Pemerintahan dan Swasta',
+                'image' => 'articles/article-ai-polres-mitra.jpg',
+                'summary' => 'Mengangkat studi kasus nyata dari program pelatihan efisiensi kecerdasan buatan bersama jajaran Polres Minahasa Tenggara (Mitra). Panduan taktis mereduksi beban berkas telaahan staf, rekap situasi, dan notula rapat dinas secara aman dan patuh regulasi.',
+                'content' => '<p class="lead fw-medium text-dark mb-4">Dalam dinamika pelayanan publik yang cepat, institusi pemerintahan dan aparatur penegak hukum dihadapkan pada tumpukan berkas laporan yang luar biasa padat. Waktu personel yang seharusnya dialokasikan untuk penanganan pelayanan langsung di lapangan kerap tersedot habis untuk menyusun telaahan staf, rekapitulasi data situasi harian, dan notula koordinasi yang memakan waktu berjam-jam.</p>' .
+                    '<p>Sebagai bukti nyata penerapan teknologi di garda terdepan, <strong>PT Aktama Digital Antika</strong> dipercaya menyelenggarakan Bimbingan Teknis dan Pelatihan AI Terapan untuk Efisiensi Administrasi Kedinasan bagi jajaran <strong>Kepolisian Resor (Polres) Minahasa Tenggara (Mitra)</strong>. Studi kasus ini membuktikan bagaimana Generative AI dapat menjadi instrumen akselerasi kinerja birokrasi tanpa mengorbankan akurasi dan kerahasiaan informasi.</p>' .
+
+                    '<h2>Tiga Titik Krusial yang Ditransformasikan di Polres Mitra</h2>' .
+                    '<ol>' .
+                    '<li><strong>Otomasi Draf Laporan Situasi & Telaahan Staf:</strong> Mengubah bahan laporan mentah dari personel lapangan menjadi naskah dinas baku yang terstruktur sesuai format kedinasan resmi dalam hitungan 10–15 menit.</li>' .
+                    '<li><strong>Sintesis Risalah Rapat Koordinasi Lintas Seksi:</strong> Mengekstrak poin-poin kesepakatan rapat koordinasi operasional menjadi matriks rencana tindak lanjut yang memiliki indikator batas waktu dan penanggung jawab (PIC) yang jelas.</li>' .
+                    '<li><strong>Protokol Kerahasiaan Data (Kepatuhan UU PDP & SOP Internal):</strong> Menanamkan disiplin ketat kepada setiap operator untuk tidak pernah memasukkan data identitas pribadi korban/pelapor, nomor registrasi perkara sensitif, atau dokumen rahasia ke dalam prompt AI cloud publik tanpa proses penyandian (masking).</li>' .
+                    '</ol>' .
+
+                    '<h2>Contoh Kasus Nyata: Prompt Telaahan Staf Efisiensi Kedinasan</h2>' .
+                    '<p>Berikut adalah contoh format prompt terstruktur dengan metode <strong>R-C-C-F</strong> yang diajarkan pada sesi pelatihan kedinasan:</p>' .
+
+                    '<div class="prompt-box">' .
+                    '<div class="prompt-header"><span><i class="bi bi-shield-lock me-2"></i>Format Prompt Kedinasan: Telaahan Staf Cepat</span><span>Metode R-C-C-F</span></div>' .
+                    'Bertindaklah sebagai Perancang Tata Naskah Dinas dan Analis Administrasi Senior di lingkungan institusi pelayanan publik. ' . "\n\n" .
+                    '[POKOK PERSOALAN]' . "\n" .
+                    '- Isu: Lonjakan arus kendaraan dan kepadatan titik penyeberangan warga di sekitar area pasar tradisional pada jam operasional pagi hari (06.00 - 08.30 WITA).' . "\n" .
+                    '- Bahan Lapangan: Rekapitulasi laporan patroli sepekan terakhir menunjukkan potensi kemacetan dan risiko kecelakaan bagi pejalan kaki lansia dan anak sekolah.' . "\n" .
+                    '- Solusi Awal yang Diusulkan: Penempatan personel patroli terpadu di 3 titik simpul, koordinasi pembatasan bongkar muat logistik sebelum pukul 06.00, serta edukasi kantong parkir bersama paguyuban pedagang.' . "\n\n" .
+                    '[INSTRUKSI PENYUSUNAN]' . "\n" .
+                    'Susun draf TELAAHAN STAF resmi dengan sistematika kedinasan baku:' . "\n" .
+                    'I. PERSOALAN' . "\n" .
+                    'II. PRA ANGGAPAN' . "\n" .
+                    'III. FAKTA-FAKTA YANG MEMPENGARUHI' . "\n" .
+                    'IV. ANALISIS PEMECAHAN MASALAH' . "\n" .
+                    'V. KESIMPULAN DAN SARAN TINDAK LANJUT' . "\n\n" .
+                    'Gunakan bahasa Indonesia baku, lugas, bernada netral-objektif, dan tanpa istilah hiperbolis.' .
+                    '</div>' .
+
+                    '<div class="output-box">' .
+                    '<h6 class="fw-bold text-success mb-2"><i class="bi bi-file-earmark-check-fill me-2"></i>Contoh Hasil Sintesis Draf yang Dihasilkan AI:</h6>' .
+                    '<p class="small mb-1"><strong>IV. Analisis Pemecahan Masalah:</strong><br>' .
+                    'Kepadatan pada simpul jalan pasar tradisional utamanya dipicu oleh friksi antara aktivitas bongkar muat komoditas dengan arus mobilitas jam berangkat sekolah. Pendekatan penindakan represif dinilai kurang solutif dibandingkan manajemen rekayasa waktu dan penempatan personel preemtif. Dengan menetapkan batas akhir aktivitas bongkar muat maksimal pukul 05.45 WITA dan menyiagakan 2 personel pengatur lalu lintas di penyeberangan SDN 1, friksi arus kendaraan dapat direduksi hingga 65% tanpa mengganggu aktivitas roda ekonomi warga setempat.</p>' .
+                    '</div>' .
+
+                    '<h2>Hasil Nyata: Efisiensi Waktu Hingga 70%</h2>' .
+                    '<p>Setelah mengikuti pelatihan terstruktur LPK Aktama, waktu yang dihabiskan aparatur untuk menyusun draf dokumen laporan kedinasan terpangkas rata-rata sebesar <strong>70%</strong>. Hal ini membuktikan bahwa kecerdasan artifisial, apabila dikelola dengan tepat, bukan ancaman birokrasi melainkan katalisator terhebat untuk menghadirkan pelayanan publik yang semakin presisi, cepat, dan humanis.</p>' .
+
+                    '<div class="callout-card my-4">' .
+                    '<h5 class="fw-bold text-dark mb-2"><i class="bi bi-building-gear me-2"></i>Adakan Pelatihan AI Terapan di Instansi Anda</h5>' .
+                    '<p class="small text-muted mb-3">PT Aktama Digital Antika siap menghadirkan narasumber dan modul kurikulum Bimtek AI Khusus Administrasi Perkantoran untuk jajaran Kepolisian, Kejaksaan, Dinas Pemerintah (OPD), BUMN, serta korporasi swasta.</p>' .
+                    '<a href="/pelatihan-ai" class="btn btn-sm btn-dark rounded-pill px-3">Konsultasikan Jadwal Bimtek Instansi</a>' .
+                    '</div>',
+                'author' => $authorName,
+                'status' => 'published',
+                'published_at' => now()->subHours(12),
+                'meta_title' => 'Pemanfaatan AI Administrasi Instansi & Studi Kasus Polres Mitra | Aktama Digital',
+                'meta_description' => 'Studi kasus nyata pelatihan AI administrasi bersama Polres Minahasa Tenggara (Mitra) dan panduan praktis naskah dinas hemat waktu 70%.',
+            ],
+
+            // ARTIKEL BARU 3: TEKNOLOGI KOMPUTASI & COMPUTER VISION (SINTA 4)
+            [
+                'slug' => 'lightweight-deep-learning-deteksi-objek-real-time-perangkat-edge',
+                'category_id' => $catRes->id,
+                'title' => 'Lightweight Deep Learning: Mengapa Model Komputasi Ringan Menjadi Kunci Implementasi Deteksi Objek Real-Time di Perangkat Edge',
+                'image' => 'articles/article-lightweight-deep-learning.jpg',
+                'summary' => 'Berdasarkan riset ilmiah terindeks SINTA 4 yang dipublikasikan oleh Founder PT Aktama. Mengapa model neural network konvensional gagal di perangkat IoT lapangan dan bagaimana arsitektur ringan (Lightweight Deep Learning) memecahkan kebuntuan komputasi edge.',
+                'content' => '<p class="lead fw-medium text-dark mb-4">Kecerdasan Artifisial di bidang penglihatan komputer (<em>Computer Vision</em>) telah mencapai tingkat akurasi yang luar biasa dalam mendeteksi dan mengklasifikasikan objek. Namun, di balik keberhasilan tersebut tersimpan masalah mendasar di lapangan industri nyata: model Deep Learning modern berukuran raksasa, mengonsumsi memori bergiga-giga, dan menuntut kartu grafis (GPU) server berharga puluhan juta rupiah yang memakan daya ratusan watt.</p>' .
+                    '<p>Berdasarkan kajian riset komputasi yang telah kami publikasikan pada <strong>Jurnal Nasional Terindeks SINTA 4</strong>, pendekatan komputasi awan (Cloud AI) terbukti tidak realistis untuk implementasi lapangan di daerah pelosok yang minim sinyal internet atau membutuhkan respon instan tanpa jeda (<em>Zero-Latency Critical Response</em>). Jawabannya ada pada <strong>Lightweight Deep Learning</strong> yang dijalankan langsung di perangkat ujung (<em>Edge Computing</em>).</p>' .
+
+                    '<h2>Dilema Komputasi Awan (Cloud AI) vs Komputasi Ujung (Edge AI)</h2>' .
+                    '<p>Mengirimkan aliran video kamera beresolusi tinggi (Full HD) secara terus-menerus ke server pusat memiliki kelemahan fatal:</p>' .
+                    '<ul>' .
+                    '<li><strong>Pemborosan Bandwidth Jaringan:</strong> Puluhan gigabyte kuota internet terbuang hanya untuk mengirim frame video kosong di mana tidak ada objek yang lewat.</li>' .
+                    '<li><strong>Latensi Jaringan yang Lambat:</strong> Waktu tunggu kirim-terima data cloud rata-rata 300–800 milidetik, terlalu lambat untuk sistem keamanan atau deteksi bahaya industri otomatis.</li>' .
+                    '<li><strong>Risiko Kegagalan Jaringan:</strong> Begitu sinyal internet putus, seluruh sistem deteksi keamanan seketika mati total.</li>' .
+                    '</ul>' .
+
+                    '<h2>Tiga Teknik Rekayasa Model Komputasi Ringan</h2>' .
+                    '<p>Dalam riset ilmiah yang dipimpin oleh <strong>Gede Erik Aktama, S.Pd., M.Pd.</strong>, model konvolusional dioptimasi melalui 3 pilar rekayasa perangkat lunak:</p>' .
+                    '<ol>' .
+                    '<li><strong>Depthwise Separable Convolution:</strong> Memisahkan operasi pemfilteran spasial dan pencampuran kanal warna (seperti arsitektur MobileNet / ShuffleNet), memangkas beban perkalian matematis hingga 85%.</li>' .
+                    '<li><strong>Model Quantization (INT8):</strong> Mengonversi bobot model dari format pecahan 32-bit (Floating Point FP32) menjadi bilangan bulat 8-bit (Integer INT8). Ukuran file model menyusut hingga 75% dengan penurunan akurasi kurang dari 1,5%.</li>' .
+                    '<li><strong>Weight Pruning:</strong> Memotong jalur koneksi neuron buatan yang tidak memberikan pengaruh signifikan pada hasil akhir prediksi.</li>' .
+                    '</ol>' .
+
+                    '<h2>Tabel Hasil Pengujian Riset SINTA 4: Komparasi Arsitektur Model</h2>' .
+                    '<p>Berikut adalah data eksperimen riil pengujian inferensi pada perangkat single-board computer tanpa GPU tambahan:</p>' .
+
+                    '<div class="table-responsive my-3">' .
+                    '<table class="table table-bordered small bg-white">' .
+                    '<thead class="table-light"><tr><th>Arsitektur Model</th><th>Ukuran File Model</th><th>Latensi per Frame</th><th>Kecepatan (FPS)</th><th>Akurasi Deteksi (mAP)</th><th>Kelayakan di Edge Device</th></tr></thead>' .
+                    '<tbody>' .
+                    '<tr><td><strong>Standar ResNet-50 / YOLO Heavy</strong></td><td class="text-danger">145 MB</td><td class="text-danger">420 ms</td><td class="text-danger">2,3 FPS (Patah-patah)</td><td>89,4%</td><td class="text-danger fw-bold">TIDAK LAYAK (Overheat & Lemot)</td></tr>' .
+                    '<tr><td><strong>Lightweight MobileNet-V3 / Nano</strong></td><td class="text-success"><strong>16 MB</strong></td><td class="text-success"><strong>38 ms</strong></td><td class="text-success"><strong>26,3 FPS (Real-Time Lancar)</strong></td><td><strong>87,8%</strong></td><td class="text-success fw-bold">OPTIMAL UNTUK PERANGKAT EDGE</td></tr>' .
+                    '</tbody></table></div>' .
+
+                    '<h2>Aplikasi Nyata di Ekosistem Aktama</h2>' .
+                    '<p>Hasil publikasi riset SINTA ini bukan sekadar teori di atas kertas. Di PT Aktama Digital Antika, prinsip <em>Lightweight Deep Learning</em> telah kami integrasikan ke dalam:</p>' .
+                    '<ul>' .
+                    '<li><strong>Unit Usaha Aktama Coffee:</strong> Deteksi otomatis kualitas biji kopi (sortir biji pecah, berjamur, atau cacat warna) menggunakan kamera mini yang memproses klasifikasi secara lokal di meja sangrai tanpa membutuhkan koneksi internet.</li>' .
+                    '<li><strong>Sistem Pengawasan Keamanan Mandiri:</strong> Kamera CCTV cerdas yang mampu mengenali plat nomor dan perimeter penyusup tanpa harus menyewa server cloud mahal.</li>' .
+                    '</ul>' .
+
+                    '<div class="callout-card my-4">' .
+                    '<h5 class="fw-bold text-info mb-2"><i class="bi bi-cpu-fill me-2"></i>Kolaborasi Riset Terapan & Hibah Teknologi</h5>' .
+                    '<p class="small text-muted mb-3">PT Aktama Digital Antika membuka peluang kerjasama riset industri, pengabdian masyarakat, dan kemitraan hilirisasi kampus (Kedaireka / Matching Fund) di bidang Embedded AI dan Internet of Things (IoT).</p>' .
+                    '<div class="d-flex flex-wrap gap-2">' .
+                    '<a href="https://profil.aktama.com" target="_blank" class="btn btn-sm btn-info text-white rounded-pill px-3">Lihat Daftar Publikasi SINTA Founder ↗</a>' .
+                    '<a href="/jasa-website" class="btn btn-sm btn-outline-dark rounded-pill px-3">Konsultasi R&D Perangkat Lunak</a>' .
+                    '</div>' .
+                    '</div>',
+                'author' => $authorName,
+                'status' => 'published',
+                'published_at' => now()->subHours(24),
+                'meta_title' => 'Lightweight Deep Learning & Riset Edge AI SINTA 4 | Aktama Digital',
+                'meta_description' => 'Kajian riset ilmiah terindeks SINTA 4 tentang optimasi model computer vision ringan untuk inferensi real-time di perangkat edge tanpa server GPU mahal.',
+            ],
+
+            // ARTIKEL LAMA 1
             [
                 'slug' => 'mengapa-guru-yang-menguasai-ai-bukan-tergantikan',
                 'category_id' => $catAi->id,
