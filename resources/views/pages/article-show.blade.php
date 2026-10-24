@@ -67,6 +67,40 @@
         .article-content table {
             margin: 1.5rem 0;
         }
+        .article-content .prompt-box {
+            background-color: #0f172a;
+            color: #f1f5f9;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 0.95rem;
+            border-left: 4px solid #38bdf8;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            line-height: 1.7;
+        }
+        .article-content .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.8rem;
+            color: #38bdf8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .article-content .output-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #10b981;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
     </style>
 
     <!-- Header Breadcrumb & Judul -->
