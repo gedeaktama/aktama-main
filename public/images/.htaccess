@@ -1,0 +1,37 @@
+# ==============================================================================
+# PT AKTAMA DIGITAL ANTIKA - MEDIA DIRECTORY SECURITY SHIELD
+# ==============================================================================
+# Mencegah eksekusi file script (PHP, CGI, Perl, Python, ASP, JSP, dll.)
+# di dalam folder publik aset/gambar/media.
+# Mencegah serangan web shell, defacement, dan injeksi situs judi online (judol).
+# ==============================================================================
+
+# 1. Matikan engine PHP jika modul PHP Apache aktif
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+# 2. Blokir eksekusi handler script apapun
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .py .asp .jsp .sh
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .py .asp .jsp .sh
+
+# 3. Matikan opsi CGI dan penjelajahan direktori
+Options -ExecCGI -Indexes
+
+# 4. Tolak akses langsung ke semua ekstensi file script yang berpotensi berbahaya
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|phps|cgi|pl|py|jsp|asp|sh|bash|exe|bat|cmd|bin)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# 5. Hanya izinkan ekstensi gambar dan aset statis yang sah
+<FilesMatch "(?i)\.(jpe?g|png|gif|webp|svg|ico|bmp|avif|pdf|woff2?|ttf|eot)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
