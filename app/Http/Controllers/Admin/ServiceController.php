@@ -26,23 +26,50 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:150',
+            'slug' => 'nullable|string|max:150|unique:services,slug',
             'category' => 'required|string|max:50',
             'excerpt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'price_starting' => 'nullable|string|max:100',
             'features_text' => 'nullable|string',
             'icon' => 'nullable|string|max:50',
-            'is_published' => 'boolean',
-            'sort_order' => 'integer',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'is_published' => 'nullable|boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->input('features_text', ''))));
 
+        $imagePath = null;
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/services');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'service-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'services/' . $fileName;
+        }
+
+        $slug = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Service::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+
         Service::create([
-            ...$validated,
-            'slug' => Str::slug($request->title) . '-' . rand(100, 999),
+            'title' => $validated['title'],
+            'slug' => $slug,
+            'category' => $validated['category'],
+            'excerpt' => $validated['excerpt'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'price_starting' => $validated['price_starting'] ?? null,
             'features' => $features,
-            'is_published' => $request->boolean('is_published'),
+            'icon' => $validated['icon'] ?? 'bi-globe',
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
             'sort_order' => $request->input('sort_order', 0),
         ]);
 
@@ -58,22 +85,47 @@ class ServiceController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:150',
+            'slug' => 'required|string|max:150|unique:services,slug,' . $service->id,
             'category' => 'required|string|max:50',
             'excerpt' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'price_starting' => 'nullable|string|max:100',
             'features_text' => 'nullable|string',
             'icon' => 'nullable|string|max:50',
-            'is_published' => 'boolean',
-            'sort_order' => 'integer',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'remove_image' => 'nullable|boolean',
+            'is_published' => 'nullable|boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->input('features_text', ''))));
 
+        $imagePath = $service->image;
+        if ($request->boolean('remove_image')) {
+            $imagePath = null;
+        }
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/services');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'service-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'services/' . $fileName;
+        }
+
         $service->update([
-            ...$validated,
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['slug']),
+            'category' => $validated['category'],
+            'excerpt' => $validated['excerpt'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'price_starting' => $validated['price_starting'] ?? null,
             'features' => $features,
-            'is_published' => $request->boolean('is_published'),
+            'icon' => $validated['icon'] ?? 'bi-globe',
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
             'sort_order' => $request->input('sort_order', 0),
         ]);
 

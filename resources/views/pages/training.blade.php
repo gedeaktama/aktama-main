@@ -61,8 +61,11 @@
                                     <span class="text-muted small"><i class="bi bi-clock me-1"></i>{{ $prog->duration }}</span>
                                 </div>
 
+                                @if($prog->image)
+                                    <img src="{{ asset('images/' . $prog->image) }}" alt="{{ $prog->title }}" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover shadow-xs" style="max-height: 200px;">
+                                @endif
                                 <h3 class="fw-bold text-dark fs-5 mb-2">{{ $prog->title }}</h3>
-                                <p class="text-muted small leading-relaxed mb-4">{{ $prog->objectives }}</p>
+                                <div class="text-muted small leading-relaxed mb-4">{!! $prog->objectives !!}</div>
 
                                 <div class="p-3 rounded-3 bg-light border mb-4">
                                     <strong class="text-dark d-block small mb-1"><i class="bi bi-people text-info me-1"></i> Target Peserta:</strong>

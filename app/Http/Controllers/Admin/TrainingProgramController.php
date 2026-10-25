@@ -26,6 +26,7 @@ class TrainingProgramController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:200',
+            'slug' => 'nullable|string|max:200|unique:training_programs,slug',
             'category' => 'required|string|max:50',
             'target_audience' => 'required|string|max:255',
             'objectives' => 'nullable|string',
@@ -33,17 +34,44 @@ class TrainingProgramController extends Controller
             'delivery_format' => 'required|string|max:30',
             'duration' => 'nullable|string|max:100',
             'price_info' => 'nullable|string|max:100',
-            'is_published' => 'boolean',
-            'sort_order' => 'integer',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'is_published' => 'nullable|boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
         $syllabus = array_filter(array_map('trim', explode("\n", $request->input('syllabus_text', ''))));
 
+        $imagePath = null;
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/training');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'training-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'training/' . $fileName;
+        }
+
+        $slug = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (TrainingProgram::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+
         TrainingProgram::create([
-            ...$validated,
-            'slug' => Str::slug($request->title) . '-' . rand(100, 999),
+            'title' => $validated['title'],
+            'slug' => $slug,
+            'category' => $validated['category'],
+            'target_audience' => $validated['target_audience'],
+            'objectives' => $validated['objectives'] ?? null,
             'syllabus' => $syllabus,
-            'is_published' => $request->boolean('is_published'),
+            'delivery_format' => $validated['delivery_format'],
+            'duration' => $validated['duration'] ?? null,
+            'price_info' => $validated['price_info'] ?? null,
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
             'sort_order' => $request->input('sort_order', 0),
         ]);
 
@@ -59,6 +87,7 @@ class TrainingProgramController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:200',
+            'slug' => 'required|string|max:200|unique:training_programs,slug,' . $training->id,
             'category' => 'required|string|max:50',
             'target_audience' => 'required|string|max:255',
             'objectives' => 'nullable|string',
@@ -66,16 +95,41 @@ class TrainingProgramController extends Controller
             'delivery_format' => 'required|string|max:30',
             'duration' => 'nullable|string|max:100',
             'price_info' => 'nullable|string|max:100',
-            'is_published' => 'boolean',
-            'sort_order' => 'integer',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'remove_image' => 'nullable|boolean',
+            'is_published' => 'nullable|boolean',
+            'sort_order' => 'nullable|integer',
         ]);
 
         $syllabus = array_filter(array_map('trim', explode("\n", $request->input('syllabus_text', ''))));
 
+        $imagePath = $training->image;
+        if ($request->boolean('remove_image')) {
+            $imagePath = null;
+        }
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/training');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'training-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'training/' . $fileName;
+        }
+
         $training->update([
-            ...$validated,
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['slug']),
+            'category' => $validated['category'],
+            'target_audience' => $validated['target_audience'],
+            'objectives' => $validated['objectives'] ?? null,
             'syllabus' => $syllabus,
-            'is_published' => $request->boolean('is_published'),
+            'delivery_format' => $validated['delivery_format'],
+            'duration' => $validated['duration'] ?? null,
+            'price_info' => $validated['price_info'] ?? null,
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
             'sort_order' => $request->input('sort_order', 0),
         ]);
 

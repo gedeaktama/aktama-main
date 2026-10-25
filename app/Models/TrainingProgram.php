@@ -16,6 +16,7 @@ class TrainingProgram extends Model
         'delivery_format',
         'duration',
         'price_info',
+        'image',
         'is_featured',
         'is_published',
         'sort_order',

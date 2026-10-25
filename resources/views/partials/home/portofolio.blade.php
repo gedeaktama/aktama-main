@@ -17,8 +17,11 @@
                             <span class="badge bg-light text-muted small">{{ $port->client_type }}</span>
                             <span class="text-muted small fw-semibold">{{ $port->project_year }}</span>
                         </div>
+                        @if($port->image)
+                            <img src="{{ asset('images/' . $port->image) }}" alt="{{ $port->title }}" class="img-fluid rounded-3 mb-2 w-100 object-fit-cover shadow-xs" style="max-height: 140px;">
+                        @endif
                         <h5 class="fw-bold text-dark fs-6 mb-2">{{ $port->title }}</h5>
-                        <p class="text-muted small mb-3">{{ $port->description }}</p>
+                        <p class="text-muted small mb-3">{{ Str::limit(strip_tags($port->description), 140) }}</p>
                         <div class="mt-auto border-top pt-2">
                             <small class="text-muted d-block" style="font-size: 0.75rem;">Stack Teknologi:</small>
                             <span class="badge bg-primary bg-opacity-10 text-primary small font-monospace">{{ $port->technology }}</span>

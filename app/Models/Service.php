@@ -15,6 +15,7 @@ class Service extends Model
         'price_starting',
         'features',
         'icon',
+        'image',
         'is_featured',
         'is_published',
         'sort_order',

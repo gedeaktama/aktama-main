@@ -38,7 +38,7 @@ $PHP_BIN artisan db:seed --force
 echo "--> [3/5] Sinkronisasi gambar artikel & aset publik..."
 WEB_ROOT="/home/u107454400/domains/aktama.com/public_html"
 if [ -d "$WEB_ROOT" ]; then
-    mkdir -p "$WEB_ROOT/images/articles" "$WEB_ROOT/images/uploads" "$WEB_ROOT/images/pages" "$WEB_ROOT/build"
+    mkdir -p "$WEB_ROOT/images/articles" "$WEB_ROOT/images/services" "$WEB_ROOT/images/training" "$WEB_ROOT/images/portfolios" "$WEB_ROOT/images/uploads" "$WEB_ROOT/images/pages" "$WEB_ROOT/build"
     cp -r public/images/. "$WEB_ROOT/images/" 2>/dev/null || true
     cp -r public/build/. "$WEB_ROOT/build/" 2>/dev/null || true
     chmod -R 755 "$WEB_ROOT/images" "$WEB_ROOT/build" 2>/dev/null || true

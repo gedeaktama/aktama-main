@@ -69,8 +69,11 @@
                                     </div>
                                 </div>
 
+                                @if($srv->image)
+                                    <img src="{{ asset('images/' . $srv->image) }}" alt="{{ $srv->title }}" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover shadow-xs" style="max-height: 200px;">
+                                @endif
                                 <h3 class="fw-bold text-dark fs-5 mb-2">{{ $srv->title }}</h3>
-                                <p class="text-muted small leading-relaxed mb-4">{{ $srv->description }}</p>
+                                <div class="text-muted small leading-relaxed mb-4">{!! $srv->description !!}</div>
 
                                 @if($srv->features && is_array($srv->features))
                                     <div class="p-3 rounded-3 bg-light border mb-4">

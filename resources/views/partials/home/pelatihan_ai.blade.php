@@ -29,7 +29,7 @@
                             </div>
 
                             <h5 class="fw-bold text-dark fs-6 mb-2">{{ $program->title }}</h5>
-                            <p class="text-muted small mb-3 leading-relaxed">{{ Str::limit($program->objectives, 100) }}</p>
+                            <p class="text-muted small mb-3 leading-relaxed">{{ Str::limit(strip_tags($program->objectives), 110) }}</p>
 
                             <div class="border-top pt-2 mb-3">
                                 <small class="text-muted d-block fw-semibold mb-1">Target Peserta:</small>

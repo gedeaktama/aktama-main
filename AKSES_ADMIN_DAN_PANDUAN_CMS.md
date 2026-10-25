@@ -80,7 +80,41 @@ Mendukung 2 mode pembuatan halaman (*Dual Engine*):
 
 ---
 
-## 5. 🚀 CARA UPDATE SERVER PRODUKSI NIAGAHOSTER (1-KLIK)
+## 5. 🛠️ PANDUAN POSTING JASA, PELATIHAN AI & PORTOFOLIO (ALA WORDPRESS)
+Seluruh modul postingan di panel admin kini telah diseragamkan dengan antarmuka 2-kolom ala WordPress lengkap dengan Editor Teks Kaya (**TinyMCE 6**) dan tombol **"Tambah Media"**:
+
+### A. Jasa Web & Aplikasi (`/admin/services`)
+- **Editor Deskripsi Lengkap:** Buat rincian paket layanan menggunakan heading, bullet points, tabel perbandingan, gambar pendukung, dan tombol CTA.
+- **Tombol Tambah Media:** Sisipkan infografis alur pembuatan website atau arsitektur sistem langsung ke dalam deskripsi.
+- **Sidebar Kanan:**
+  - *Kategori Layanan:* Pengembangan Web & Aplikasi, AI & Data Science, Sistem Informasi Terpadu, Desain UI/UX.
+  - *Estimasi Harga:* Format mata uang (contoh: `Mulai Rp 5.000.000` atau `Kustom`).
+  - *Ikon / Badge:* Pilihan ikon Lucide / FontAwesome.
+  - *Gambar Unggulan (Thumbnail):* Banner representatif jasa untuk kartu katalog dan Open Graph.
+  - *Poin Fitur Unggulan:* Daftar fitur per baris yang otomatis dirender sebagai checklist bercentang hijau.
+
+### B. Program Pelatihan AI (`/admin/training`)
+- **Editor Silabus & Sasaran Kompetensi:** Format tujuan pembelajaran, kurikulum modul, dan studi kasus dengan editor teks kaya.
+- **Tombol Tambah Media:** Sisipkan foto dokumentasi pelatihan sebelumnya, sertifikat contoh, atau bagan materi.
+- **Sidebar Kanan:**
+  - *Kategori & Format:* AI untuk Pendidikan / Guru, AI Produktivitas Kantor, Pemrograman AI / Edge Computing, LPK & Sertifikasi; Format Tatap Muka (In-House / Onsite) atau Daring (Online / Webinar).
+  - *Durasi & Investasi Biaya:* Contoh `2 Hari (16 Jam Pelajaran)` dan `Rp 2.500.000 / Peserta`.
+  - *Status Pendaftaran:* Buka Pendaftaran, Penuh, atau Selesai.
+  - *Gambar Unggulan Pelatihan:* Poster kegiatan atau foto kelas pelatihan.
+
+### C. Portofolio Proyek (`/admin/portfolios`)
+- **Editor Studi Kasus Proyek:** Tulis latar belakang masalah, solusi teknis yang dibangun, tantangan implementasi, dan dampak positif untuk klien.
+- **Tombol Tambah Media:** Unggah tangkapan layar antarmuka dashboard, ERD database, atau foto serah terima sistem langsung di dalam artikel.
+- **Sidebar Kanan:**
+  - *Tangkapan Layar Unggulan (Mockup):* Foto mockup layar sistem/aplikasi (disarankan rasio 16:9).
+  - *Tautan Proyek / Demo:* Link URL sistem yang berjalan (otomatis menghasilkan tombol "Kunjungi Proyek" live).
+  - *Tumpukan Teknologi (Tech Stack):* Tag teknologi (contoh: `Laravel 11`, `Python`, `YOLOv8`, `MySQL`, `TailwindCSS`).
+  - *Nama & Tipe Klien:* Pemerintah Daerah, Instansi Kepolisian, Sekolah/Kampus, UMKM, atau Perusahaan Swasta.
+  - *Tahun Penyelesaian:* Tahun rilis proyek.
+
+---
+
+## 6. 🚀 CARA UPDATE SERVER PRODUKSI NIAGAHOSTER (1-KLIK)
 
 Setiap kali ada pembaruan kode atau artikel dari GitHub, Anda cukup menjalankan perintah 1-baris berikut di terminal SSH Niagahoster:
 
@@ -90,11 +124,12 @@ cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source && git pul
 
 Skrip ini akan mengeksekusi secara otomatis:
 1. `git pull origin main` (tarik pembaruan terbaru dari GitHub).
-2. Menjalankan migrasi database via binary Alt-PHP 8.3 (`/opt/alt/php83/usr/bin/php artisan migrate --force`).
+2. Menjalankan migrasi database via binary Alt-PHP 8.3 (`/opt/alt/php83/usr/bin/php artisan migrate --force`) untuk membuat tabel dan kolom `image` baru.
 3. Menjalankan seeder artikel komprehensif (`db:seed --force`).
-4. Menyinkronkan aset gambar artikel, upload media, dan build ke folder publik `public_html`.
+4. Menyinkronkan aset gambar artikel, layanan, pelatihan, portofolio, upload media, dan build ke folder publik `public_html`.
 5. Membersihkan cache dan mengoptimalkan cache produksi Laravel.
 
 ---
 
 &copy; 2026 PT Aktama Digital Antika. Seluruh hak cipta dilindungi.
+

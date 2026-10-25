@@ -26,18 +26,47 @@ class PortfolioController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:150',
+            'slug' => 'nullable|string|max:150|unique:portfolios,slug',
             'category' => 'required|string|max:50',
             'client_type' => 'nullable|string|max:100',
             'technology' => 'required|string|max:150',
             'project_year' => 'nullable|string|max:4',
+            'project_url' => 'nullable|url|max:255',
             'description' => 'nullable|string',
-            'is_published' => 'boolean',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'is_published' => 'nullable|boolean',
         ]);
 
+        $imagePath = null;
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/portfolios');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'portfolio-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'portfolios/' . $fileName;
+        }
+
+        $slug = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Portfolio::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter++;
+        }
+
         Portfolio::create([
-            ...$validated,
-            'slug' => Str::slug($request->title) . '-' . rand(100, 999),
-            'is_published' => $request->boolean('is_published'),
+            'title' => $validated['title'],
+            'slug' => $slug,
+            'category' => $validated['category'],
+            'client_type' => $validated['client_type'] ?? null,
+            'technology' => $validated['technology'],
+            'project_year' => $validated['project_year'] ?? date('Y'),
+            'project_url' => $validated['project_url'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
         ]);
 
         return redirect()->route('admin.portfolios.index')->with('success', 'Portofolio berhasil ditambahkan!');
@@ -52,17 +81,44 @@ class PortfolioController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:150',
+            'slug' => 'required|string|max:150|unique:portfolios,slug,' . $portfolio->id,
             'category' => 'required|string|max:50',
             'client_type' => 'nullable|string|max:100',
             'technology' => 'required|string|max:150',
             'project_year' => 'nullable|string|max:4',
+            'project_url' => 'nullable|url|max:255',
             'description' => 'nullable|string',
-            'is_published' => 'boolean',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'remove_image' => 'nullable|boolean',
+            'is_published' => 'nullable|boolean',
         ]);
 
+        $imagePath = $portfolio->image;
+        if ($request->boolean('remove_image')) {
+            $imagePath = null;
+        }
+        if ($request->hasFile('image_file')) {
+            $dir = public_path('images/portfolios');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('image_file');
+            $fileName = 'portfolio-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $imagePath = 'portfolios/' . $fileName;
+        }
+
         $portfolio->update([
-            ...$validated,
-            'is_published' => $request->boolean('is_published'),
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['slug']),
+            'category' => $validated['category'],
+            'client_type' => $validated['client_type'] ?? null,
+            'technology' => $validated['technology'],
+            'project_year' => $validated['project_year'] ?? date('Y'),
+            'project_url' => $validated['project_url'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'image' => $imagePath,
+            'is_published' => $request->has('is_published'),
         ]);
 
         return redirect()->route('admin.portfolios.index')->with('success', 'Portofolio berhasil diperbarui!');

@@ -52,12 +52,15 @@
                                     <span class="text-muted small fw-bold">{{ $port->project_year }}</span>
                                 </div>
 
+                                @if($port->image)
+                                    <img src="{{ asset('images/' . $port->image) }}" alt="{{ $port->title }}" class="img-fluid rounded-3 mb-3 w-100 object-fit-cover shadow-xs" style="max-height: 180px;">
+                                @endif
                                 <h4 class="fw-bold text-dark fs-6 mb-2">{{ $port->title }}</h4>
                                 <small class="text-muted d-block mb-3">
                                     <i class="bi bi-building me-1"></i> Kategori Klien: <strong class="text-dark">{{ $port->client_type }}</strong>
                                 </small>
 
-                                <p class="text-muted small leading-relaxed mb-4">{{ $port->description }}</p>
+                                <div class="text-muted small leading-relaxed mb-4">{!! $port->description !!}</div>
                             </div>
 
                             <div class="border-top pt-3 mt-auto">
