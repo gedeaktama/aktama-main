@@ -187,8 +187,18 @@ class HomeController extends Controller
     /**
      * Halaman Detail Artikel
      */
-    public function articleShow(string $slug): View
+    public function articleShow(string $slug): View|\Illuminate\Http\RedirectResponse
     {
+        // 301 Permanent Redirect untuk URL artikel lama ke artikel baru yang komprehensif
+        $legacyRedirects = [
+            'mengapa-website-bisnis-harus-aman-dari-celah-malware-judol' => 'fenomena-web-sekolah-disusupi-spam-judol-dan-solusinya',
+            'peran-kecerdasan-artifisial-dalam-meningkatkan-produktivitas-kerja-administrasi' => 'pemanfaatan-generative-ai-efisiensi-kerja-administratif-instansi',
+        ];
+
+        if (isset($legacyRedirects[$slug])) {
+            return redirect()->route('articles.show', $legacyRedirects[$slug], 301);
+        }
+
         $settings = $this->getSettings();
         $article = Article::with('category')
             ->where('slug', $slug)

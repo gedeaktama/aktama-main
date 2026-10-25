@@ -38,9 +38,10 @@ $PHP_BIN artisan db:seed --force
 echo "--> [3/5] Sinkronisasi gambar artikel & aset publik..."
 WEB_ROOT="/home/u107454400/domains/aktama.com/public_html"
 if [ -d "$WEB_ROOT" ]; then
-    mkdir -p "$WEB_ROOT/images" "$WEB_ROOT/build"
+    mkdir -p "$WEB_ROOT/images/articles" "$WEB_ROOT/build"
     cp -r public/images/. "$WEB_ROOT/images/" 2>/dev/null || true
     cp -r public/build/. "$WEB_ROOT/build/" 2>/dev/null || true
+    chmod -R 755 "$WEB_ROOT/images" "$WEB_ROOT/build" 2>/dev/null || true
 fi
 
 # 5. Storage symlink

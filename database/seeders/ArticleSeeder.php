@@ -20,6 +20,17 @@ class ArticleSeeder extends Seeder
         $catEdu = Category::updateOrCreate(['slug' => 'literasi-digital-koding'], ['name' => 'Literasi Digital & Koding']);
         $catRes = Category::updateOrCreate(['slug' => 'riset-publikasi-ilmiah'], ['name' => 'Riset & Publikasi Ilmiah']);
 
+        // Bersihkan artikel lama / draft uji coba tanpa gambar yang sudah digantikan
+        Article::whereNull('image')
+            ->orWhere('image', '')
+            ->orWhereIn('slug', [
+                'mengapa-website-bisnis-harus-aman-dari-celah-malware-judol',
+                'peran-kecerdasan-artifisial-dalam-meningkatkan-produktivitas-kerja-administrasi',
+            ])
+            ->delete();
+
+        Category::where('slug', 'tips-teknologi-web')->delete();
+
         $authorName = 'Gede Erik Aktama, S.Pd., M.Pd.';
 
         // 2. Daftar Artikel Komprehensif & Studi Kasus Faktual
