@@ -13,12 +13,42 @@ use Illuminate\View\View;
 class ArticleController extends Controller
 {
     /**
-     * Tampilkan daftar seluruh postingan artikel / berita
+     * Tampilkan daftar seluruh postingan artikel / berita layaknya WordPress Posts Manager
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $articles = Article::with('category')->orderByDesc('created_at')->paginate(15);
-        return view('admin.articles.index', compact('articles'));
+        $query = Article::with('category');
+
+        // Filter Status: All, Published, Draft
+        if ($request->filled('status') && in_array($request->status, ['published', 'draft'])) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter Kategori
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Pencarian Kata Kunci
+        if ($request->filled('q')) {
+            $keyword = trim($request->q);
+            $query->where(function ($q) use ($keyword) {
+                $q->where('title', 'like', "%{$keyword}%")
+                  ->orWhere('summary', 'like', "%{$keyword}%")
+                  ->orWhere('tags', 'like', "%{$keyword}%");
+            });
+        }
+
+        $articles = $query->orderByDesc('created_at')->paginate(15)->withQueryString();
+
+        $categories = Category::all();
+        $counts = [
+            'all' => Article::count(),
+            'published' => Article::where('status', 'published')->count(),
+            'draft' => Article::where('status', 'draft')->count(),
+        ];
+
+        return view('admin.articles.index', compact('articles', 'categories', 'counts'));
     }
 
     /**
@@ -42,9 +72,11 @@ class ArticleController extends Controller
             'slug' => 'nullable|string|max:200|unique:articles,slug',
             'summary' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
             'author' => 'required|string|max:100',
+            'tags' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published',
+            'published_at' => 'nullable|date',
             'meta_title' => 'nullable|string|max:200',
             'meta_description' => 'nullable|string|max:300',
         ]);
@@ -74,6 +106,11 @@ class ArticleController extends Controller
 
         $slug = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']) . '-' . rand(100, 999);
 
+        $publishedAt = null;
+        if ($validated['status'] === 'published') {
+            $publishedAt = !empty($validated['published_at']) ? $validated['published_at'] : now();
+        }
+
         Article::create([
             'category_id' => $categoryId,
             'title' => $validated['title'],
@@ -82,8 +119,9 @@ class ArticleController extends Controller
             'content' => $validated['content'],
             'image' => $imagePath,
             'author' => $validated['author'],
+            'tags' => $validated['tags'] ?? null,
             'status' => $validated['status'],
-            'published_at' => $validated['status'] === 'published' ? now() : null,
+            'published_at' => $publishedAt,
             'meta_title' => $validated['meta_title'] ?? $validated['title'],
             'meta_description' => $validated['meta_description'] ?? null,
         ]);
@@ -112,9 +150,12 @@ class ArticleController extends Controller
             'slug' => 'required|string|max:200|unique:articles,slug,' . $article->id,
             'summary' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'remove_image' => 'nullable|boolean',
             'author' => 'required|string|max:100',
+            'tags' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published',
+            'published_at' => 'nullable|date',
             'meta_title' => 'nullable|string|max:200',
             'meta_description' => 'nullable|string|max:300',
         ]);
@@ -131,6 +172,9 @@ class ArticleController extends Controller
 
         // Upload Gambar Baru Jika Ada
         $imagePath = $article->image;
+        if ($request->boolean('remove_image')) {
+            $imagePath = null;
+        }
         if ($request->hasFile('image_file')) {
             $dir = public_path('images/articles');
             if (!file_exists($dir)) {
@@ -143,8 +187,8 @@ class ArticleController extends Controller
         }
 
         $publishedAt = $article->published_at;
-        if ($validated['status'] === 'published' && !$publishedAt) {
-            $publishedAt = now();
+        if ($validated['status'] === 'published') {
+            $publishedAt = !empty($validated['published_at']) ? $validated['published_at'] : ($article->published_at ?: now());
         }
 
         $article->update([
@@ -155,6 +199,7 @@ class ArticleController extends Controller
             'content' => $validated['content'],
             'image' => $imagePath,
             'author' => $validated['author'],
+            'tags' => $validated['tags'] ?? null,
             'status' => $validated['status'],
             'published_at' => $publishedAt,
             'meta_title' => $validated['meta_title'] ?? $validated['title'],
@@ -162,6 +207,30 @@ class ArticleController extends Controller
         ]);
 
         return redirect()->route('admin.articles.index')->with('success', 'Postingan artikel berhasil diperbarui!');
+    }
+
+    /**
+     * AJAX endpoint tambah kategori baru secara instan (WordPress style "+ Tambah Kategori Baru")
+     */
+    public function ajaxStoreCategory(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+        ]);
+
+        $name = trim($request->input('name'));
+        $slug = Str::slug($name);
+
+        $category = Category::firstOrCreate(
+            ['name' => $name],
+            ['slug' => $slug]
+        );
+
+        return response()->json([
+            'success' => true,
+            'category' => $category,
+            'message' => "Kategori '{$category->name}' berhasil ditambahkan!",
+        ]);
     }
 
     /**

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\HomeSectionController as AdminHomeSectionController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
@@ -83,6 +84,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Manajemen Artikel Blog / Postingan Berita & SEO
         Route::resource('articles', AdminArticleController::class)->except(['show']);
+        Route::post('/categories/ajax-store', [AdminArticleController::class, 'ajaxStoreCategory'])->name('categories.ajaxStore');
+
+        // Media & Image Uploader Inline (WYSIWYG / TinyMCE / WordPress style)
+        Route::post('/media/upload', [AdminMediaController::class, 'upload'])->name('media.upload');
 
         // Manajemen Layanan Website & Aplikasi
         Route::resource('services', AdminServiceController::class)->except(['show']);

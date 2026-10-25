@@ -13,12 +13,37 @@ use Illuminate\View\View;
 class PageController extends Controller
 {
     /**
-     * Tampilkan daftar halaman CMS
+     * Tampilkan daftar halaman CMS layaknya WordPress Pages
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $pages = Page::orderBy('sort_order')->orderByDesc('created_at')->paginate(15);
-        return view('admin.pages.index', compact('pages'));
+        $query = Page::query();
+
+        if ($request->filled('status')) {
+            if ($request->status === 'published') {
+                $query->where('is_published', true);
+            } elseif ($request->status === 'draft') {
+                $query->where('is_published', false);
+            }
+        }
+
+        if ($request->filled('q')) {
+            $keyword = trim($request->q);
+            $query->where(function ($q) use ($keyword) {
+                $q->where('title', 'like', "%{$keyword}%")
+                  ->orWhere('slug', 'like', "%{$keyword}%");
+            });
+        }
+
+        $pages = $query->orderBy('sort_order')->orderByDesc('created_at')->paginate(15)->withQueryString();
+
+        $counts = [
+            'all' => Page::count(),
+            'published' => Page::where('is_published', true)->count(),
+            'draft' => Page::where('is_published', false)->count(),
+        ];
+
+        return view('admin.pages.index', compact('pages', 'counts'));
     }
 
     /**
@@ -38,6 +63,9 @@ class PageController extends Controller
             'title' => 'required|string|max:200',
             'slug' => 'nullable|string|max:200|unique:pages,slug',
             'editor_type' => 'required|in:builder,standard',
+            'template' => 'nullable|string|in:default,full-width,blank',
+            'featured_image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'sort_order' => 'nullable|integer',
             'meta_title' => 'nullable|string|max:200',
             'meta_description' => 'nullable|string|max:300',
             'content_html' => 'nullable|string',
@@ -52,13 +80,29 @@ class PageController extends Controller
             $slug = $originalSlug . '-' . $counter++;
         }
 
+        // Upload Gambar Unggulan Halaman
+        $featuredImage = null;
+        if ($request->hasFile('featured_image_file')) {
+            $dir = public_path('images/pages');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('featured_image_file');
+            $fileName = 'page-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $featuredImage = 'pages/' . $fileName;
+        }
+
         $page = Page::create([
             'title' => $validated['title'],
             'slug' => $slug,
             'editor_type' => $validated['editor_type'],
+            'template' => $validated['template'] ?? 'default',
+            'featured_image' => $featuredImage,
+            'sort_order' => $validated['sort_order'] ?? 0,
             'meta_title' => $validated['meta_title'] ?? $validated['title'],
             'meta_description' => $validated['meta_description'] ?? null,
-            'content_html' => $validated['content_html'] ?? ($validated['editor_type'] === 'builder' ? '<div class="py-5 text-center"><h2>' . e($validated['title']) . '</h2><p class="lead text-muted">Selamat datang di halaman baru.</p></div>' : '<p>Konten halaman...</p>'),
+            'content_html' => $validated['content_html'] ?? ($validated['editor_type'] === 'builder' ? '<div class="py-5 text-center"><h2>' . e($validated['title']) . '</h2><p class="lead text-muted">Selamat datang di halaman baru.</p></div>' : '<p>Tuliskan konten halaman Anda di sini...</p>'),
             'is_published' => $request->has('is_published'),
         ]);
 
@@ -87,16 +131,38 @@ class PageController extends Controller
             'title' => 'required|string|max:200',
             'slug' => 'required|string|max:200|unique:pages,slug,' . $page->id,
             'editor_type' => 'required|in:builder,standard',
+            'template' => 'nullable|string|in:default,full-width,blank',
+            'featured_image_file' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'remove_featured_image' => 'nullable|boolean',
+            'sort_order' => 'nullable|integer',
             'meta_title' => 'nullable|string|max:200',
             'meta_description' => 'nullable|string|max:300',
             'content_html' => 'nullable|string',
             'is_published' => 'nullable|boolean',
         ]);
 
+        $featuredImage = $page->featured_image;
+        if ($request->boolean('remove_featured_image')) {
+            $featuredImage = null;
+        }
+        if ($request->hasFile('featured_image_file')) {
+            $dir = public_path('images/pages');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $file = $request->file('featured_image_file');
+            $fileName = 'page-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $fileName);
+            $featuredImage = 'pages/' . $fileName;
+        }
+
         $page->update([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['slug']),
             'editor_type' => $validated['editor_type'],
+            'template' => $validated['template'] ?? 'default',
+            'featured_image' => $featuredImage,
+            'sort_order' => $validated['sort_order'] ?? 0,
             'meta_title' => $validated['meta_title'] ?? $validated['title'],
             'meta_description' => $validated['meta_description'] ?? null,
             'content_html' => $validated['content_html'] ?? $page->content_html,

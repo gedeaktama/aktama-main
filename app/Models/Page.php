@@ -10,6 +10,8 @@ class Page extends Model
         'title',
         'slug',
         'editor_type',
+        'template',
+        'featured_image',
         'content_html',
         'content_css',
         'content_json',
