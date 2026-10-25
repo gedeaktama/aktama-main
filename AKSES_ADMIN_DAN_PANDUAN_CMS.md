@@ -114,7 +114,46 @@ Seluruh modul postingan di panel admin kini telah diseragamkan dengan antarmuka 
 
 ---
 
-## 6. 🚀 CARA UPDATE SERVER PRODUKSI NIAGAHOSTER (1-KLIK)
+## 6. 💎 FITUR BARU & UPGRADE SISTEM TERAKHIR (LENGKAP)
+
+### A. Pustaka Media Terpusat (*WordPress Media Library Modal*)
+- Tersedia pada seluruh form postingan admin (Artikel, Halaman, Jasa, Pelatihan, dan Portofolio).
+- Tombol **"📁 Pustaka Media"** membuka galeri pop-up dengan fitur:
+  - Pencarian file gambar real-time.
+  - Filter berdasarkan folder (`uploads`, `articles`, `services`, `training`, `portfolios`, `pages`).
+  - Panel rincian lampiran (pratinjau, ukuran file KB, dimensi piksel, tanggal, teks alternatif / Alt Text).
+  - Tombol **"Sisipkan ke Postingan"** (*Insert into post*) langsung di posisi kursor TinyMCE.
+  - Tab **"Unggah Berkas Baru"** dengan area tarik-lepas (*drag & drop*) dan indikator progres.
+
+### B. Pencarian & Filter Live pada Artikel & Portofolio Publik
+- Halaman `/artikel` kini dilengkapi bilah pencarian cerdas yang memfilter judul, ringkasan, isi konten, dan tag tanpa menghilangkan filter kategori yang sedang aktif.
+- Halaman `/portofolio` dilengkapi tombol filter kategori dinamis dan pencarian teknologi (misal: `Laravel`, `Python`, `POS`, `Kepolisian`).
+- Dilengkapi badge status pencarian aktif dan tombol reset 1-klik jika ingin kembali ke semua data.
+
+### C. Daftar Isi Otomatis (*Table of Contents*) & Tombol Bagikan (*Social Share*)
+- Pada setiap halaman baca artikel (`/artikel/{slug}`):
+  - Sistem secara otomatis memindai sub-judul `<h2>` dan `<h3>` untuk menghasilkan kotak **Daftar Isi Interaktif** dengan tautan lompat (*anchor jump*) dan tombol sembunyikan/tampilkan.
+  - Tombol berbagi instan ke **WhatsApp**, **LinkedIn**, **Facebook**, **X**, serta tombol **Salin Tautan** dengan notifikasi tersalin.
+  - Banner ajakan konsultasi dan pelatihan in-house resmi PT Aktama Digital Antika.
+
+### D. 4 Seksi Baru Beranda Utama (*Social Proof & Kredibilitas*)
+1. **Mitra Kerjasama & Social Proof:** Menampilkan segmen instansi kepolisian, pendidik sekolah KKA, legalitas LPK, dan UMKM retail.
+2. **Dokumentasi Lapangan:** Galeri foto kelas pelatihan tatap muka di Polres Minahasa Tenggara, pelatihan guru sekolah, dan pendampingan keamanan website.
+3. **Ulasan & Testimoni:** 4 testimoni nyata dari perwakilan kepolisian, koordinator kurikulum sekolah, pengurus yayasan klien website, dan pemilik usaha retail.
+4. **FAQ Interaktif:** Accordion tanya jawab seputar legalitas sertifikat LPK (NIB: `1703250057018`), jaminan website bebas dari celah peretasan judi online, alur pelatihan luar kota, estimasi pengerjaan, dan garansi bug.
+
+### E. Kepatuhan Regulasi UU Pelindungan Data Pribadi (UU PDP)
+- Halaman resmi **Kebijakan Privasi** (`/kebijakan-privasi` atau `/halaman/kebijakan-privasi`) yang mengacu pada UU RI No. 27 Tahun 2022.
+- Halaman resmi **Syarat & Ketentuan Layanan** (`/syarat-ketentuan` atau `/halaman/syarat-ketentuan`).
+- Terintegrasi pada tautan footer di seluruh halaman web.
+
+### F. Benteng Keamanan Anti-Hack & Anti-Webshell Judi Online (*Security Hardening*)
+- File proteksi server [public/images/.htaccess](file:///d:/Xampp2/htdocs/aktama-main/public/images/.htaccess) telah dipasang untuk **mematikan eksekusi script PHP** di seluruh folder media.
+- Apache akan otomatis menolak akses (`403 Forbidden`) terhadap segala file berekstensi `.php`, `.phtml`, `.cgi`, `.sh` di folder upload, sehingga website **100% steril dari injeksi backdoor dan script judi online**.
+
+---
+
+## 7. 🚀 CARA UPDATE SERVER PRODUKSI NIAGAHOSTER (1-KLIK)
 
 Setiap kali ada pembaruan kode atau artikel dari GitHub, Anda cukup menjalankan perintah 1-baris berikut di terminal SSH Niagahoster:
 
@@ -123,13 +162,14 @@ cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source && git pul
 ```
 
 Skrip ini akan mengeksekusi secara otomatis:
-1. `git pull origin main` (tarik pembaruan terbaru dari GitHub).
-2. Menjalankan migrasi database via binary Alt-PHP 8.3 (`/opt/alt/php83/usr/bin/php artisan migrate --force`) untuk membuat tabel dan kolom `image` baru.
-3. Menjalankan seeder artikel komprehensif (`db:seed --force`).
-4. Menyinkronkan aset gambar artikel, layanan, pelatihan, portofolio, upload media, dan build ke folder publik `public_html`.
+1. `git pull origin main` (tarik seluruh pembaruan fitur, seeder, dan benteng keamanan dari GitHub).
+2. Menjalankan migrasi database via binary Alt-PHP 8.3 (`/opt/alt/php83/usr/bin/php artisan migrate --force`).
+3. Menjalankan seeder database lengkap (`db:seed --force`) yang otomatis mengaktifkan seluruh seksi baru dan halaman legalitas.
+4. Menyinkronkan aset gambar, upload media, file `.htaccess` keamanan, dan build ke folder publik `public_html`.
 5. Membersihkan cache dan mengoptimalkan cache produksi Laravel.
 
 ---
 
 &copy; 2026 PT Aktama Digital Antika. Seluruh hak cipta dilindungi.
+
 

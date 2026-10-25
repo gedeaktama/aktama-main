@@ -364,12 +364,21 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'section_key' => 'mitra_klien',
+                'name' => 'Mitra Kerjasama & Social Proof',
+                'badge' => 'Jejak Rekam Kepercayaan',
+                'title' => 'Dipercaya Lintas Sektor Instansi & Bisnis',
+                'subtitle' => 'Membangun sinergi berdampak nyata bersama kepolisian, institusi pendidikan, sekolah, dan pelaku usaha.',
+                'sort_order' => 2,
+                'is_active' => true,
+            ],
+            [
                 'section_key' => 'jasa_website',
                 'name' => 'Jasa Pembuatan Website & Aplikasi',
                 'badge' => 'Software House & Rekayasa Web',
                 'title' => 'Jasa Pembuatan Website & Sistem Informasi Bebas Celah Malware',
                 'subtitle' => 'Didesain dengan arsitektur modern berstandar enterprise yang kebal dari risiko injeksi script judi online, cepat, mobile-friendly, dan teroptimasi SEO.',
-                'sort_order' => 2,
+                'sort_order' => 3,
                 'is_active' => true,
             ],
             [
@@ -378,7 +387,16 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Pusat Pelatihan AI & Teknologi',
                 'title' => 'Program Pelatihan Kecerdasan Artifisial (AI) & Koding Praktis',
                 'subtitle' => 'Disusun langsung oleh Fasilitator Nasional KKA Kemdikdasmen berlisensi LPK resmi untuk mendongkrak produktivitas instansi pemerintah, sekolah, dan pelaku usaha.',
-                'sort_order' => 3,
+                'sort_order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'section_key' => 'dokumentasi_kegiatan',
+                'name' => 'Dokumentasi Kelas & Pelatihan Lapangan',
+                'badge' => 'Social Proof LPK',
+                'title' => 'Dokumentasi Kelas Pelatihan & Implementasi Lapangan',
+                'subtitle' => 'Bukti dedikasi transfer teknologi nyata melalui workshop tatap muka, bimbingan teknis AI di instansi pemerintah, dan serah terima sistem informasi.',
+                'sort_order' => 5,
                 'is_active' => true,
             ],
             [
@@ -387,7 +405,7 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Ekosistem Bisnis Aktama',
                 'title' => 'Ekosistem Produk Digital & Unit Bisnis Terpadu',
                 'subtitle' => 'Jelajahi lini produk perangkat lunak unggulan, platform pembelajaran daring, dan unit komoditas riil yang dikembangkan dan dikelola oleh PT Aktama Digital Antika.',
-                'sort_order' => 4,
+                'sort_order' => 6,
                 'is_active' => true,
             ],
             [
@@ -396,7 +414,16 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Bukti Kinerja Nyata',
                 'title' => 'Portofolio Implementasi Sistem & Rekayasa Digital',
                 'subtitle' => 'Jejak karya sistem informasi, aplikasi kasir operasional, dan portal web yang telah sukses diimplementasikan dan digunakan secara riil.',
-                'sort_order' => 5,
+                'sort_order' => 7,
+                'is_active' => true,
+            ],
+            [
+                'section_key' => 'testimoni',
+                'name' => 'Ulasan & Testimoni Mitra',
+                'badge' => 'Kepuasan Stakeholder',
+                'title' => 'Apa Kata Peserta Pelatihan & Mitra Kami?',
+                'subtitle' => 'Testimoni nyata dari perwakilan instansi kepolisian, pendidik sekolah, serta pemilik usaha retail.',
+                'sort_order' => 8,
                 'is_active' => true,
             ],
             [
@@ -405,7 +432,7 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Integritas & Kepemimpinan',
                 'title' => 'Integritas Legalitas & Kepemimpinan Berbasis Kompetensi Akademik',
                 'subtitle' => 'Didirikan dengan landasan kepatuhan hukum yang solid serta dipimpin oleh praktisi sekaligus akademisi yang berkomitmen pada transfer teknologi nyata.',
-                'sort_order' => 6,
+                'sort_order' => 9,
                 'is_active' => true,
             ],
             [
@@ -414,7 +441,16 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Wawasan & Literasi Digital',
                 'title' => 'Wawasan Terkini Seputar AI, Keamanan Web, & Bisnis Digital',
                 'subtitle' => 'Artikel edukatif dan panduan praktis untuk membantu Anda memahami perkembangan lanskap teknologi terkini secara bijak.',
-                'sort_order' => 7,
+                'sort_order' => 10,
+                'is_active' => true,
+            ],
+            [
+                'section_key' => 'faq',
+                'name' => 'FAQ (Pertanyaan yang Sering Diajukan)',
+                'badge' => 'Transparansi Layanan',
+                'title' => 'Pertanyaan yang Sering Diajukan (FAQ)',
+                'subtitle' => 'Jawaban transparan seputar legalitas pelatihan LPK, garansi keamanan rekayasa website, serta prosedur kolaborasi resmi bersama PT Aktama Digital Antika.',
+                'sort_order' => 11,
                 'is_active' => true,
             ],
             [
@@ -423,7 +459,7 @@ class DatabaseSeeder extends Seeder
                 'badge' => 'Mulai Kolaborasi',
                 'title' => 'Konsultasikan Kebutuhan Teknologi atau Pelatihan Anda',
                 'subtitle' => 'Isi formulir ringkas di bawah ini atau hubungi saluran resmi kami. Tim teknis Aktama Digital siap menganalisis kebutuhan Anda dan memberikan solusi terbaik.',
-                'sort_order' => 8,
+                'sort_order' => 12,
                 'is_active' => true,
             ],
         ];
@@ -432,15 +468,41 @@ class DatabaseSeeder extends Seeder
             HomeSection::updateOrCreate(['section_key' => $sec['section_key']], $sec);
         }
 
-        // 9. Halaman Kustom Default (CMS Pages)
+        // 9. Halaman Kustom Default (CMS Pages) - Standar Kepatuhan UU PDP No. 27/2022
         Page::updateOrCreate(
             ['slug' => 'kebijakan-privasi'],
             [
-                'title' => 'Kebijakan Privasi',
+                'title' => 'Kebijakan Privasi (Privacy Policy)',
                 'editor_type' => 'standard',
-                'content_html' => '<div class="py-4"><h3>Kebijakan Privasi PT Aktama Digital Antika</h3><p>PT Aktama Digital Antika berkomitmen untuk melindungi dan menghormati hak privasi setiap pengguna, klien, dan peserta pelatihan kami.</p><h4>1. Pengumpulan Informasi</h4><p>Kami hanya mengumpulkan informasi yang Anda berikan secara sukarela melalui formulir konsultasi, pendaftaran pelatihan, atau pemesanan layanan, seperti nama, nomor kontak, dan alamat email.</p><h4>2. Penggunaan Informasi</h4><p>Informasi yang terkumpul digunakan semata-mata untuk memproses permintaan penawaran, mengoordinasikan pelaksanaan pelatihan, serta memberikan layanan purna jual terbaik tanpa membagikannya kepada pihak ketiga tanpa izin Anda.</p></div>',
+                'content_html' => '<div class="py-2">
+                    <p class="lead text-muted">Kebijakan Privasi ini menjelaskan bagaimana <strong>PT Aktama Digital Antika</strong> (NIB: <code>1703250057018</code>) mengumpulkan, mengelola, memproses, dan melindungi data pribadi Anda sesuai dengan <strong>Undang-Undang Republik Indonesia Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)</strong>.</p>
+                    
+                    <h3 class="fw-bold text-dark mt-4 mb-2">1. Prinsip Pengumpulan Informasi</h3>
+                    <p>Kami hanya mengumpulkan data pribadi yang diserahkan secara sukarela oleh pengguna saat:</p>
+                    <ul>
+                        <li>Mengisi formulir konsultasi, permohonan penawaran harga (inquiry), atau pemesanan jasa rekayasa perangkat lunak.</li>
+                        <li>Melakukan pendaftaran program pelatihan kerja (LPK), webinar, atau workshop.</li>
+                        <li>Menghubungi layanan pelanggan kami melalui saluran resmi WhatsApp atau email.</li>
+                    </ul>
+                    <p>Data yang dihimpun mencakup: nama lengkap, alamat email, nomor telepon/WhatsApp, nama instansi/organisasi, serta rincian pesan kebutuhan.</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">2. Tujuan Pemrosesan Data Pribadi</h3>
+                    <p>Informasi pribadi Anda diproses secara sah untuk tujuan:</p>
+                    <ul>
+                        <li>Menyusun dokumen penawaran teknis, Kerangka Acuan Kerja (KAK), dan perjanjian kerjasama resmi.</li>
+                        <li>Penerbitan sertifikat pelatihan kerja berlisensi LPK resmi yang dilengkapi nomor identifikasi unik.</li>
+                        <li>Komunikasi koordinasi pelaksanaan proyek dan layanan purna jual (maintenance support).</li>
+                        <li>Memenuhi kewajiban pelaporan administratif sesuai peraturan perundang-undangan yang berlaku di Indonesia.</li>
+                    </ul>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">3. Jaminan Keamanan & Kerahasiaan Data</h3>
+                    <p>PT Aktama Digital Antika menerapkan standar keamanan teknologi informasi yang ketat. Kami <strong>tidak pernah menjual, menyewakan, atau memperdagangkan</strong> data pribadi Anda kepada pihak ketiga manapun untuk kepentingan komersial.</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">4. Hak Subjek Data Pribadi</h3>
+                    <p>Sesuai UU PDP, Anda memiliki hak untuk meminta akses, pembaharuan, koreksi kesalahan, atau penghapusan data pribadi Anda dari sistem kami dengan mengajukan permohonan resmi ke email: <code>gedeerikaktama@gmail.com</code>.</p>
+                </div>',
                 'meta_title' => 'Kebijakan Privasi | PT Aktama Digital Antika',
-                'meta_description' => 'Kebijakan privasi resmi PT Aktama Digital Antika mengenai perlindungan data pengguna dan klien.',
+                'meta_description' => 'Kebijakan privasi resmi PT Aktama Digital Antika sesuai UU Pelindungan Data Pribadi (UU PDP No. 27/2022).',
                 'is_published' => true,
                 'sort_order' => 1,
             ]
@@ -449,9 +511,23 @@ class DatabaseSeeder extends Seeder
         Page::updateOrCreate(
             ['slug' => 'syarat-ketentuan'],
             [
-                'title' => 'Syarat & Ketentuan Layanan',
+                'title' => 'Syarat & Ketentuan Layanan (Terms of Service)',
                 'editor_type' => 'standard',
-                'content_html' => '<div class="py-4"><h3>Syarat & Ketentuan Layanan PT Aktama Digital Antika</h3><p>Dengan menggunakan layanan dan platform PT Aktama Digital Antika, Anda menyetujui ketentuan-ketentuan berikut:</p><h4>1. Ruang Lingkup Layanan</h4><p>Seluruh jasa rekayasa perangkat lunak, pelatihan AI, serta produk yang kami sediakan disesuaikan dengan Surat Perjanjian Kerja (SPK) atau Kerangka Acuan Kerja (KAK) yang disepakati.</p><h4>2. Hak Kekayaan Intelektual</h4><p>Kode sumber aplikasi yang diserahterimakan menjadi milik klien sesuai klausul kontrak, dengan jaminan bahwa infrastruktur yang kami bangun bebas dari celah injeksi kode berbahaya.</p></div>',
+                'content_html' => '<div class="py-2">
+                    <p class="lead text-muted">Selamat datang di portal resmi <strong>PT Aktama Digital Antika</strong>. Dengan mengakses situs ini dan menggunakan layanan rekayasa perangkat lunak serta program pelatihan kami, Anda menyetujui ketentuan-ketentuan di bawah ini:</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">1. Ruang Lingkup Layanan & Perjanjian Kerja</h3>
+                    <p>Penyediaan jasa pembuatan website, pengembangan sistem informasi, dan pelatihan AI diatur berdasarkan Surat Perjanjian Kerja (SPK), Surat Perintah Kerja, atau Kerangka Acuan Kerja (KAK) resmi yang ditandatangani kedua belah pihak.</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">2. Standar Integritas & Jaminan Bebas Malware</h3>
+                    <p>PT Aktama Digital Antika berkomitmen menyerahkan perangkat lunak yang dibangun di atas fondasi teknologi yang kokoh, terbebas dari script tersembunyi berbahaya, celah injeksi situs judi online, maupun backdoor yang dapat merugikan reputasi klien.</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">3. Sertifikat Pelatihan & Kode Etik LPK</h3>
+                    <p>Sertifikat yang diterbitkan oleh Lembaga Pelatihan Kerja (LPK) PT Aktama Digital Antika diberikan kepada peserta yang telah memenuhi seluruh syarat kehadiran dan penugasan evaluasi materi. Penyalahgunaan sertifikat untuk tindakan melanggar hukum di luar tanggung jawab PT Aktama Digital Antika.</p>
+
+                    <h3 class="fw-bold text-dark mt-4 mb-2">4. Hak Kekayaan Intelektual</h3>
+                    <p>Seluruh materi publikasi, logo, modul pelatihan, dan konten artikel di situs web ini dilindungi hak cipta. Pengutipan materi artikel untuk kepentingan akademik atau edukasi diperkenankan dengan mencantumkan sumber rujukan jelas ke <code>https://aktama.com</code>.</p>
+                </div>',
                 'meta_title' => 'Syarat & Ketentuan Layanan | PT Aktama Digital Antika',
                 'meta_description' => 'Syarat dan ketentuan layanan resmi PT Aktama Digital Antika.',
                 'is_published' => true,

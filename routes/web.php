@@ -31,6 +31,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/portofolio', 'portfolios')->name('portfolios');
     Route::get('/artikel', 'articles')->name('articles.index');
     Route::get('/artikel/{slug}', 'articleShow')->name('articles.show');
+    Route::get('/kebijakan-privasi', fn() => redirect()->route('pages.show', 'kebijakan-privasi', 301))->name('privacy.redirect');
+    Route::get('/syarat-ketentuan', fn() => redirect()->route('pages.show', 'syarat-ketentuan', 301))->name('terms.redirect');
     Route::get('/halaman/{slug}', 'customPage')->name('pages.show');
     Route::post('/inquiry', 'storeInquiry')->middleware('throttle:6,1')->name('inquiry.store');
 });
@@ -88,6 +90,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Media & Image Uploader Inline (WYSIWYG / TinyMCE / WordPress style)
         Route::post('/media/upload', [AdminMediaController::class, 'upload'])->name('media.upload');
+        Route::get('/media/list', [AdminMediaController::class, 'index'])->name('media.list');
+        Route::post('/media/delete', [AdminMediaController::class, 'destroy'])->name('media.destroy');
 
         // Manajemen Layanan Website & Aplikasi
         Route::resource('services', AdminServiceController::class)->except(['show']);

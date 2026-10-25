@@ -83,8 +83,11 @@
                 <!-- 3. ACTION BAR EDITOR (ADD MEDIA) -->
                 <div class="d-flex justify-content-between align-items-center bg-white p-2 border border-bottom-0 rounded-top-3">
                     <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 shadow-xs" onclick="openMediaLibraryModal('training-objectives')">
+                            <i class="bi bi-images me-1"></i> Pustaka Media
+                        </button>
                         <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-xs" id="btn-add-media-training">
-                            <i class="bi bi-camera me-1"></i> Tambah Media (Upload Gambar ke Materi)
+                            <i class="bi bi-cloud-arrow-up me-1"></i> Unggah Cepat
                         </button>
                         <input type="file" id="media-file-input-training" accept="image/*" class="d-none">
                         <span id="media-spinner-training" class="spinner-border spinner-border-sm text-primary d-none" role="status"></span>
@@ -237,6 +240,8 @@
             @method('DELETE')
         </form>
     @endif
+
+    @include('admin.partials.media-modal')
 
 @endsection
 

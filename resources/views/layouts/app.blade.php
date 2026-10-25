@@ -356,8 +356,12 @@
 
             <!-- Copyright & Subline -->
             <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center small text-white-50">
-                <div>
-                    {{ $settings['footer_copyright'] ?? ('© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.') }}
+                <div class="d-flex align-items-center gap-3 flex-wrap mb-2 mb-md-0">
+                    <span>{{ $settings['footer_copyright'] ?? ('© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.') }}</span>
+                    <span>&bull;</span>
+                    <a href="{{ route('pages.show', 'kebijakan-privasi') }}" class="text-white-50 text-decoration-none hover-white">Kebijakan Privasi (UU PDP)</a>
+                    <span>&bull;</span>
+                    <a href="{{ route('pages.show', 'syarat-ketentuan') }}" class="text-white-50 text-decoration-none hover-white">Syarat & Ketentuan</a>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <span class="text-white-50 small"><i class="bi bi-patch-check-fill text-success me-1"></i>NIB: {{ $settings['nib_number'] ?? '1703250057018' }}</span>

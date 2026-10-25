@@ -15,6 +15,7 @@
             border-left: 4px solid #4f46e5;
             padding-left: 0.85rem;
             line-height: 1.35;
+            scroll-margin-top: 80px;
         }
         .article-content h3 {
             font-size: 1.25rem;
@@ -22,6 +23,7 @@
             color: #1e293b;
             margin-top: 1.75rem;
             margin-bottom: 0.85rem;
+            scroll-margin-top: 80px;
         }
         .article-content p {
             margin-bottom: 1.35rem;
@@ -66,6 +68,7 @@
         }
         .article-content table {
             margin: 1.5rem 0;
+            width: 100%;
         }
         .article-content .prompt-box {
             background-color: #0f172a;
@@ -101,6 +104,35 @@
             font-size: 0.95rem;
             line-height: 1.7;
         }
+        .toc-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        .toc-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .toc-list li.toc-h3 {
+            padding-left: 1.25rem;
+            font-size: 0.88rem;
+        }
+        .toc-list a {
+            color: #334155;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .toc-list a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
     </style>
 
     <!-- Header Breadcrumb & Judul -->
@@ -110,6 +142,9 @@
                 <ol class="breadcrumb small">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none">Beranda</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('articles.index') }}" class="text-decoration-none">Artikel</a></li>
+                    @if($article->category)
+                        <li class="breadcrumb-item"><a href="{{ route('articles.index', ['kategori' => $article->category->slug]) }}" class="text-decoration-none">{{ $article->category->name }}</a></li>
+                    @endif
                     <li class="breadcrumb-item active text-truncate" aria-current="page" style="max-width: 250px;">{{ $article->title }}</li>
                 </ol>
             </nav>
@@ -138,7 +173,27 @@
                 </div>
             @endif
 
-            <div class="article-content fs-6 text-dark leading-relaxed mb-5">
+            <!-- DAFTAR ISI OTOMATIS (TABLE OF CONTENTS) -->
+            <div id="tableOfContentsContainer" class="toc-card d-none">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-list-nested text-primary fs-5"></i>
+                        <span>Daftar Isi Artikel</span>
+                    </h6>
+                    <button type="button" id="btnToggleToc" class="btn btn-sm btn-link text-muted p-0 text-decoration-none" style="font-size: 0.8rem;">
+                        [Sembunyikan]
+                    </button>
+                </div>
+                <div id="tocContent">
+                    <hr class="my-2 border-secondary border-opacity-25">
+                    <ul id="tocList" class="toc-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Konten Artikel -->
+            <div id="mainArticleContent" class="article-content fs-6 text-dark leading-relaxed mb-5">
                 {!! $article->content !!}
             </div>
 
@@ -149,28 +204,59 @@
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
                             <h6 class="fw-bold text-dark mb-0">{{ $article->author }}</h6>
-                            <span class="badge bg-success bg-opacity-10 text-success small" style="font-size: 0.7rem;">Verified Author</span>
+                            <span class="badge bg-success bg-opacity-10 text-success small" style="font-size: 0.7rem;">Verified Author & Researcher</span>
                         </div>
                         <p class="text-muted small mb-2">
-                            Founder PT Aktama Digital Antika • Dosen & Kaprodi Sistem Komputer Univ. Parna Raya • Fasilitator Nasional KKA Kemdikdasmen.
+                            Direktur PT Aktama Digital Antika • Dosen & Peneliti Sistem Komputer Univ. Parna Raya • Fasilitator Nasional KKA Kemdikdasmen.
                         </p>
                         <a href="https://profil.aktama.com" target="_blank" rel="noopener noreferrer" class="small text-primary text-decoration-none fw-semibold">
-                            Lihat Profil Akademik & Publikasi SINTA <i class="bi bi-arrow-up-right"></i>
+                            Lihat Profil Akademik & Publikasi Jurnal SINTA <i class="bi bi-arrow-up-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Share Buttons -->
+            <!-- Share Buttons Lengkap -->
             <div class="p-4 rounded-4 bg-light border d-flex flex-wrap align-items-center justify-content-between gap-3 mb-5">
                 <div>
-                    <h6 class="fw-bold text-dark mb-1">Bagikan Artikel Ini:</h6>
-                    <small class="text-muted">Bantu rekan atau instansi Anda mendapatkan wawasan strategis ini.</small>
+                    <h6 class="fw-bold text-dark mb-1"><i class="bi bi-share me-1 text-primary"></i> Bagikan Wawasan Ini:</h6>
+                    <small class="text-muted">Bantu rekan instansi atau komunitas Anda mendapatkan wawasan strategis ini.</small>
                 </div>
-                <div class="d-flex gap-2">
-                    <a href="https://wa.me/?text={{ urlencode($article->title . ' - ' . url()->current()) }}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm rounded-pill px-3">
-                        <i class="bi bi-whatsapp me-1"></i> Bagikan ke WhatsApp
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="https://api.whatsapp.com/send?text={{ urlencode($article->title . "\n\n" . url()->current()) }}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm rounded-pill px-3 shadow-xs">
+                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
                     </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm rounded-pill px-3 shadow-xs" style="background-color: #0077b5; border-color: #0077b5;">
+                        <i class="bi bi-linkedin me-1"></i> LinkedIn
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm rounded-pill px-3 shadow-xs" style="background-color: #1877f2; border-color: #1877f2;">
+                        <i class="bi bi-facebook me-1"></i> Facebook
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text={{ urlencode($article->title) }}&url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-sm rounded-pill px-3 shadow-xs">
+                        <i class="bi bi-twitter-x me-1"></i> X
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 shadow-xs" id="btnCopyLink" onclick="copyArticleLink()">
+                        <i class="bi bi-link-45deg me-1"></i> <span id="copyLinkText">Salin Tautan</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Call-To-Action Banner Konsultasi / Pelatihan -->
+            <div class="card border-0 rounded-4 p-4 p-md-5 mb-5 text-white position-relative overflow-hidden shadow-sm" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);">
+                <div class="position-relative" style="z-index: 2;">
+                    <span class="badge bg-info bg-opacity-25 text-info fw-bold text-uppercase px-3 py-1 mb-2">Konsultasi Resmi</span>
+                    <h4 class="fw-bold font-display mb-2">Butuh Pelatihan Serupa atau Solusi Rekayasa Website?</h4>
+                    <p class="text-white-50 small mb-4" style="max-width: 600px;">
+                        PT Aktama Digital Antika siap menghadirkan program pelatihan in-house bersertifikat LPK resmi maupun pembuatan website & sistem informasi berstandar enterprise bebas dari celah injeksi malware.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6285341026331' }}?text={{ urlencode('Halo PT Aktama Digital Antika, saya tertarik setelah membaca artikel ' . $article->title . ' dan ingin berkonsultasi mengenai solusi yang relevan.') }}" target="_blank" rel="noopener noreferrer" class="btn btn-success rounded-pill px-4 py-2 fw-semibold shadow-sm">
+                            <i class="bi bi-whatsapp me-1"></i> Konsultasi via WhatsApp
+                        </a>
+                        <a href="{{ route('home') }}#form-konsultasi" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold">
+                            Minta Proposal Penawaran
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -199,5 +285,71 @@
             @endif
         </div>
     </section>
+
+    <!-- Script Table of Contents & Copy Link -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. GENERATE DAFTAR ISI OTOMATIS
+            const content = document.getElementById('mainArticleContent');
+            const tocContainer = document.getElementById('tableOfContentsContainer');
+            const tocList = document.getElementById('tocList');
+            const btnToggleToc = document.getElementById('btnToggleToc');
+            const tocContent = document.getElementById('tocContent');
+
+            if (content && tocContainer && tocList) {
+                const headings = content.querySelectorAll('h2, h3');
+                if (headings.length >= 2) {
+                    tocContainer.classList.remove('d-none');
+
+                    headings.forEach((h, index) => {
+                        let id = h.id;
+                        if (!id) {
+                            id = 'section-' + (index + 1) + '-' + h.textContent.trim().toLowerCase()
+                                .replace(/[^\w\s-]/g, '')
+                                .replace(/[\s_-]+/g, '-')
+                                .replace(/^-+|-+$/g, '');
+                            h.id = id;
+                        }
+
+                        const li = document.createElement('li');
+                        li.className = h.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2';
+
+                        const icon = h.tagName.toLowerCase() === 'h3' ? 'bi-dot text-muted' : 'bi-chevron-right text-primary';
+                        li.innerHTML = `<a href="#${id}"><i class="bi ${icon} me-1 small"></i>${h.textContent.trim()}</a>`;
+                        tocList.appendChild(li);
+                    });
+
+                    // Toggle expand/collapse TOC
+                    if (btnToggleToc && tocContent) {
+                        btnToggleToc.addEventListener('click', function () {
+                            if (tocContent.classList.contains('d-none')) {
+                                tocContent.classList.remove('d-none');
+                                btnToggleToc.textContent = '[Sembunyikan]';
+                            } else {
+                                tocContent.classList.add('d-none');
+                                btnToggleToc.textContent = '[Tampilkan]';
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        // 2. COPY LINK HELPER
+        function copyArticleLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btnText = document.getElementById('copyLinkText');
+                if (btnText) {
+                    const original = btnText.textContent;
+                    btnText.textContent = 'Tersalin!';
+                    setTimeout(() => {
+                        btnText.textContent = original;
+                    }, 2000);
+                }
+            }).catch(err => {
+                prompt('Salin tautan berikut:', window.location.href);
+            });
+        }
+    </script>
 
 @endsection

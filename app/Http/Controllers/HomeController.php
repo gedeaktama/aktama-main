@@ -153,9 +153,32 @@ class HomeController extends Controller
     public function portfolios(): View
     {
         $settings = $this->getSettings();
-        $portfolios = Portfolio::where('is_published', true)->get();
+        
+        $portfolioCategories = Portfolio::where('is_published', true)
+            ->whereNotNull('category')
+            ->distinct()
+            ->pluck('category');
 
-        return view('pages.portfolios', compact('settings', 'portfolios'));
+        $query = Portfolio::where('is_published', true);
+
+        if ($cat = request('kategori')) {
+            $query->where('category', $cat);
+        }
+
+        if ($search = trim((string) request('q'))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('technologies', 'like', "%{$search}%")
+                  ->orWhere('client_type', 'like', "%{$search}%");
+            });
+        }
+
+        $portfolios = $query->orderBy('sort_order')->get();
+        $activeCategory = request('kategori');
+        $searchQuery = request('q');
+
+        return view('pages.portfolios', compact('settings', 'portfolios', 'portfolioCategories', 'activeCategory', 'searchQuery'));
     }
 
     /**
@@ -177,11 +200,23 @@ class HomeController extends Controller
             });
         }
 
+        if ($search = trim((string) request('q'))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('summary', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%")
+                  ->orWhere('tags', 'like', "%{$search}%");
+            });
+        }
+
         $articles = $query->orderByDesc('published_at')
             ->paginate(12)
             ->withQueryString();
 
-        return view('pages.articles', compact('settings', 'articles', 'categories'));
+        $activeCategory = request('kategori');
+        $searchQuery = request('q');
+
+        return view('pages.articles', compact('settings', 'articles', 'categories', 'activeCategory', 'searchQuery'));
     }
 
     /**

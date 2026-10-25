@@ -193,8 +193,11 @@
                     <!-- Action Bar "Tambah Media" -->
                     <div class="d-flex justify-content-between align-items-center bg-white p-2 border border-bottom-0 rounded-top-3">
                         <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn btn-sm btn-primary rounded-pill px-3 shadow-xs" onclick="openMediaLibraryModal('page-content-html')">
+                                <i class="bi bi-images me-1"></i> Pustaka Media
+                            </button>
                             <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-xs" id="btn-add-media-page">
-                                <i class="bi bi-camera me-1"></i> Tambah Media (Upload Gambar ke Halaman)
+                                <i class="bi bi-cloud-arrow-up me-1"></i> Unggah Cepat
                             </button>
                             <input type="file" id="media-file-input-page" accept="image/*" class="d-none">
                             <span id="media-spinner-page" class="spinner-border spinner-border-sm text-primary d-none" role="status"></span>
@@ -400,6 +403,8 @@
             @method('DELETE')
         </form>
     @endif
+
+    @include('admin.partials.media-modal')
 
 @endsection
 
