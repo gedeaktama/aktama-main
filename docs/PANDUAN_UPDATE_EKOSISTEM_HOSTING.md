@@ -45,8 +45,10 @@ git push origin main
 ```bash
 cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source
 git pull origin main
-bash scripts/linux/deploy-niagahoster.sh
+bash update.sh
 ```
+> **Tips:** Jika terminal Anda sudah berada di dalam folder `public_html`, Anda cukup mengetikkan:
+> `cd aktama-main-source && git pull origin main && bash update.sh`
 
 ---
 

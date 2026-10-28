@@ -151,22 +151,54 @@ Seluruh modul postingan di panel admin kini telah diseragamkan dengan antarmuka 
 - File proteksi server [public/images/.htaccess](file:///d:/Xampp2/htdocs/aktama-main/public/images/.htaccess) telah dipasang untuk **mematikan eksekusi script PHP** di seluruh folder media.
 - Apache akan otomatis menolak akses (`403 Forbidden`) terhadap segala file berekstensi `.php`, `.phtml`, `.cgi`, `.sh` di folder upload, sehingga website **100% steril dari injeksi backdoor dan script judi online**.
 
+### G. Fitur Edit Item Menu Navigasi (`/admin/menus`)
+- Setiap butir menu navigasi (baik menu utama navbar maupun menu footer) kini dilengkapi tombol kuning **"Edit"** di sebelah tombol hapus.
+- Menampilkan modal pop-up interaktif untuk mengubah **Label Teks**, **URL Tujuan / Anchor Link**, serta opsi **Buka di Tab Baru (`target="_blank"`)** tanpa perlu menghapus dan membuat ulang menu.
+
+### H. Bilah Pintasan Admin Ala WordPress (*Frontend Admin Bar*)
+- Saat administrator sedang login dan menjelajahi website publik (`/`), di bagian paling atas layar muncul bilah hitam (*top admin toolbar*) ala WordPress.
+- Menyediakan tombol pintas cepat menuju **Dashboard**, **Pengaturan Menu**, **Tata Letak Seksi Beranda**, **Visual Page Builder**, serta indikator status login admin.
+
+### I. Visual Page Builder Ala Elementor WordPress (`/admin/pages`)
+- Fitur visual drag-and-drop kanvas mandiri tanpa ketergantungan plugin WordPress yang lambat/rentan.
+- **Panel Blok Otomatis Aktif:** Begitu kanvas dibuka, panel widget di sebelah kanan langsung aktif menampilkan pilihan blok.
+- **Pustaka Blok Siap Pakai:**
+  - `⭐ Template Siap Pakai`: **Landing Page Lengkap (1-Click Template)** — langsung memuat Hero Banner, 3 Kolom Fitur, 4 Counter Statistik, 3 Testimoni Klien bintang 5, dan Call to Action WhatsApp.
+  - `📐 Tata Letak & Grid`: Kontainer 1 Kolom Penuh, 2 Kolom (50/50), 3 Kolom Rata, dan 4 Kolom Grid.
+  - `🚀 Seksi Siap Pakai`: Hero Banner, 3 Kolom Fitur, Media & Teks 2 Kolom, Statistik Angka, Testimoni Klien, FAQ Accordion interaktif, Video YouTube responsif 16:9, Tabel Harga, dan Call to Action Banner gradien.
+  - `🧩 Elemen Dasar`: Heading, Paragraf, Tombol Brand, Gambar Foto, Card Box, Garis Pemisah, dan **Tombol Chat WhatsApp**.
+- **Fitur Interaktif:**
+  - Edit teks visual secara instan cukup dengan **klik dua kali (*double click*)** pada teks apa saja.
+  - Ganti link URL dan sumber gambar via tab **Settings (ikon gerigi)** di panel kanan atas.
+  - Pratinjau responsif perangkat: **Desktop**, **Tablet**, dan **Mobile**.
+  - Tombol modal panduan **"Cara Pakai"** di bilah atas kanvas.
+  - Tombol **"Simpan Desain"** berbasis AJAX dengan notifikasi toast instan.
+
 ---
 
 ## 7. 🚀 CARA UPDATE SERVER PRODUKSI NIAGAHOSTER (1-KLIK)
 
-Setiap kali ada pembaruan kode atau artikel dari GitHub, Anda cukup menjalankan perintah 1-baris berikut di terminal SSH Niagahoster:
+Setiap kali ada pembaruan kode, fitur, atau artikel dari GitHub, jalankan perintah 1-baris berikut di terminal SSH Niagahoster:
 
 ```bash
 cd /home/u107454400/domains/aktama.com/public_html/aktama-main-source && git pull origin main && bash update.sh
 ```
 
-Skrip ini akan mengeksekusi secara otomatis:
-1. `git pull origin main` (tarik seluruh pembaruan fitur, seeder, dan benteng keamanan dari GitHub).
+> [!NOTE]
+> **Catatan Struktur Folder di Server Niagahoster:**
+> * Folder source backend adalah **`aktama-main-source`** (terdapat akhiran `-source`).
+> * Jika terminal Anda sudah berada di dalam folder `/home/u107454400/domains/aktama.com/public_html`, Anda cukup mengetikkan:
+>   ```bash
+>   cd aktama-main-source && git pull origin main && bash update.sh
+>   ```
+
+Skrip `update.sh` ini akan mengeksekusi secara otomatis:
+1. `git pull origin main` (tarik seluruh pembaruan fitur, builder Elementor, modal edit menu, dan styling dari GitHub).
 2. Menjalankan migrasi database via binary Alt-PHP 8.3 (`/opt/alt/php83/usr/bin/php artisan migrate --force`).
-3. Menjalankan seeder database lengkap (`db:seed --force`) yang otomatis mengaktifkan seluruh seksi baru dan halaman legalitas.
-4. Menyinkronkan aset gambar, upload media, file `.htaccess` keamanan, dan build ke folder publik `public_html`.
-5. Membersihkan cache dan mengoptimalkan cache produksi Laravel.
+3. Menjalankan seeder database lengkap (`db:seed --force`) yang otomatis mengaktifkan seluruh seksi dan konfigurasi terbaru.
+4. Menyinkronkan aset gambar, upload media, file `.htaccess` keamanan, dan folder `build/` (CSS & JS) ke web root publik `public_html`.
+5. Menghubungkan symlink storage (`artisan storage:link`).
+6. Membersihkan cache lama dan mengoptimalkan cache produksi Laravel (`optimize:clear`, `view:cache`, `route:cache`).
 
 ---
 
