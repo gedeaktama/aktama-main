@@ -38,9 +38,9 @@ class AktamaCoreTest extends TestCase
             $response->assertStatus(200);
         }
 
-        // Uji rute gateway kopi dan undangan mengarahkan ke platform terkait
-        $this->get('/kopi')->assertRedirect();
-        $this->get('/undangan')->assertRedirect();
+        // Uji rute kopi dan undangan memuat halaman dengan sukses
+        $this->get('/kopi')->assertStatus(200);
+        $this->get('/undangan')->assertStatus(200);
     }
 
     /**
@@ -212,9 +212,9 @@ class AktamaCoreTest extends TestCase
      */
     public function test_article_detail_page_loads_published_article(): void
     {
-        $response = $this->get('/artikel/mengapa-website-bisnis-harus-aman-dari-celah-malware-judol');
+        $response = $this->get('/artikel/fenomena-web-sekolah-disusupi-spam-judol-dan-solusinya');
         $response->assertStatus(200);
-        $response->assertSee('Mengapa Website Bisnis Harus Bebas dari Celah Malware');
+        $response->assertSee('Fenomena Web Sekolah & Instansi Disusupi Spam Judol');
     }
 
     /**

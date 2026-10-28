@@ -64,6 +64,43 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
+    @if(auth()->check() && (auth()->user()->role ?? null) === 'admin')
+        <!-- WORDPRESS STYLE ADMIN BAR FOR LOGGED-IN ADMIN -->
+        <div class="bg-dark text-white py-1 px-3 border-bottom border-warning border-opacity-50 small" style="font-size: 0.8rem; z-index: 1060; position: relative;">
+            <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{{ route('admin.dashboard') }}" class="text-white text-decoration-none fw-bold d-flex align-items-center gap-1">
+                        <i class="bi bi-shield-lock-fill text-warning"></i>
+                        <span>Aktama Admin Portal</span>
+                    </a>
+                    <span class="text-secondary d-none d-md-inline">|</span>
+                    <a href="{{ route('admin.menus.index') }}" class="text-white-50 text-decoration-none hover-white d-flex align-items-center gap-1">
+                        <i class="bi bi-menu-button-wide text-info"></i> Edit Menu Navigasi
+                    </a>
+                    <a href="{{ route('admin.sections.index') }}" class="text-white-50 text-decoration-none hover-white d-flex align-items-center gap-1">
+                        <i class="bi bi-grid-1x2 text-info"></i> Tata Letak Beranda (Seksi)
+                    </a>
+                    <a href="{{ route('admin.pages.index') }}" class="text-white-50 text-decoration-none hover-white d-flex align-items-center gap-1 d-none d-lg-flex">
+                        <i class="bi bi-file-earmark-code text-info"></i> Visual Page Builder
+                    </a>
+                    <a href="{{ route('admin.articles.create') }}" class="text-white-50 text-decoration-none hover-white d-flex align-items-center gap-1 d-none d-xl-flex">
+                        <i class="bi bi-plus-circle text-success"></i> + Berita
+                    </a>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white-50 d-none d-sm-inline">Halo, <strong class="text-white">{{ auth()->user()->name }}</strong></span>
+                    <span class="text-secondary d-none d-sm-inline">|</span>
+                    <form action="{{ route('admin.logout') }}" method="POST" class="d-inline mb-0">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white-50 text-decoration-none hover-white p-0 small" style="font-size: 0.78rem;">
+                            <i class="bi bi-box-arrow-right text-danger"></i> Keluar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- TOPBAR KONTAK & INFO -->
     <div class="bg-dark text-white-50 py-1 border-bottom border-secondary border-opacity-25 small">
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
@@ -182,6 +219,11 @@
 
                 <!-- Right Action CTA -->
                 <div class="d-flex align-items-center gap-2">
+                    @if(auth()->check() && (auth()->user()->role ?? null) === 'admin')
+                        <a href="{{ route('admin.menus.index') }}" class="btn btn-outline-warning btn-sm px-2 py-1 rounded-pill small" title="Klik untuk mengedit susunan menu navigasi ini" style="font-size: 0.75rem;">
+                            <i class="bi bi-pencil-square me-1"></i> Edit Menu
+                        </a>
+                    @endif
                     <a href="#form-konsultasi" class="btn btn-brand btn-sm px-3 py-2 rounded-pill shadow-sm">
                         <i class="bi bi-chat-dots-fill me-1"></i> Minta Penawaran
                     </a>

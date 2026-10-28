@@ -106,13 +106,18 @@
                                                     <div class="fw-bold text-dark item-label-display">{{ $item['label'] }}</div>
                                                     <small class="text-muted font-monospace item-url-display">{{ $item['url'] }}</small>
                                                     @if(($item['target'] ?? '_self') === '_blank')
-                                                        <span class="badge bg-secondary bg-opacity-25 text-dark ms-1" style="font-size: 0.65rem;">Tab Baru</span>
+                                                        <span class="badge bg-secondary bg-opacity-25 text-dark ms-1 item-target-badge" style="font-size: 0.65rem;">Tab Baru</span>
                                                     @endif
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
-                                                <i class="bi bi-trash me-1"></i> Hapus
-                                            </button>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-edit-item" title="Edit teks label atau tautan ini">
+                                                    <i class="bi bi-pencil-square me-1"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
+                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                </button>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -135,13 +140,18 @@
                                                     <div class="fw-bold text-dark item-label-display">{{ $item['label'] }}</div>
                                                     <small class="text-muted font-monospace item-url-display">{{ $item['url'] }}</small>
                                                     @if(($item['target'] ?? '_self') === '_blank')
-                                                        <span class="badge bg-secondary bg-opacity-25 text-dark ms-1" style="font-size: 0.65rem;">Tab Baru</span>
+                                                        <span class="badge bg-secondary bg-opacity-25 text-dark ms-1 item-target-badge" style="font-size: 0.65rem;">Tab Baru</span>
                                                     @endif
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
-                                                <i class="bi bi-trash me-1"></i> Hapus
-                                            </button>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-edit-item" title="Edit teks label atau tautan ini">
+                                                    <i class="bi bi-pencil-square me-1"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
+                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                </button>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -160,6 +170,46 @@
             </div>
         </div>
     </form>
+
+    <!-- MODAL EDIT ITEM MENU (ALA WORDPRESS NAV-MENUS) -->
+    <div class="modal fade" id="modalEditMenu" tabindex="-1" aria-labelledby="modalEditMenuLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow rounded-4">
+                <div class="modal-header bg-light border-bottom py-3">
+                    <h6 class="modal-title fw-bold text-dark mb-0" id="modalEditMenuLabel">
+                        <i class="bi bi-pencil-square text-primary me-2"></i> Edit Item Menu Navigasi
+                    </h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label for="edit_menu_label" class="form-label small fw-bold text-dark">Label Teks Menu *</label>
+                        <input type="text" class="form-control" id="edit_menu_label" placeholder="Contoh: Beranda, Layanan Kami, Kontak">
+                        <div class="form-text small text-muted">Teks yang akan muncul dan terbaca oleh pengunjung di menu navigasi.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_menu_url" class="form-label small fw-bold text-dark">URL / Tautan Tujuan *</label>
+                        <input type="text" class="form-control font-monospace" id="edit_menu_url" placeholder="/nama-halaman atau https://...">
+                        <div class="form-text small text-muted">Dapat berupa tautan lokal seperti <code>/layanan</code> atau URL lengkap <code>https://...</code></div>
+                    </div>
+                    <div class="form-check p-3 bg-light rounded-3 mt-3">
+                        <input class="form-check-input" type="checkbox" id="edit_menu_target">
+                        <label class="form-check-label small text-dark fw-medium" for="edit_menu_target">
+                            Buka di tab baru browser (<code>target="_blank"</code>)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top py-3">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-3 btn-sm" data-bs-dismiss="modal">
+                        Batal
+                    </button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 btn-sm" id="btn-save-edit-menu">
+                        <i class="bi bi-check2-circle me-1"></i> Simpan Perubahan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -183,7 +233,80 @@
             ghostClass: 'bg-primary-subtle'
         });
 
-        // Helper Buat Elemen Menu
+        // Modal Edit References
+        const editModalEl = document.getElementById('modalEditMenu');
+        const editModal = new bootstrap.Modal(editModalEl);
+        const editLabelInput = document.getElementById('edit_menu_label');
+        const editUrlInput = document.getElementById('edit_menu_url');
+        const editTargetInput = document.getElementById('edit_menu_target');
+        let currentEditItem = null;
+
+        // Pasang Event Listener (Edit & Remove) pada Elemen Menu
+        function attachMenuItemEvents(item) {
+            const editBtn = item.querySelector('.btn-edit-item');
+            if (editBtn) {
+                editBtn.addEventListener('click', function () {
+                    currentEditItem = item;
+                    editLabelInput.value = item.getAttribute('data-label') || '';
+                    editUrlInput.value = item.getAttribute('data-url') || '';
+                    editTargetInput.checked = (item.getAttribute('data-target') === '_blank');
+                    editModal.show();
+                });
+            }
+
+            const removeBtn = item.querySelector('.btn-remove-item');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function () {
+                    item.remove();
+                });
+            }
+        }
+
+        // Simpan Perubahan dari Modal Edit
+        document.getElementById('btn-save-edit-menu')?.addEventListener('click', function () {
+            if (!currentEditItem) return;
+
+            const newLabel = editLabelInput.value.trim();
+            const newUrl = editUrlInput.value.trim();
+            const isBlank = editTargetInput.checked;
+            const newTarget = isBlank ? '_blank' : '_self';
+
+            if (!newLabel || !newUrl) {
+                alert('Silakan isi Label Teks Menu dan URL tujuan terlebih dahulu.');
+                return;
+            }
+
+            // Update Atribut Data
+            currentEditItem.setAttribute('data-label', newLabel);
+            currentEditItem.setAttribute('data-url', newUrl);
+            currentEditItem.setAttribute('data-target', newTarget);
+
+            // Update Teks Label dan URL Tampilan
+            const labelDisplay = currentEditItem.querySelector('.item-label-display');
+            const urlDisplay = currentEditItem.querySelector('.item-url-display');
+            if (labelDisplay) labelDisplay.textContent = newLabel;
+            if (urlDisplay) urlDisplay.textContent = newUrl;
+
+            // Update Badge "Tab Baru"
+            let badge = currentEditItem.querySelector('.item-target-badge');
+            if (isBlank) {
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge bg-secondary bg-opacity-25 text-dark ms-1 item-target-badge';
+                    badge.style.fontSize = '0.65rem';
+                    badge.textContent = 'Tab Baru';
+                    labelDisplay.parentNode.appendChild(badge);
+                }
+            } else {
+                if (badge) {
+                    badge.remove();
+                }
+            }
+
+            editModal.hide();
+        });
+
+        // Helper Buat Elemen Menu Baru
         function createMenuItem(label, url, target) {
             const div = document.createElement('div');
             div.className = 'list-group-item border rounded-3 p-3 d-flex align-items-center justify-content-between gap-3 menu-item';
@@ -199,26 +322,26 @@
                     <div class="flex-grow-1">
                         <div class="fw-bold text-dark item-label-display">${label}</div>
                         <small class="text-muted font-monospace item-url-display">${url}</small>
-                        ${target === '_blank' ? '<span class="badge bg-secondary bg-opacity-25 text-dark ms-1" style="font-size: 0.65rem;">Tab Baru</span>' : ''}
+                        ${target === '_blank' ? '<span class="badge bg-secondary bg-opacity-25 text-dark ms-1 item-target-badge" style="font-size: 0.65rem;">Tab Baru</span>' : ''}
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
-                    <i class="bi bi-trash me-1"></i> Hapus
-                </button>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-edit-item" title="Edit teks label atau tautan ini">
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3 btn-remove-item" title="Hapus dari menu">
+                        <i class="bi bi-trash me-1"></i> Hapus
+                    </button>
+                </div>
             `;
 
-            div.querySelector('.btn-remove-item').addEventListener('click', function () {
-                div.remove();
-            });
-
+            attachMenuItemEvents(div);
             return div;
         }
 
-        // Attach event delete untuk item awal
-        document.querySelectorAll('.btn-remove-item').forEach(btn => {
-            btn.addEventListener('click', function () {
-                btn.closest('.menu-item').remove();
-            });
+        // Attach event listener untuk seluruh item yang ada saat halaman dimuat
+        document.querySelectorAll('.menu-item').forEach(item => {
+            attachMenuItemEvents(item);
         });
 
         // Dapatkan target list aktif (Header atau Footer)

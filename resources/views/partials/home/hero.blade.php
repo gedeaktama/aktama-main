@@ -1,10 +1,15 @@
 <!-- HERO SECTION -->
 <section class="py-5 bg-white border-bottom position-relative overflow-hidden">
-    <div class="container py-lg-4">
+    <!-- Ambient Background Glows (Hardware Accelerated) -->
+    <div class="hero-ambient-glow" style="top: -15%; left: -8%; width: 480px; height: 480px; background: radial-gradient(circle, rgba(79, 70, 229, 0.14) 0%, rgba(14, 165, 233, 0.06) 50%, transparent 70%);"></div>
+    <div class="hero-ambient-glow" style="bottom: -20%; right: -8%; width: 520px; height: 520px; background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 70%); animation-delay: -4.5s;"></div>
+
+    <div class="container py-lg-4 position-relative" style="z-index: 1;">
         <div class="row align-items-center g-5">
             <div class="col-lg-7 text-center text-lg-start">
                 <!-- Badge Kredibilitas -->
-                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-light border border-primary border-opacity-25 text-primary small fw-semibold mb-3">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-light border border-primary border-opacity-25 text-primary small fw-semibold mb-3 badge-shimmer shadow-xs">
+                    <span class="status-dot-pulse"></span>
                     <i class="bi bi-shield-check text-primary"></i>
                     <span>{{ $sectionConfig->badge ?? 'PT Aktama Digital Antika • Solusi Teknologi Terpadu' }}</span>
                 </div>
@@ -14,7 +19,7 @@
                     @if(!empty($sectionConfig?->title))
                         {{ $sectionConfig->title }}
                     @else
-                        Kembangkan Bisnis & Kompetensi Digital Bersama <span class="text-gradient">{{ $settings['brand_name'] ?? 'Aktama Digital' }}</span>
+                        Kembangkan Bisnis & Kompetensi Digital Bersama <span class="text-gradient text-gradient-animate">{{ $settings['brand_name'] ?? 'Aktama Digital' }}</span>
                     @endif
                 </h1>
 
@@ -29,11 +34,11 @@
 
                 <!-- CTA Buttons -->
                 <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start mb-4">
-                    <a href="#form-konsultasi" class="btn btn-brand btn-lg px-4 py-3 rounded-pill shadow-sm">
-                        <i class="bi bi-send-fill me-2"></i> Minta Penawaran / Konsultasi
+                    <a href="{{ $sectionConfig?->content_data['cta_primary_url'] ?? '#form-konsultasi' }}" class="btn btn-brand btn-lg px-4 py-3 rounded-pill shadow-sm">
+                        <i class="bi bi-send-fill me-2"></i> {{ $sectionConfig?->content_data['cta_primary_text'] ?? 'Minta Penawaran / Konsultasi' }}
                     </a>
-                    <a href="#layanan-utama" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill">
-                        <i class="bi bi-grid-fill me-2"></i> Jelajahi Layanan
+                    <a href="{{ $sectionConfig?->content_data['cta_secondary_url'] ?? '#layanan-utama' }}" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill">
+                        <i class="bi bi-grid-fill me-2"></i> {{ $sectionConfig?->content_data['cta_secondary_text'] ?? 'Jelajahi Layanan' }}
                     </a>
                 </div>
 
@@ -58,11 +63,11 @@
                 <div class="card border-0 shadow-lg rounded-4 p-4 bg-white position-relative">
                     <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3">
                         <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-layers-fill text-primary me-2"></i> Ekosistem Layanan</h6>
-                        <span class="badge bg-success bg-opacity-10 text-success fw-semibold">Operasional Aktif</span>
+                        <span class="badge bg-success bg-opacity-10 text-success fw-semibold"><span class="status-dot-pulse me-1"></span> Operasional Aktif</span>
                     </div>
 
                     <div class="list-group list-group-flush gap-2">
-                        <a href="#jasa-website" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                        <a href="#jasa-website" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3 hover-lift">
                             <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary fs-5"><i class="bi bi-code-slash"></i></div>
                             <div class="flex-grow-1">
                                 <div class="fw-bold text-dark small">Jasa Rekayasa Website & Software</div>
@@ -71,7 +76,7 @@
                             <span class="badge bg-primary bg-opacity-10 text-primary" style="font-size: 0.65rem;">Layanan</span>
                         </a>
 
-                        <a href="#pelatihan-ai" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                        <a href="#pelatihan-ai" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3 hover-lift">
                             <div class="p-2 rounded-3 bg-info bg-opacity-10 text-info fs-5"><i class="bi bi-robot"></i></div>
                             <div class="flex-grow-1">
                                 <div class="fw-bold text-dark small">Pelatihan AI & Koding (LPK)</div>
@@ -80,7 +85,7 @@
                             <span class="badge bg-info bg-opacity-10 text-info" style="font-size: 0.65rem;">Resmi LPK</span>
                         </a>
 
-                        <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3">
+                        <a href="{{ $settings['profile_url'] ?? 'https://profil.aktama.com' }}" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action border rounded-3 p-3 d-flex align-items-center gap-3 hover-lift">
                             <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary fs-5"><i class="bi bi-person-workspace"></i></div>
                             <div class="flex-grow-1">
                                 <div class="fw-bold text-dark small">Profil & Riset Founder</div>

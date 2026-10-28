@@ -116,3 +116,211 @@ body {
     background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
     box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.25);
 }
+
+/* ==========================================================================
+   MODERN HARDWARE-ACCELERATED MICRO-ANIMATIONS (HIGH PERFORMANCE)
+   ========================================================================== */
+
+/* 1. Interactive Hover & Card Lift System */
+.hover-lift, 
+.hover-translate-up {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s ease !important;
+    will-change: transform;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+        border-color: rgba(79, 70, 229, 0.35) !important;
+    }
+
+    &:active {
+        transform: translateY(-2px);
+    }
+}
+
+.hover-shadow {
+    transition: box-shadow 0.25s ease, transform 0.25s ease !important;
+    &:hover {
+        box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.12) !important;
+        transform: translateY(-2px);
+    }
+}
+
+/* Smooth zoom on card image hover */
+.card.overflow-hidden img.object-fit-cover,
+.hover-lift img.object-fit-cover {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.card.overflow-hidden:hover img.object-fit-cover,
+.hover-lift:hover img.object-fit-cover {
+    transform: scale(1.04);
+}
+
+/* Smooth button tactile press effect */
+.btn {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+/* 2. Sticky Navbar Glassmorphism */
+.navbar.sticky-top {
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+
+    &.navbar-scrolled {
+        background-color: rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08) !important;
+    }
+}
+
+/* 3. Hero Ambient Glow & Animated Gradients */
+.hero-ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.65;
+    animation: hero-glow-float 9s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes hero-glow-float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(25px, 20px) scale(1.08); }
+}
+
+.text-gradient-animate {
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 50%, #4f46e5 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-pan 6s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-pan {
+    0% { background-position: 0% center; }
+    100% { background-position: 100% center; }
+}
+
+/* 4. Live Status Pulse & Shimmer Indicators */
+.status-dot-pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    vertical-align: middle;
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.badge-shimmer {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+        transform: rotate(30deg);
+        animation: badge-shimmer-run 4.5s infinite linear;
+        pointer-events: none;
+    }
+}
+
+@keyframes badge-shimmer-run {
+    0% { transform: translateX(-100%) rotate(30deg); }
+    25%, 100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* 5. Floating WhatsApp Micro-Glow */
+.floating-wa-btn {
+    animation: wa-float-glow 3.5s ease-in-out infinite;
+    will-change: transform, box-shadow;
+
+    &:hover {
+        transform: translateY(-5px) scale(1.04) !important;
+        box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6) !important;
+    }
+}
+
+@keyframes wa-float-glow {
+    0%, 100% {
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
+        transform: translateY(0);
+    }
+    50% {
+        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.55);
+        transform: translateY(-4px);
+    }
+}
+
+/* 6. Scroll-Driven Reveal Classes (GPU Accelerated) */
+.reveal-init {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+
+    &.is-revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal-fade-left.reveal-init {
+    transform: translateX(-24px);
+    &.is-revealed {
+        transform: translateX(0);
+    }
+}
+
+.reveal-fade-right.reveal-init {
+    transform: translateX(24px);
+    &.is-revealed {
+        transform: translateX(0);
+    }
+}
+
+.reveal-scale.reveal-init {
+    transform: scale(0.95);
+    &.is-revealed {
+        transform: scale(1);
+    }
+}
+
+/* 7. Accessibility Mode (Prefers-Reduced-Motion) */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal-init {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .hero-ambient-glow {
+        display: none !important;
+    }
+}

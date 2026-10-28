@@ -243,9 +243,11 @@
             }
 
             card.innerHTML = `
-                <div class="ratio ratio-1x1 bg-light position-relative">
-                    <img src="${item.url}" alt="${item.filename}" class="object-fit-cover w-100 h-100" loading="lazy">
-                    <span class="position-absolute bottom-0 start-0 m-1 badge bg-dark bg-opacity-75 text-white" style="font-size: 0.65rem;">
+                <div class="position-relative">
+                    <div class="ratio ratio-1x1 bg-light">
+                        <img src="${item.url}" alt="${item.filename}" class="object-fit-cover w-100 h-100" loading="lazy">
+                    </div>
+                    <span class="position-absolute bottom-0 start-0 m-1 badge bg-dark bg-opacity-75 text-white" style="font-size: 0.65rem; z-index: 2;">
                         ${item.folder}
                     </span>
                 </div>

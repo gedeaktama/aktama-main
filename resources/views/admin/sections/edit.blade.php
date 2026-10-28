@@ -44,6 +44,30 @@
                         <textarea name="subtitle" class="form-control" rows="3" placeholder="Tuliskan kalimat penjelas di bawah judul...">{{ old('subtitle', $section->subtitle) }}</textarea>
                     </div>
 
+                    @if($section->section_key === 'hero')
+                        <div class="card border border-primary border-opacity-25 rounded-3 bg-light p-3 mb-4">
+                            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-cursor-fill text-primary me-2"></i> Pengaturan Tombol Aksi (CTA Buttons)</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-dark">Teks Tombol Utama</label>
+                                    <input type="text" name="content_data[cta_primary_text]" class="form-control form-control-sm" value="{{ old('content_data.cta_primary_text', $section->content_data['cta_primary_text'] ?? 'Minta Penawaran / Konsultasi') }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-dark">URL / Tautan Tombol Utama</label>
+                                    <input type="text" name="content_data[cta_primary_url]" class="form-control form-control-sm font-monospace" value="{{ old('content_data.cta_primary_url', $section->content_data['cta_primary_url'] ?? '#form-konsultasi') }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-dark">Teks Tombol Sekunder</label>
+                                    <input type="text" name="content_data[cta_secondary_text]" class="form-control form-control-sm" value="{{ old('content_data.cta_secondary_text', $section->content_data['cta_secondary_text'] ?? 'Jelajahi Layanan') }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-dark">URL / Tautan Tombol Sekunder</label>
+                                    <input type="text" name="content_data[cta_secondary_url]" class="form-control form-control-sm font-monospace" value="{{ old('content_data.cta_secondary_url', $section->content_data['cta_secondary_url'] ?? '#layanan-utama') }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="form-check form-switch mb-4 p-3 bg-light rounded-3 d-flex align-items-center gap-3">
                         <input class="form-check-input ms-0 mt-0" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ old('is_active', $section->is_active) ? 'checked' : '' }} style="width: 2.5rem; height: 1.25rem;">
                         <label class="form-check-label fw-bold text-dark small mb-0" for="is_active">

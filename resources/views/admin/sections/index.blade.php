@@ -11,16 +11,46 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                     <div>
                         <h6 class="fw-bold text-dark mb-1">
-                            <i class="bi bi-arrows-move text-primary me-2"></i> Pengaturan Tata Letak Seksi Beranda (Opsi A)
+                            <i class="bi bi-arrows-move text-primary me-2"></i> Pengaturan Tata Letak Seksi Beranda (Landing Page)
                         </h6>
                         <p class="text-muted small mb-0">
                             Tarik dan lepas (drag & drop) kotak seksi di bawah ini untuk mengubah susunan urutan tampilan beranda secara langsung tanpa menyentuh kode program.
                         </p>
                     </div>
-                    <div>
-                        <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                            <i class="bi bi-palette-fill me-1"></i> Visual Page Builder (GrapesJS)
+                        </a>
+                        <a href="{{ route('home') }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-3">
                             <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Beranda Publik
                         </a>
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-3 pt-3 border-top">
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 bg-light border h-100">
+                            <div class="fw-bold small text-dark mb-1"><i class="bi bi-sliders text-primary me-1"></i> 1. Urutan & Teks Seksi</div>
+                            <p class="text-muted small mb-0" style="font-size: 0.78rem;">
+                                Geser urutan seksi di bawah, klik <strong>Edit Teks</strong> untuk merubah judul, badge, subtitle, serta tombol CTA Hero.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 bg-light border h-100">
+                            <div class="fw-bold small text-dark mb-1"><i class="bi bi-database text-success me-1"></i> 2. Konten Dinamis Terpusat</div>
+                            <p class="text-muted small mb-0" style="font-size: 0.78rem;">
+                                Data layanan, pelatihan AI, portofolio, dan berita pada seksi beranda otomatis terhubung dari menu sidebar kiri.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 bg-light border h-100">
+                            <div class="fw-bold small text-dark mb-1"><i class="bi bi-magic text-info me-1"></i> 3. Desain Ala Elementor</div>
+                            <p class="text-muted small mb-0" style="font-size: 0.78rem;">
+                                Ingin landing page bebas kanvas? Buka menu <strong>Halaman & Visual Canvas</strong> untuk mendesain dengan drag & drop visual.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

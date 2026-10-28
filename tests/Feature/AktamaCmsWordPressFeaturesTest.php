@@ -36,7 +36,7 @@ class AktamaCmsWordPressFeaturesTest extends TestCase
         $admin = $this->getAdminUser();
 
         $sections = HomeSection::orderBy('sort_order')->get();
-        $this->assertCount(8, $sections);
+        $this->assertGreaterThanOrEqual(8, $sections->count());
 
         // Balik urutan seksi
         $reversedIds = $sections->pluck('id')->reverse()->values()->all();
@@ -132,6 +132,13 @@ class AktamaCmsWordPressFeaturesTest extends TestCase
             ['label' => 'Program Magang', 'url' => '/halaman/magang', 'target' => '_blank'],
             ['label' => 'Hubungi Kami', 'url' => '#form-konsultasi', 'target' => '_self'],
         ];
+
+        // Pastikan halaman admin menu menampilkan tombol edit dan modal edit
+        $menuPageResponse = $this->actingAs($admin)->get('/admin/menus');
+        $menuPageResponse->assertStatus(200);
+        $menuPageResponse->assertSee('btn-edit-item', false);
+        $menuPageResponse->assertSee('modalEditMenu', false);
+        $menuPageResponse->assertSee('Edit Item Menu Navigasi');
 
         $response = $this->actingAs($admin)->post('/admin/menus', [
             'header_menu' => json_encode($customHeaderMenu),

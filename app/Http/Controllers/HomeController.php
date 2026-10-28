@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\CoffeeProduct;
 use App\Models\Course;
 use App\Models\HomeSection;
+use App\Models\InvitationPackage;
 use App\Models\Lead;
 use App\Models\Page;
 use App\Models\Portfolio;
@@ -14,6 +16,7 @@ use App\Models\SiteSetting;
 use App\Models\TrainingProgram;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -81,6 +84,12 @@ class HomeController extends Controller
             ->orderByDesc('published_at')
             ->take(3)
             ->get();
+        $coffeeProducts = Schema::hasTable('coffee_products')
+            ? CoffeeProduct::with('variants')->where('is_published', true)->orderBy('sort_order')->get()
+            : collect();
+        $invitationPackages = Schema::hasTable('invitation_packages')
+            ? InvitationPackage::where('is_published', true)->orderBy('sort_order')->get()
+            : collect();
 
         return view('home', compact(
             'settings',
@@ -89,7 +98,9 @@ class HomeController extends Controller
             'trainingPrograms',
             'courses',
             'portfolios',
-            'articles'
+            'articles',
+            'coffeeProducts',
+            'invitationPackages'
         ));
     }
 
@@ -135,7 +146,10 @@ class HomeController extends Controller
     public function coffee(): View
     {
         $settings = $this->getSettings();
-        return view('pages.coffee', compact('settings'));
+        $coffeeProducts = Schema::hasTable('coffee_products')
+            ? CoffeeProduct::with('variants')->where('is_published', true)->orderBy('sort_order')->get()
+            : collect();
+        return view('pages.coffee', compact('settings', 'coffeeProducts'));
     }
 
     /**
@@ -144,7 +158,11 @@ class HomeController extends Controller
     public function invitations(): View
     {
         $settings = $this->getSettings();
-        return view('pages.invitations', compact('settings'));
+        $packages = Schema::hasTable('invitation_packages')
+            ? InvitationPackage::where('is_published', true)->orderBy('sort_order')->get()
+            : collect();
+        $invitationPackages = $packages;
+        return view('pages.invitations', compact('settings', 'packages', 'invitationPackages'));
     }
 
     /**

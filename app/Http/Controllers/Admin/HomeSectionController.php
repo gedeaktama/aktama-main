@@ -39,15 +39,22 @@ class HomeSectionController extends Controller
             'title' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:1000',
             'is_active' => 'nullable|boolean',
+            'content_data' => 'nullable|array',
         ]);
 
-        $section->update([
+        $updatePayload = [
             'name' => $validated['name'],
             'badge' => $validated['badge'] ?? null,
             'title' => $validated['title'] ?? null,
             'subtitle' => $validated['subtitle'] ?? null,
             'is_active' => $request->has('is_active'),
-        ]);
+        ];
+
+        if ($request->has('content_data')) {
+            $updatePayload['content_data'] = $request->input('content_data');
+        }
+
+        $section->update($updatePayload);
 
         return redirect()->route('admin.sections.index')->with('success', "Seksi '{$section->name}' berhasil diperbarui!");
     }

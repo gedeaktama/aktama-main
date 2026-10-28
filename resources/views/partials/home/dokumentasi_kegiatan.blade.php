@@ -17,9 +17,11 @@
             <!-- Galeri 1: Pelatihan Instansi Kepolisian -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 border-0 rounded-4 overflow-hidden shadow-sm bg-white hover-lift">
-                    <div class="ratio ratio-16x9 bg-dark position-relative">
-                        <img src="{{ asset('images/articles/article-ai-polres-mitra.jpg') }}" alt="Pelatihan AI Instansi Kepolisian" class="object-fit-cover w-100 h-100">
-                        <span class="position-absolute top-0 end-0 m-3 badge bg-danger text-white">
+                    <div class="position-relative">
+                        <div class="ratio ratio-16x9 bg-dark">
+                            <img src="{{ asset('images/articles/article-ai-polres-mitra.jpg') }}" alt="Pelatihan AI Instansi Kepolisian" class="object-fit-cover w-100 h-100" loading="lazy">
+                        </div>
+                        <span class="position-absolute top-0 end-0 m-3 badge bg-danger text-white shadow-sm" style="z-index: 2;">
                             <i class="bi bi-shield-check me-1"></i> In-House Instansi
                         </span>
                     </div>
@@ -38,9 +40,11 @@
             <!-- Galeri 2: Pelatihan Pendidik & Guru KKA -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 border-0 rounded-4 overflow-hidden shadow-sm bg-white hover-lift">
-                    <div class="ratio ratio-16x9 bg-dark position-relative">
-                        <img src="{{ asset('images/articles/article-ai-guru.jpg') }}" alt="Pelatihan Guru KKA" class="object-fit-cover w-100 h-100">
-                        <span class="position-absolute top-0 end-0 m-3 badge bg-primary text-white">
+                    <div class="position-relative">
+                        <div class="ratio ratio-16x9 bg-dark">
+                            <img src="{{ asset('images/articles/article-ai-guru.jpg') }}" alt="Pelatihan Guru KKA" class="object-fit-cover w-100 h-100" loading="lazy">
+                        </div>
+                        <span class="position-absolute top-0 end-0 m-3 badge bg-primary text-white shadow-sm" style="z-index: 2;">
                             <i class="bi bi-mortarboard me-1"></i> Literasi Nasional
                         </span>
                     </div>
@@ -59,9 +63,11 @@
             <!-- Galeri 3: Riset & Rekayasa Software Bebas Malware -->
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 border-0 rounded-4 overflow-hidden shadow-sm bg-white hover-lift">
-                    <div class="ratio ratio-16x9 bg-dark position-relative">
-                        <img src="{{ asset('images/articles/article-web-security.jpg') }}" alt="Rekayasa Keamanan Web" class="object-fit-cover w-100 h-100">
-                        <span class="position-absolute top-0 end-0 m-3 badge bg-success text-white">
+                    <div class="position-relative">
+                        <div class="ratio ratio-16x9 bg-dark">
+                            <img src="{{ asset('images/articles/article-web-security.jpg') }}" alt="Rekayasa Keamanan Web" class="object-fit-cover w-100 h-100" loading="lazy">
+                        </div>
+                        <span class="position-absolute top-0 end-0 m-3 badge bg-success text-white shadow-sm" style="z-index: 2;">
                             <i class="bi bi-code-slash me-1"></i> Rekayasa Sistem
                         </span>
                     </div>
