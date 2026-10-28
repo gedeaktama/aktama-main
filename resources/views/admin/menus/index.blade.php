@@ -220,55 +220,119 @@
         const headerList = document.getElementById('header-sortable-list');
         const footerList = document.getElementById('footer-sortable-list');
 
-        // Init SortableJS
-        new Sortable(headerList, {
-            handle: '.drag-handle',
-            animation: 150,
-            ghostClass: 'bg-primary-subtle'
-        });
+        // 1. Inisialisasi SortableJS untuk Drag & Drop
+        if (typeof Sortable !== 'undefined') {
+            if (headerList) {
+                new Sortable(headerList, {
+                    handle: '.drag-handle',
+                    animation: 150,
+                    ghostClass: 'bg-primary-subtle'
+                });
+            }
+            if (footerList) {
+                new Sortable(footerList, {
+                    handle: '.drag-handle',
+                    animation: 150,
+                    ghostClass: 'bg-primary-subtle'
+                });
+            }
+        }
 
-        new Sortable(footerList, {
-            handle: '.drag-handle',
-            animation: 150,
-            ghostClass: 'bg-primary-subtle'
-        });
-
-        // Modal Edit References
+        // 2. Referensi Modal Edit
         const editModalEl = document.getElementById('modalEditMenu');
-        const editModal = new bootstrap.Modal(editModalEl);
         const editLabelInput = document.getElementById('edit_menu_label');
         const editUrlInput = document.getElementById('edit_menu_url');
         const editTargetInput = document.getElementById('edit_menu_target');
         let currentEditItem = null;
 
-        // Pasang Event Listener (Edit & Remove) pada Elemen Menu
-        function attachMenuItemEvents(item) {
-            const editBtn = item.querySelector('.btn-edit-item');
-            if (editBtn) {
-                editBtn.addEventListener('click', function () {
-                    currentEditItem = item;
-                    editLabelInput.value = item.getAttribute('data-label') || '';
-                    editUrlInput.value = item.getAttribute('data-url') || '';
-                    editTargetInput.checked = (item.getAttribute('data-target') === '_blank');
-                    editModal.show();
-                });
-            }
+        // Fungsi Buka Modal Edit (Mendukung Bootstrap 5 + Fallback Native JS)
+        function openEditModal(item) {
+            currentEditItem = item;
+            const label = item.getAttribute('data-label') || '';
+            const url = item.getAttribute('data-url') || '';
+            const isBlank = (item.getAttribute('data-target') === '_blank');
 
-            const removeBtn = item.querySelector('.btn-remove-item');
-            if (removeBtn) {
-                removeBtn.addEventListener('click', function () {
-                    item.remove();
-                });
+            if (editLabelInput) editLabelInput.value = label;
+            if (editUrlInput) editUrlInput.value = url;
+            if (editTargetInput) editTargetInput.checked = isBlank;
+
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                const modal = bootstrap.Modal.getOrCreateInstance(editModalEl);
+                modal.show();
+            } else {
+                // Fallback jika library belum termuat
+                editModalEl.classList.add('show');
+                editModalEl.style.display = 'block';
+                editModalEl.removeAttribute('aria-hidden');
+                document.body.classList.add('modal-open');
+                let backdrop = document.getElementById('modal-edit-backdrop');
+                if (!backdrop) {
+                    backdrop = document.createElement('div');
+                    backdrop.id = 'modal-edit-backdrop';
+                    backdrop.className = 'modal-backdrop fade show';
+                    document.body.appendChild(backdrop);
+                }
             }
         }
 
-        // Simpan Perubahan dari Modal Edit
+        // Fungsi Tutup Modal Edit
+        function closeEditModal() {
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                const modal = bootstrap.Modal.getInstance(editModalEl);
+                if (modal) modal.hide();
+            }
+            editModalEl.classList.remove('show');
+            editModalEl.style.display = 'none';
+            editModalEl.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            const backdrop = document.getElementById('modal-edit-backdrop');
+            if (backdrop) backdrop.remove();
+        }
+
+        // Event listener tutup modal (tombol silang & tombol batal)
+        editModalEl.querySelectorAll('[data-bs-dismiss="modal"]').forEach(btn => {
+            btn.addEventListener('click', closeEditModal);
+        });
+
+        // Tutup modal jika klik di luar area modal dialog
+        editModalEl.addEventListener('click', function (e) {
+            if (e.target === editModalEl) {
+                closeEditModal();
+            }
+        });
+
+        // 3. Event Delegation Global untuk Tombol Edit dan Hapus (Anti-Macet)
+        document.addEventListener('click', function (e) {
+            // Klik Tombol Edit
+            const editBtn = e.target.closest('.btn-edit-item');
+            if (editBtn) {
+                e.preventDefault();
+                const item = editBtn.closest('.menu-item');
+                if (item) {
+                    openEditModal(item);
+                }
+                return;
+            }
+
+            // Klik Tombol Hapus
+            const removeBtn = e.target.closest('.btn-remove-item');
+            if (removeBtn) {
+                e.preventDefault();
+                const item = removeBtn.closest('.menu-item');
+                if (item) {
+                    item.remove();
+                }
+                return;
+            }
+        });
+
+        // 4. Simpan Perubahan dari Modal Edit
         document.getElementById('btn-save-edit-menu')?.addEventListener('click', function () {
             if (!currentEditItem) return;
 
-            const newLabel = editLabelInput.value.trim();
-            const newUrl = editUrlInput.value.trim();
-            const isBlank = editTargetInput.checked;
+            const newLabel = editLabelInput ? editLabelInput.value.trim() : '';
+            const newUrl = editUrlInput ? editUrlInput.value.trim() : '';
+            const isBlank = editTargetInput ? editTargetInput.checked : false;
             const newTarget = isBlank ? '_blank' : '_self';
 
             if (!newLabel || !newUrl) {
@@ -276,12 +340,12 @@
                 return;
             }
 
-            // Update Atribut Data
+            // Update Atribut Data Elemen
             currentEditItem.setAttribute('data-label', newLabel);
             currentEditItem.setAttribute('data-url', newUrl);
             currentEditItem.setAttribute('data-target', newTarget);
 
-            // Update Teks Label dan URL Tampilan
+            // Update Teks Label & URL Tampilan
             const labelDisplay = currentEditItem.querySelector('.item-label-display');
             const urlDisplay = currentEditItem.querySelector('.item-url-display');
             if (labelDisplay) labelDisplay.textContent = newLabel;
@@ -290,7 +354,7 @@
             // Update Badge "Tab Baru"
             let badge = currentEditItem.querySelector('.item-target-badge');
             if (isBlank) {
-                if (!badge) {
+                if (!badge && labelDisplay) {
                     badge = document.createElement('span');
                     badge.className = 'badge bg-secondary bg-opacity-25 text-dark ms-1 item-target-badge';
                     badge.style.fontSize = '0.65rem';
@@ -303,10 +367,10 @@
                 }
             }
 
-            editModal.hide();
+            closeEditModal();
         });
 
-        // Helper Buat Elemen Menu Baru
+        // 5. Helper Buat Elemen Menu Baru
         function createMenuItem(label, url, target) {
             const div = document.createElement('div');
             div.className = 'list-group-item border rounded-3 p-3 d-flex align-items-center justify-content-between gap-3 menu-item';
@@ -334,15 +398,8 @@
                     </button>
                 </div>
             `;
-
-            attachMenuItemEvents(div);
             return div;
         }
-
-        // Attach event listener untuk seluruh item yang ada saat halaman dimuat
-        document.querySelectorAll('.menu-item').forEach(item => {
-            attachMenuItemEvents(item);
-        });
 
         // Dapatkan target list aktif (Header atau Footer)
         function getActiveList() {
@@ -353,7 +410,7 @@
             return headerList;
         }
 
-        // Tambah dari checkbox halaman
+        // 6. Tambah dari Checkbox Halaman CMS
         document.getElementById('btn-add-pages')?.addEventListener('click', function () {
             const checkedPages = document.querySelectorAll('.page-checkbox:checked');
             const targetList = getActiveList();
@@ -367,7 +424,7 @@
             });
         });
 
-        // Tambah dari custom link
+        // 7. Tambah dari Custom Link
         document.getElementById('btn-add-custom')?.addEventListener('click', function () {
             const urlInput = document.getElementById('custom-url');
             const labelInput = document.getElementById('custom-label');
@@ -391,25 +448,29 @@
             targetInput.checked = false;
         });
 
-        // Sebelum submit form, serap seluruh item menjadi JSON string
-        document.getElementById('menu-form').addEventListener('submit', function (e) {
+        // 8. Submit Form: Ekspor seluruh item menjadi format JSON string
+        document.getElementById('menu-form')?.addEventListener('submit', function (e) {
             const headerItems = [];
-            headerList.querySelectorAll('.menu-item').forEach(item => {
-                headerItems.push({
-                    label: item.getAttribute('data-label'),
-                    url: item.getAttribute('data-url'),
-                    target: item.getAttribute('data-target') || '_self'
+            if (headerList) {
+                headerList.querySelectorAll('.menu-item').forEach(item => {
+                    headerItems.push({
+                        label: item.getAttribute('data-label'),
+                        url: item.getAttribute('data-url'),
+                        target: item.getAttribute('data-target') || '_self'
+                    });
                 });
-            });
+            }
 
             const footerItems = [];
-            footerList.querySelectorAll('.menu-item').forEach(item => {
-                footerItems.push({
-                    label: item.getAttribute('data-label'),
-                    url: item.getAttribute('data-url'),
-                    target: item.getAttribute('data-target') || '_self'
+            if (footerList) {
+                footerList.querySelectorAll('.menu-item').forEach(item => {
+                    footerItems.push({
+                        label: item.getAttribute('data-label'),
+                        url: item.getAttribute('data-url'),
+                        target: item.getAttribute('data-target') || '_self'
+                    });
                 });
-            });
+            }
 
             document.getElementById('header_menu_input').value = JSON.stringify(headerItems);
             document.getElementById('footer_menu_input').value = JSON.stringify(footerItems);
