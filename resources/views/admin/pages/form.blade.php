@@ -324,8 +324,8 @@
                                 <a href="{{ route('admin.pages.index') }}" class="btn btn-sm btn-light border">Batal</a>
                             @endif
 
-                            <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
-                                <i class="bi bi-check2-circle me-1"></i> {{ $page->exists ? 'Perbarui' : 'Simpan Halaman' }}
+                            <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm" id="btn-submit-page">
+                                <i class="bi bi-check2-circle me-1" id="submit-btn-icon"></i> <span id="submit-btn-text">{{ $page->exists ? 'Perbarui' : 'Simpan Halaman' }}</span>
                             </button>
                         </div>
                     </div>
@@ -476,24 +476,36 @@
         const builderWrapper = document.getElementById('builder-editor-wrapper');
         const labelModeStandard = document.getElementById('label-mode-standard');
         const labelModeBuilder = document.getElementById('label-mode-builder');
+        const submitBtnText = document.getElementById('submit-btn-text');
+        const submitBtnIcon = document.getElementById('submit-btn-icon');
+        const isNewPage = {{ $page->exists ? 'false' : 'true' }};
 
         function toggleEditorMode() {
-            if (modeBuilder.checked) {
-                standardWrapper.classList.add('d-none');
-                builderWrapper.classList.remove('d-none');
-                labelModeBuilder.classList.add('active');
-                labelModeStandard.classList.remove('active');
+            if (modeBuilder && modeBuilder.checked) {
+                standardWrapper?.classList.add('d-none');
+                builderWrapper?.classList.remove('d-none');
+                labelModeBuilder?.classList.add('active');
+                labelModeStandard?.classList.remove('active');
+                if (isNewPage && submitBtnText) {
+                    submitBtnText.innerText = 'Simpan & Buka Canvas';
+                    if (submitBtnIcon) submitBtnIcon.className = 'bi bi-brush me-1';
+                }
             } else {
-                standardWrapper.classList.remove('d-none');
-                builderWrapper.classList.add('d-none');
-                labelModeStandard.classList.add('active');
-                labelModeBuilder.classList.remove('active');
+                standardWrapper?.classList.remove('d-none');
+                builderWrapper?.classList.add('d-none');
+                labelModeStandard?.classList.add('active');
+                labelModeBuilder?.classList.remove('active');
+                if (isNewPage && submitBtnText) {
+                    submitBtnText.innerText = 'Simpan Halaman';
+                    if (submitBtnIcon) submitBtnIcon.className = 'bi bi-check2-circle me-1';
+                }
             }
         }
 
         if (modeStandard && modeBuilder) {
             modeStandard.addEventListener('change', toggleEditorMode);
             modeBuilder.addEventListener('change', toggleEditorMode);
+            toggleEditorMode(); // Sinkronisasi awal
         }
 
         // INISIALISASI TINYMCE UNTUK HALAMAN

@@ -30,6 +30,30 @@
         </a>
     </div>
 
+    <!-- BANNER PANDUAN ELEMENTOR / VISUAL BUILDER -->
+    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="p-3 bg-white text-primary rounded-circle shadow-sm fs-4 d-none d-sm-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                    <i class="bi bi-brush"></i>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        <i class="bi bi-palette-fill me-1"></i> Desain Landing Page Visual Seperti Elementor WordPress
+                    </h6>
+                    <p class="mb-0 small text-white-50">
+                        Ingin membuat landing page kustom yang dinamis? Klik <strong>"Tambah Halaman Baru"</strong>, pilih opsi <strong>"Visual Drag & Drop Canvas (Elementor Style)"</strong>, lalu susun Hero Banner, Grid Kolom, Testimoni, FAQ Accordion, hingga tombol WhatsApp secara visual.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <a href="{{ route('admin.pages.create') }}" class="btn btn-light text-primary btn-sm rounded-pill px-3 fw-bold shadow-sm text-nowrap">
+                    <i class="bi bi-plus-circle me-1"></i> Buat Halaman Visual
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- SEARCH BAR -->
     <div class="card border-0 shadow-sm rounded-4 bg-white p-3 mb-4">
         <form action="{{ route('admin.pages.index') }}" method="GET" class="row g-2 align-items-center">
