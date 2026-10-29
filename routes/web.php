@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController as AdminActivityLogController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\BackupController as AdminBackupController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\HomeSectionController as AdminHomeSectionController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
@@ -37,8 +39,10 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/inquiry', 'storeInquiry')->middleware('throttle:6,1')->name('inquiry.store');
 });
 
-// Dynamic XML Sitemap untuk Mesin Pencari
+// Dynamic XML Sitemap & RSS Feed untuk Mesin Pencari & Sindikasi Berita
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/rss.xml', [SitemapController::class, 'rss'])->name('rss');
+Route::get('/feed', fn() => redirect()->route('rss', [], 301));
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +77,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Opsi B: Halaman Kustom & Visual Drag & Drop Canvas Builder (GrapesJS)
         Route::resource('pages', AdminPageController::class)->except(['show']);
+        Route::post('/pages/{page}/duplicate', [AdminPageController::class, 'duplicate'])->name('pages.duplicate');
+        Route::put('/pages/{page}/quick-update', [AdminPageController::class, 'quickUpdate'])->name('pages.quickUpdate');
         Route::get('/pages/{page}/builder', [AdminPageController::class, 'builder'])->name('pages.builder');
         Route::post('/pages/{page}/builder', [AdminPageController::class, 'saveBuilder'])->name('pages.saveBuilder');
 
@@ -86,6 +92,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Manajemen Artikel Blog / Postingan Berita & SEO
         Route::resource('articles', AdminArticleController::class)->except(['show']);
+        Route::post('/articles/{article}/duplicate', [AdminArticleController::class, 'duplicate'])->name('articles.duplicate');
+        Route::put('/articles/{article}/quick-update', [AdminArticleController::class, 'quickUpdate'])->name('articles.quickUpdate');
         Route::post('/categories/ajax-store', [AdminArticleController::class, 'ajaxStoreCategory'])->name('categories.ajaxStore');
 
         // Media & Image Uploader Inline (WYSIWYG / TinyMCE / WordPress style)
@@ -101,5 +109,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Manajemen Portofolio
         Route::resource('portfolios', AdminPortfolioController::class)->except(['show']);
+
+        // 1-Click Backup Database & Media (UpdraftPlus style)
+        Route::get('/backup', [AdminBackupController::class, 'index'])->name('backup.index');
+        Route::get('/backup/database', [AdminBackupController::class, 'downloadDatabase'])->name('backup.database');
+        Route::get('/backup/media', [AdminBackupController::class, 'downloadMedia'])->name('backup.media');
+
+        // Audit Trail & Activity Log (WP Activity Log style)
+        Route::get('/activity-logs', [AdminActivityLogController::class, 'index'])->name('activityLogs.index');
+        Route::post('/activity-logs/clear', [AdminActivityLogController::class, 'clear'])->name('activityLogs.clear');
     });
 });

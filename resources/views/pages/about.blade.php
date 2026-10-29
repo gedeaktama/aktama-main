@@ -74,10 +74,9 @@
                     <div class="col-lg-4 text-center">
                         <div class="bg-white p-3 rounded-4 shadow-sm border d-inline-block">
                             <img src="{{ asset('images/gede-erik-aktama.jpg') }}" alt="{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}" class="img-fluid rounded-3 shadow-sm object-fit-cover mb-2" style="max-height: 260px;">
-                            <div class="py-1">
-                                <img src="{{ asset('images/gede-ttd.png') }}" alt="Tanda Tangan Direktur" style="height: 42px; opacity: 0.85;" class="img-fluid">
+                            <div>
+                                <span class="badge bg-primary px-3 py-1 rounded-pill small mt-1">Direktur Utama & Penanggung Jawab</span>
                             </div>
-                            <span class="badge bg-primary px-3 py-1 rounded-pill small mt-1">Direktur Utama & Penanggung Jawab</span>
                         </div>
                     </div>
                     <div class="col-lg-8">

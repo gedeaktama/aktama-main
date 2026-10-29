@@ -52,6 +52,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset($settings['favicon_path'] ?? 'images/logo-aktama.png') }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ $settings['brand_name'] ?? 'Aktama Digital' }} RSS Feed" href="{{ route('rss') }}">
 
     <!-- Bootstrap Icons (Lokal Vendor & CDN Fallback: Jaminan Ikon 100% Muncul) -->
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
@@ -101,6 +102,43 @@
         </div>
     @endif
 
+    <!-- ANNOUNCEMENT PROMO TOP BAR (ALA OPTINMONSTER) -->
+    @if(!empty($settings['announcement_enabled']) && $settings['announcement_enabled'] == '1' && !empty($settings['announcement_text']))
+        <div class="py-2 px-3 text-white text-center position-relative shadow-sm" style="background-color: {{ $settings['announcement_bg_color'] ?? '#4f46e5' }}; font-size: 0.85rem; z-index: 1025;" id="site-announcement-bar">
+            <div class="container d-flex flex-wrap align-items-center justify-content-center gap-2">
+                @if(!empty($settings['announcement_badge']))
+                    <span class="badge bg-white text-dark fw-bold px-2 py-1 rounded-pill" style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                        {{ $settings['announcement_badge'] }}
+                    </span>
+                @endif
+                <span class="fw-semibold">{{ $settings['announcement_text'] }}</span>
+                @if(!empty($settings['announcement_link_url']) && !empty($settings['announcement_link_text']))
+                    <a href="{{ $settings['announcement_link_url'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-light rounded-pill px-3 py-0 fw-bold shadow-xs ms-1 text-dark" style="font-size: 0.78rem;">
+                        {{ $settings['announcement_link_text'] }} <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                @endif
+                <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3 d-none d-md-block" style="font-size: 0.65rem;" onclick="document.getElementById('site-announcement-bar').style.display='none';" aria-label="Tutup"></button>
+            </div>
+        </div>
+    @endif
+
+    @php
+        $waNumber = $settings['whatsapp_number'] ?? '6285341026331';
+        $waContextText = 'Halo PT Aktama Digital Antika, saya ingin berkonsultasi mengenai solusi teknologi dan pelatihan.';
+        if (isset($service) && !empty($service->title)) {
+            $waContextText = "Halo PT Aktama Digital Antika, saya tertarik dengan layanan: {$service->title}. Bisakah saya konsultasi kebutuhan dan penawaran teknisnya?";
+        } elseif (isset($program) && !empty($program->title)) {
+            $waContextText = "Halo PT Aktama Digital Antika, saya ingin konsultasi pendaftaran Program Pelatihan AI: {$program->title}.";
+        } elseif (isset($portfolio) && !empty($portfolio->title)) {
+            $waContextText = "Halo PT Aktama Digital Antika, saya melihat portofolio proyek: {$portfolio->title} dan ingin konsultasi pembuatan sistem serupa.";
+        } elseif (isset($page) && !empty($page->title)) {
+            $waContextText = "Halo PT Aktama Digital Antika, saya sedang membaca halaman: {$page->title} dan ingin bertanya lebih lanjut.";
+        } elseif (isset($article) && !empty($article->title)) {
+            $waContextText = "Halo PT Aktama Digital Antika, saya membaca artikel '{$article->title}' di aktama.com dan ingin berkonsultasi.";
+        }
+        $dynamicWaUrl = "https://wa.me/{$waNumber}?text=" . urlencode($waContextText);
+    @endphp
+
     <!-- TOPBAR KONTAK & INFO -->
     <div class="bg-dark text-white-50 py-1 border-bottom border-secondary border-opacity-25 small">
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
@@ -124,7 +162,7 @@
                     <i class="bi bi-envelope text-info me-1"></i> {{ $settings['email'] ?? 'kontak@aktama.com' }}
                 </a>
                 <span class="text-secondary">|</span>
-                <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6285341026331' }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
+                <a href="{{ $dynamicWaUrl }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none hover-white">
                     <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Resmi
                 </a>
             </div>
@@ -417,7 +455,7 @@
 
     <!-- FLOATING WHATSAPP BUTTON (FAB) -->
     <div class="position-fixed bottom-0 end-0 p-3 p-md-4" style="z-index: 1080;">
-        <a href="https://wa.me/{{ $settings['whatsapp_number'] ?? '6285341026331' }}?text={{ urlencode('Halo PT Aktama Digital Antika, saya ingin berkonsultasi mengenai solusi teknologi dan pelatihan.') }}" 
+        <a href="{{ $dynamicWaUrl }}" 
            target="_blank" 
            rel="noopener noreferrer" 
            class="btn btn-success d-flex align-items-center gap-2 rounded-pill shadow-lg px-3 py-2 text-white fw-bold text-decoration-none floating-wa-btn" 

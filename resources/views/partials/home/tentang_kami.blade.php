@@ -15,11 +15,6 @@
                     <div class="mt-3">
                         <h4 class="fw-bold font-display text-dark mb-1">{{ $settings['owner_name'] ?? 'Gede Erik Aktama, S.Pd., M.Pd.' }}</h4>
                         <p class="text-primary fw-semibold small mb-2">{{ $settings['owner_title'] ?? 'Dosen Sistem Komputer & Fasilitator Nasional KKA Kemdikdasmen' }}</p>
-                        
-                        <!-- Tanda Tangan Resmi -->
-                        <div class="py-2">
-                            <img src="{{ asset('images/gede-ttd.png') }}" alt="Tanda Tangan Direktur" style="height: 48px; opacity: 0.85;" class="img-fluid">
-                        </div>
                     </div>
 
                     <div class="d-flex justify-content-center gap-2 flex-wrap border-top pt-3 small">

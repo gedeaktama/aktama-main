@@ -935,6 +935,7 @@
 
                     toastMsg.innerText = data.message || 'Desain halaman visual berhasil disimpan!';
                     toast.show();
+                    localStorage.removeItem('aktama_page_draft_{{ $page->id }}');
                 })
                 .catch(err => {
                     console.error('Save error:', err);
@@ -945,6 +946,21 @@
                     alert('Gagal menyimpan desain halaman. Silakan periksa koneksi Anda.');
                 });
             });
+
+            // 5. AUTOSAVE KE LOCALSTORAGE SETIAP 25 DETIK (MENCEGAH HILANGNYA DESAIN)
+            const draftStorageKey = 'aktama_page_draft_{{ $page->id }}';
+            setInterval(() => {
+                try {
+                    const currentComponents = JSON.stringify(editor.getComponents());
+                    localStorage.setItem(draftStorageKey, JSON.stringify({
+                        components: currentComponents,
+                        css: editor.getCss(),
+                        savedAt: new Date().toISOString()
+                    }));
+                } catch (e) {
+                    // Ignore quota exceeded
+                }
+            }, 25000);
         });
     </script>
 </body>

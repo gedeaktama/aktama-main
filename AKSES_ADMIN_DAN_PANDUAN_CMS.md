@@ -173,6 +173,32 @@ Seluruh modul postingan di panel admin kini telah diseragamkan dengan antarmuka 
   - Pratinjau responsif perangkat: **Desktop**, **Tablet**, dan **Mobile**.
   - Tombol modal panduan **"Cara Pakai"** di bilah atas kanvas.
   - Tombol **"Simpan Desain"** berbasis AJAX dengan notifikasi toast instan.
+  - **Autosave Draf Berkala:** Kanvas otomatis menyimpan draf ke penyimpanan lokal browser setiap 25 detik untuk mencegah kehilangan desain jika koneksi internet terputus.
+
+### J. Perlindungan Keamanan Tanda Tangan Digital Direktur
+- Tanda tangan resmi direktur telah **dihapus sepenuhnya** dari halaman depan (*landing page*) dan halaman *Tentang Kami* publik untuk mencegah penyalahgunaan atau pencurian dokumen digital oleh pihak yang tidak bertanggung jawab.
+
+### K. Bilah Pengumuman Promo Penjualan (*Announcement Top Bar*)
+- Diatur melalui menu **Pengaturan Situs** (`/admin/settings`).
+- Menampilkan bilah promo tipis di bagian paling atas halaman publik dengan warna kustom, badge sorotan, kalimat penawaran, dan tombol aksi (link website / WhatsApp langsung).
+
+### L. Konteks Pesan WhatsApp Cerdas (*Dynamic Contextual WhatsApp*)
+- Tombol WhatsApp melayang (*Floating Action Button*) dan link WhatsApp topbar kini otomatis menyesuaikan teks sapaan berdasarkan halaman yang dibuka pengunjung:
+  - Di halaman Jasa Web: *"Halo PT Aktama, saya tertarik dengan layanan [Nama Layanan]..."*
+  - Di halaman Pelatihan AI: *"Halo PT Aktama, saya ingin konsultasi pendaftaran Program Pelatihan AI [Nama Pelatihan]..."*
+  - Di halaman Portofolio: *"Halo PT Aktama, saya melihat portofolio [Nama Proyek] dan ingin konsultasi sistem serupa..."*
+
+### M. Duplikasi 1-Klik (*1-Click Duplicate*) & Edit Cepat (*Quick Edit*)
+- Tersedia pada tabel **Halaman & Visual Canvas** (`/admin/pages`) dan tabel **Postingan Berita** (`/admin/articles`).
+- **Tombol Duplikat (ikon 2 kertas):** Menggandakan seluruh isi halaman/artikel, template, dan CSS ke draf baru dalam 1 kali klik.
+- **Tombol Edit Cepat (ikon petir):** Membuka jendela pop-up cepat untuk mengubah judul, slug, urutan, kategori/template, dan status publikasi tanpa perlu membuka halaman edit penuh.
+
+### N. Pusat Cadangan Data & Media 1-Klik (*1-Click Backup* `/admin/backup`)
+- **Unduh Cadangan Database (.sql):** Menghasilkan dump SQL seluruh database via Native PDO tanpa ketergantungan `mysqldump` CLI (100% aman dan kompatibel dengan hosting Niagahoster).
+- **Unduh Cadangan Media (.zip):** Mengompres seluruh folder `public/images/` ke dalam file arsip ZIP siap simpan.
+
+### O. Audit Trail & Log Aktivitas Administrator (`/admin/activity-logs`)
+- Merekam setiap aksi login, pembuatan konten baru, update halaman/artikel, quick edit, duplikasi, dan penghapusan data secara otomatis lengkap dengan waktu, nama admin, dan alamat IP.
 
 ---
 

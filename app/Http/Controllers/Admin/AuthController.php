@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,7 @@ class AuthController extends Controller
             }
 
             $request->session()->regenerate();
+            ActivityLog::record('login', 'Administrator berhasil masuk ke sistem panel admin.', 'User', Auth::id());
 
             return redirect()->intended(route('admin.dashboard'))
                 ->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');

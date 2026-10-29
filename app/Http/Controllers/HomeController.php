@@ -62,6 +62,12 @@ class HomeController extends Controller
             'footer_description' => SiteSetting::get('footer_description', 'Perusahaan penyedia solusi teknologi terpadu: Jasa Pembuatan Website & Aplikasi Bebas Malware, Pelatihan Kecerdasan Artifisial (AI) Terapan, serta Ekosistem Produk Digital Mandiri.'),
             'footer_copyright' => SiteSetting::get('footer_copyright', '© ' . date('Y') . ' PT Aktama Digital Antika. Seluruh hak cipta dilindungi.'),
             'header_navigation_menu' => SiteSetting::get('header_navigation_menu', null),
+            'announcement_enabled' => SiteSetting::get('announcement_enabled', '0'),
+            'announcement_text' => SiteSetting::get('announcement_text', '🔥 Promo Spesial: Konsultasi Pembuatan Website & Pelatihan AI Bersertifikat Resmi Terbuka!'),
+            'announcement_badge' => SiteSetting::get('announcement_badge', 'PROMO TERBATAS'),
+            'announcement_link_text' => SiteSetting::get('announcement_link_text', 'Konsultasi Sekarang'),
+            'announcement_link_url' => SiteSetting::get('announcement_link_url', 'https://wa.me/6285341026331'),
+            'announcement_bg_color' => SiteSetting::get('announcement_bg_color', '#4f46e5'),
         ];
     }
 

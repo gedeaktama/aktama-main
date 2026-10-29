@@ -265,6 +265,60 @@
             </div>
         </div>
 
+        <!-- CARD 9: BILAH PENGUMUMAN PROMO (ANNOUNCEMENT TOP BAR ALA OPTINMONSTER) -->
+        <div class="card border-0 shadow-sm rounded-4 bg-white mb-4 border-start border-warning border-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold text-dark mb-0">
+                    <i class="bi bi-megaphone-fill text-warning me-2"></i> Bilah Pengumuman Promo (Announcement Top Bar)
+                </h6>
+                <span class="badge bg-warning bg-opacity-25 text-dark small">Marketing & Sales</span>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Bilah promo tipis yang muncul di bagian paling atas halaman publik untuk menarik perhatian pengunjung, mengumumkan promo pelatihan AI, diskon jasa website, atau agenda penting.
+                </p>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-dark">Status Tampilan Bilah</label>
+                        <select name="announcement_enabled" class="form-select">
+                            <option value="1" {{ ($settings['announcement_enabled']->value ?? '0') == '1' ? 'selected' : '' }}>Aktif (Tampilkan di Publik)</option>
+                            <option value="0" {{ ($settings['announcement_enabled']->value ?? '0') == '0' ? 'selected' : '' }}>Nonaktif (Sembunyikan)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-dark">Teks Label Badge</label>
+                        <input type="text" name="announcement_badge" class="form-control" value="{{ $settings['announcement_badge']->value ?? 'PROMO TERBATAS' }}" placeholder="PROMO TERBATAS">
+                        <small class="text-muted" style="font-size: 0.72rem;">Label sorotan kecil berlatar putih.</small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-dark">Warna Latar Bilah (Hex)</label>
+                        <div class="input-group">
+                            <input type="color" class="form-control form-control-color" id="announcementColorInput" value="{{ $settings['announcement_bg_color']->value ?? '#4f46e5' }}" title="Pilih warna latar" onchange="document.getElementById('announcement_bg_color').value = this.value">
+                            <input type="text" name="announcement_bg_color" id="announcement_bg_color" class="form-control" value="{{ $settings['announcement_bg_color']->value ?? '#4f46e5' }}">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label small fw-bold text-dark">Kalimat Pengumuman / Penawaran Promo</label>
+                        <input type="text" name="announcement_text" class="form-control" value="{{ $settings['announcement_text']->value ?? '🔥 Promo Spesial: Konsultasi Pembuatan Website & Pelatihan AI Bersertifikat Resmi Terbuka!' }}" placeholder="Tuliskan kalimat ajakan promo di sini...">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-dark">Teks Tombol Aksi</label>
+                        <input type="text" name="announcement_link_text" class="form-control" value="{{ $settings['announcement_link_text']->value ?? 'Konsultasi Sekarang' }}" placeholder="Konsultasi Sekarang">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label small fw-bold text-dark">Tautan Tujuan Tombol (URL Web atau WhatsApp)</label>
+                        <input type="text" name="announcement_link_url" class="form-control" value="{{ $settings['announcement_link_url']->value ?? 'https://wa.me/6285341026331' }}" placeholder="https://wa.me/... atau /halaman/promo">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex justify-content-end mb-5">
             <button type="submit" class="btn btn-brand btn-lg rounded-pill px-5 shadow-sm">
                 <i class="bi bi-check-circle-fill me-2"></i> Simpan Seluruh Pengaturan & Media

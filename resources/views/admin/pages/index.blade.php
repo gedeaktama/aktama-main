@@ -163,7 +163,28 @@
                                         </a>
                                     @endif
 
-                                    <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3" title="Edit Rincian">
+                                    <!-- Quick Edit Modal Trigger -->
+                                    <button type="button" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-2 btn-quick-edit-page" 
+                                            title="Edit Cepat (Ganti judul, slug, status tanpa buka halaman edit)"
+                                            data-id="{{ $page->id }}"
+                                            data-title="{{ $page->title }}"
+                                            data-slug="{{ $page->slug }}"
+                                            data-template="{{ $page->template }}"
+                                            data-order="{{ $page->sort_order }}"
+                                            data-published="{{ $page->is_published ? '1' : '0' }}"
+                                            data-url="{{ route('admin.pages.quickUpdate', $page->id) }}">
+                                        <i class="bi bi-lightning-charge"></i>
+                                    </button>
+
+                                    <!-- 1-Click Duplicate -->
+                                    <form action="{{ route('admin.pages.duplicate', $page->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Duplikasi halaman ini?');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-info rounded-pill px-2" title="Duplikasi Halaman 1-Klik">
+                                            <i class="bi bi-files"></i>
+                                        </button>
+                                    </form>
+
+                                    <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3" title="Edit Rincian Lengkap">
                                         <i class="bi bi-pencil me-1"></i> Edit
                                     </a>
 
@@ -202,4 +223,88 @@
         @endif
     </div>
 
+    <!-- MODAL QUICK EDIT HALAMAN ALA WORDPRESS -->
+    <div class="modal fade" id="modalQuickEditPage" tabindex="-1" aria-labelledby="modalQuickEditPageLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <form id="formQuickEditPage" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header bg-dark text-white py-3 px-4">
+                        <h6 class="modal-title fw-bold mb-0" id="modalQuickEditPageLabel">
+                            <i class="bi bi-lightning-charge text-warning me-2"></i> Edit Cepat Halaman (Quick Edit)
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body p-4 bg-white">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-dark mb-1">Judul Halaman</label>
+                            <input type="text" name="title" id="qe-page-title" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-dark mb-1">URL / Permalink Slug</label>
+                            <input type="text" name="slug" id="qe-page-slug" class="form-control form-control-sm font-monospace" required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-7">
+                                <label class="form-label small fw-bold text-dark mb-1">Tata Letak (Template)</label>
+                                <select name="template" id="qe-page-template" class="form-select form-select-sm">
+                                    <option value="default">Default (Container)</option>
+                                    <option value="full-width">Full Width (Canvas)</option>
+                                    <option value="blank">Blank Canvas (Murni)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label small fw-bold text-dark mb-1">Urutan Menu</label>
+                                <input type="number" name="sort_order" id="qe-page-order" class="form-control form-control-sm" value="0">
+                            </div>
+                        </div>
+                        <div class="form-check form-switch p-0 ps-5 mt-3">
+                            <input class="form-check-input ms-n5" type="checkbox" role="switch" name="is_published" id="qe-page-published" value="1" style="width: 2rem; height: 1.15rem;">
+                            <label class="form-check-label fw-bold text-dark ms-2 small" for="qe-page-published">
+                                Publikasikan Halaman
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light border-top py-2 px-4 d-flex justify-content-between">
+                        <button type="button" class="btn btn-sm btn-light border rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold shadow-xs">
+                            <i class="bi bi-check2-circle me-1"></i> Perbarui Cepat
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalEl = document.getElementById('modalQuickEditPage');
+        const formEl = document.getElementById('formQuickEditPage');
+        const titleInput = document.getElementById('qe-page-title');
+        const slugInput = document.getElementById('qe-page-slug');
+        const templateInput = document.getElementById('qe-page-template');
+        const orderInput = document.getElementById('qe-page-order');
+        const publishedInput = document.getElementById('qe-page-published');
+
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-quick-edit-page');
+            if (btn) {
+                e.preventDefault();
+                formEl.action = btn.getAttribute('data-url');
+                titleInput.value = btn.getAttribute('data-title') || '';
+                slugInput.value = btn.getAttribute('data-slug') || '';
+                templateInput.value = btn.getAttribute('data-template') || 'default';
+                orderInput.value = btn.getAttribute('data-order') || 0;
+                publishedInput.checked = btn.getAttribute('data-published') === '1';
+
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        });
+    });
+</script>
+@endpush

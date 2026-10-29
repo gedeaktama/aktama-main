@@ -234,6 +234,58 @@ class ArticleController extends Controller
     }
 
     /**
+     * 1-Click Duplicate Artikel
+     */
+    public function duplicate(Article $article): RedirectResponse
+    {
+        $newTitle = $article->title . ' (Salinan)';
+        $baseSlug = Str::slug($article->slug . '-salinan');
+        $slug = $baseSlug;
+        $counter = 1;
+        while (Article::where('slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $counter++;
+        }
+
+        $newArticle = Article::create([
+            'title' => $newTitle,
+            'slug' => $slug,
+            'category_id' => $article->category_id,
+            'summary' => $article->summary,
+            'content' => $article->content,
+            'image' => $article->image,
+            'tags' => $article->tags,
+            'meta_title' => $article->meta_title ? $article->meta_title . ' (Salinan)' : $newTitle,
+            'meta_description' => $article->meta_description,
+            'status' => 'draft',
+        ]);
+
+        return redirect()->route('admin.articles.edit', $newArticle->id)
+            ->with('success', 'Artikel berhasil diduplikasi! Silakan sesuaikan judul dan isi artikel.');
+    }
+
+    /**
+     * Quick Edit Artikel (WordPress Quick Edit style)
+     */
+    public function quickUpdate(Request $request, Article $article): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:200',
+            'slug' => 'required|string|max:200|unique:articles,slug,' . $article->id,
+            'category_id' => 'required|exists:categories,id',
+            'status' => 'required|in:published,draft',
+        ]);
+
+        $article->update([
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['slug']),
+            'category_id' => $validated['category_id'],
+            'status' => $validated['status'],
+        ]);
+
+        return back()->with('success', 'Artikel "' . $article->title . '" berhasil diperbarui dengan Quick Edit!');
+    }
+
+    /**
      * Hapus artikel
      */
     public function destroy(Article $article): RedirectResponse

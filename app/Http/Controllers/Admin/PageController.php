@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -106,6 +107,8 @@ class PageController extends Controller
             'is_published' => $request->has('is_published'),
         ]);
 
+        ActivityLog::record('create', "Membuat halaman baru: '{$page->title}'", 'Halaman', $page->id);
+
         if ($page->editor_type === 'builder') {
             return redirect()->route('admin.pages.builder', $page->id)
                 ->with('success', 'Halaman berhasil dibuat! Silakan desain visual dengan Drag & Drop Canvas.');
@@ -169,6 +172,8 @@ class PageController extends Controller
             'is_published' => $request->has('is_published'),
         ]);
 
+        ActivityLog::record('update', "Memperbarui rincian halaman: '{$page->title}'", 'Halaman', $page->id);
+
         return redirect()->route('admin.pages.index')->with('success', 'Halaman berhasil diperbarui!');
     }
 
@@ -197,6 +202,8 @@ class PageController extends Controller
             'content_json' => $request->input('components'),
         ]);
 
+        ActivityLog::record('update', "Menyimpan rancangan visual canvas pada halaman: '{$page->title}'", 'Halaman', $page->id);
+
         return response()->json([
             'success' => true,
             'message' => 'Desain halaman visual berhasil disimpan!',
@@ -204,11 +211,81 @@ class PageController extends Controller
     }
 
     /**
+     * 1-Click Duplicate Halaman (Yoast Duplicate Post style)
+     */
+    public function duplicate(Page $page): RedirectResponse
+    {
+        $newTitle = $page->title . ' (Salinan)';
+        $baseSlug = Str::slug($page->slug . '-salinan');
+        $slug = $baseSlug;
+        $counter = 1;
+        while (Page::where('slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $counter++;
+        }
+
+        $newPage = Page::create([
+            'title' => $newTitle,
+            'slug' => $slug,
+            'editor_type' => $page->editor_type,
+            'template' => $page->template,
+            'content_html' => $page->content_html,
+            'content_css' => $page->content_css,
+            'content_json' => $page->content_json,
+            'featured_image' => $page->featured_image,
+            'sort_order' => $page->sort_order + 1,
+            'meta_title' => $page->meta_title ? $page->meta_title . ' (Salinan)' : $newTitle,
+            'meta_description' => $page->meta_description,
+            'is_published' => false, // Default draf untuk keamanan
+        ]);
+
+        ActivityLog::record('duplicate', "Menduplikasi halaman: '{$page->title}' menjadi '{$newTitle}'", 'Halaman', $newPage->id);
+
+        if ($newPage->editor_type === 'builder') {
+            return redirect()->route('admin.pages.builder', $newPage->id)
+                ->with('success', 'Halaman berhasil diduplikasi! Anda sekarang berada di kanvas visual salinan.');
+        }
+
+        return redirect()->route('admin.pages.edit', $newPage->id)
+            ->with('success', 'Halaman berhasil diduplikasi! Silakan sesuaikan judul dan konten.');
+    }
+
+    /**
+     * Quick Edit Halaman (WordPress Quick Edit style)
+     */
+    public function quickUpdate(Request $request, Page $page): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:200',
+            'slug' => 'required|string|max:200|unique:pages,slug,' . $page->id,
+            'template' => 'required|string|in:default,full-width,blank',
+            'sort_order' => 'nullable|integer',
+            'is_published' => 'nullable|boolean',
+        ]);
+
+        $page->update([
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['slug']),
+            'template' => $validated['template'],
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_published' => $request->has('is_published'),
+        ]);
+
+        ActivityLog::record('quick_update', "Quick Edit halaman: '{$page->title}'", 'Halaman', $page->id);
+
+        return back()->with('success', 'Halaman "' . $page->title . '" berhasil diperbarui dengan Quick Edit!');
+    }
+
+    /**
      * Hapus halaman
      */
     public function destroy(Page $page): RedirectResponse
     {
+        $title = $page->title;
+        $id = $page->id;
         $page->delete();
+
+        ActivityLog::record('delete', "Menghapus halaman: '{$title}'", 'Halaman', $id);
+
         return redirect()->route('admin.pages.index')->with('success', 'Halaman berhasil dihapus.');
     }
 }

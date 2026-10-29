@@ -144,6 +144,16 @@
                         <i class="bi bi-person-lock"></i> Profil & Kata Sandi
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.backup.index') }}" class="nav-link {{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
+                        <i class="bi bi-shield-lock-fill"></i> Cadangan Data (Backup)
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.activityLogs.index') }}" class="nav-link {{ request()->routeIs('admin.activityLogs.*') ? 'active' : '' }}">
+                        <i class="bi bi-clock-history"></i> Log Aktivitas (Audit)
+                    </a>
+                </li>
             </ul>
 
             <hr class="border-secondary border-opacity-25 my-3">

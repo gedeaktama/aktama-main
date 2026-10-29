@@ -150,6 +150,26 @@
                                         </a>
                                     @endif
 
+                                    <!-- Quick Edit Modal Trigger -->
+                                    <button type="button" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-2 btn-quick-edit-art" 
+                                            title="Edit Cepat (Ganti judul, slug, kategori, status tanpa buka halaman edit)"
+                                            data-id="{{ $art->id }}"
+                                            data-title="{{ $art->title }}"
+                                            data-slug="{{ $art->slug }}"
+                                            data-category="{{ $art->category_id }}"
+                                            data-status="{{ $art->status }}"
+                                            data-url="{{ route('admin.articles.quickUpdate', $art->id) }}">
+                                        <i class="bi bi-lightning-charge"></i>
+                                    </button>
+
+                                    <!-- 1-Click Duplicate -->
+                                    <form action="{{ route('admin.articles.duplicate', $art->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Duplikasi artikel ini?');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-info rounded-pill px-2" title="Duplikasi Artikel 1-Klik">
+                                            <i class="bi bi-files"></i>
+                                        </button>
+                                    </form>
+
                                     <a href="{{ route('admin.articles.edit', $art->id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
                                         <i class="bi bi-pencil me-1"></i> Edit
                                     </a>
@@ -183,4 +203,83 @@
         @endif
     </div>
 
+    <!-- MODAL QUICK EDIT ARTIKEL ALA WORDPRESS -->
+    <div class="modal fade" id="modalQuickEditArticle" tabindex="-1" aria-labelledby="modalQuickEditArticleLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <form id="formQuickEditArticle" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header bg-dark text-white py-3 px-4">
+                        <h6 class="modal-title fw-bold mb-0" id="modalQuickEditArticleLabel">
+                            <i class="bi bi-lightning-charge text-warning me-2"></i> Edit Cepat Artikel (Quick Edit)
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body p-4 bg-white">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-dark mb-1">Judul Artikel / Berita</label>
+                            <input type="text" name="title" id="qe-art-title" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-dark mb-1">URL / Permalink Slug</label>
+                            <input type="text" name="slug" id="qe-art-slug" class="form-control form-control-sm font-monospace" required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-dark mb-1">Kategori</label>
+                                <select name="category_id" id="qe-art-category" class="form-select form-select-sm" required>
+                                    @foreach($categories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-dark mb-1">Status Publikasi</label>
+                                <select name="status" id="qe-art-status" class="form-select form-select-sm" required>
+                                    <option value="published">Diterbitkan (Publik)</option>
+                                    <option value="draft">Draf (Disimpan)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light border-top py-2 px-4 d-flex justify-content-between">
+                        <button type="button" class="btn btn-sm btn-light border rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold shadow-xs">
+                            <i class="bi bi-check2-circle me-1"></i> Perbarui Cepat
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalEl = document.getElementById('modalQuickEditArticle');
+        const formEl = document.getElementById('formQuickEditArticle');
+        const titleInput = document.getElementById('qe-art-title');
+        const slugInput = document.getElementById('qe-art-slug');
+        const catInput = document.getElementById('qe-art-category');
+        const statusInput = document.getElementById('qe-art-status');
+
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-quick-edit-art');
+            if (btn) {
+                e.preventDefault();
+                formEl.action = btn.getAttribute('data-url');
+                titleInput.value = btn.getAttribute('data-title') || '';
+                slugInput.value = btn.getAttribute('data-slug') || '';
+                catInput.value = btn.getAttribute('data-category') || '';
+                statusInput.value = btn.getAttribute('data-status') || 'published';
+
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        });
+    });
+</script>
+@endpush
