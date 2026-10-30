@@ -112,7 +112,8 @@ class InquiryNotificationService
 
         $text = implode("\n", $lines);
 
-        $response = Http::timeout(6)->asJson()->post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+        $baseUrl = self::getTelegramApiUrl();
+        $response = self::createTelegramHttpClient()->post("{$baseUrl}/bot{$botToken}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $text,
             'parse_mode' => 'HTML',
@@ -171,7 +172,8 @@ class InquiryNotificationService
 
         if (filled($botToken) && filled($chatId)) {
             try {
-                $response = Http::timeout(6)->asJson()->post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+                $baseUrl = self::getTelegramApiUrl();
+                $response = self::createTelegramHttpClient()->post("{$baseUrl}/bot{$botToken}/sendMessage", [
                     'chat_id' => $chatId,
                     'text' => "🎉 <b>UJI COBA NOTIFIKASI AKTAMA.COM BERHASIL!</b>\n\nSistem konsultasi dan inquiry dari website utama Aktama Digital telah terhubung dengan akun Telegram ini.",
                     'parse_mode' => 'HTML',
@@ -207,6 +209,32 @@ class InquiryNotificationService
         }
 
         return $results;
+    }
+
+    /**
+     * Create configured HTTP client for Telegram API with IPv4 enforcement and resilient timeouts.
+     */
+    protected static function createTelegramHttpClient(): \Illuminate\Http\Client\PendingRequest
+    {
+        $curlOptions = [];
+        if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+            $curlOptions[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
+        }
+
+        return Http::withOptions([
+            'connect_timeout' => 10,
+            'timeout' => 15,
+            'curl' => $curlOptions,
+        ])->asJson();
+    }
+
+    /**
+     * Resolve Telegram API base URL (supports proxy/mirror when configured).
+     */
+    protected static function getTelegramApiUrl(): string
+    {
+        $url = config('services.telegram.base_url') ?: env('TELEGRAM_API_URL', 'https://api.telegram.org');
+        return rtrim($url, '/');
     }
 }
 
