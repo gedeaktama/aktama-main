@@ -14,6 +14,7 @@ use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\TrainingProgram;
+use App\Services\InquiryNotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -300,6 +301,8 @@ class HomeController extends Controller
             'status' => 'new',
             'ip_address' => $request->ip(),
         ]);
+
+        InquiryNotificationService::notifyAdminNewInquiry($lead);
 
         $waTargetNumber = SiteSetting::get('whatsapp_number', '6285341026331');
         $cleanPhone = preg_replace('/[^0-9]/', '', $waTargetNumber);

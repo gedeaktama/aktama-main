@@ -51,3 +51,4 @@ class ActivityLogController extends Controller
         return redirect()->route('admin.activityLogs.index')->with('success', 'Riwayat aktivitas berhasil dibersihkan.');
     }
 }
+
